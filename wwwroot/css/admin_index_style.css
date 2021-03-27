@@ -1,0 +1,147 @@
+.admin-page-container {
+    display: flex;
+    width: 100%;
+
+    justify-content: space-around;
+    margin: 0 auto;
+}
+
+.lab-list-container {
+    display: flex;
+    width: 30%;
+
+    flex-flow: column wrap;
+    padding: 10px;
+}
+
+.lab-list-container .lab-list-item-box {
+    display: flex;
+    flex-flow: column wrap;
+}
+
+.lab-list-container .lab-item-box {
+    display: flex;
+    background-color: #fbfbfb;
+    width: 100%;
+    height: 25px;
+
+    border: 1px solid black;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 10px;
+    margin: 5px 0;
+}
+
+.lab-list-container .lab-item-box p {
+    margin: 0;
+    padding: 0;
+}
+
+.device-history-container {
+    display: flex;
+    width: 55%;
+
+    flex-flow: column wrap;
+    padding: 10px;
+}
+
+.device-history-container .device-history-table-container {
+    max-height: 300px;
+    overflow: auto;
+}
+
+.device-history-container .device-history-table {
+    width: 100%;
+    position: sticky;
+    padding: 0;
+    margin: 0;
+}
+
+.device-history-container table,
+th,
+td {
+    border: 1px solid black;
+    border-collapse: collapse; 
+}
+
+.device-history-container th {
+    position: sticky;
+    top: 0;
+}
+
+.device-history-container th,
+td {
+    padding: 4px 10px;
+    text-align: center;
+}
+
+.device-history-container th {
+    background-color: #64bdf8;
+}
+
+.device-history-container td {
+    max-width: 150px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.device-history-container .device-history-table tr {
+    background-color: #fbfbfb;
+}
+
+.device-history-container .device-history-table tr:nth-child(even) {
+    background-color: #e5e5e5;
+}
+
+.device-history-container .device-history-option-container {
+    /* display: flex;  */
+    margin-top: 20px;
+}
+
+@media (max-width: 1200px) {
+}
+
+@media (max-width: 992px) {
+    .admin-page-container {
+        display: flex;
+        width: 100%;
+        margin: 0 auto;
+        flex-flow: row wrap;
+    }
+
+    .lab-list-container {
+        display: flex;
+        width: 80%;
+
+        flex-flow: column wrap;
+        padding: 10px;
+
+        justify-self: flex-start;
+    }
+
+    .device-history-container {
+        display: flex;
+        /* background-color: lightblue; */
+        width: 80%;
+    }
+  
+    .device-history-container th,
+    td {
+        padding: 2px 2px;
+    }
+
+    .device-history-container td {
+        max-width: 50px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+}
+
+@media (max-width: 768px) {
+    
+}
+
+@media (max-width: 576px) {
+}

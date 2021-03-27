@@ -1,6 +1,45 @@
 @{
-    ViewData["Title"] = "Admin Index";
+    string[] transactionName = { "ยืม", "คืน", "สาย" };
 }
-<h1>@ViewData["Title"]</h1>
 
-<p>Welcome to Admin.</p>
+<div class="admin-page-container">
+    <div class="lab-list-container">
+        <h3>รายการห้องแลป</h3>
+        <div class="lab-list-item-box" id="lab-list">
+            @foreach (var lab in ViewData["LabLists"] as IList<LabListModel>)
+            {
+                <div class="lab-item-box">
+                    <p>@lab.name</p>
+                    <p>@lab.current_tool / @lab.total_tool</p>
+                </div>
+
+                <scripts></scripts>
+            }
+        </div>
+    </div>
+
+    <div class="device-history-container">
+        <h3>ประวัติการยืม/คืน อุปกรณ์</h3>
+        <div class="device-history-table-container">
+            <table class="device-history-table" id="device-history-table">
+                <thead>
+                    <th>วัน/เดือน/ปี</th>
+                    <th>หมายเลขอุปกรณ์</th>
+                    <th>ชื่อผู้ใช้งาน</th>
+                    <th>สถานะ</th>
+                </thead>
+                <tbody>
+                    @foreach (var log in ViewData["LogLists"] as IList<LogModel>)
+                    {
+                        <tr>
+                            <td>@log.created</td>
+                            <td>@log.item_id</td>
+                            <td>@log.user_name</td>
+                            <td>@transactionName[log.transaction_type]</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div> 

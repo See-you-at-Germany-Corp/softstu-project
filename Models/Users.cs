@@ -8,15 +8,15 @@ namespace softstu_project.Models {
     }
     public class Users{
         public int id { get; set; }
-        [StringLength(50)]
+        [StringLength(50, MinimumLength=1)]
         [Required]
         public string name { get; set; }
         public Role role { get; set; }
         [Required]
-        [StringLength(20)]
+        [StringLength(20, MinimumLength=8)]
         public string username { get; set; }
         [Required]
-        [StringLength(100)]
+        [StringLength(100, MinimumLength=8)]
         public string password { get; set; }
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "0:{yyyy-MM-dd HH:mm:ss}", ApplyFormatInEditMode = true)]

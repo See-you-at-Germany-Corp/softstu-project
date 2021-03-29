@@ -6,7 +6,7 @@ namespace softstu_project.Models {
     public class Items {
         public int id  { get; set; }
         [Required]
-        [StringLength(50)]
+        [StringLength(50, MinimumLength=1)]
         public string name  { get; set; }
         public Boolean is_available { get; set; }
         [DataType(DataType.Date)]

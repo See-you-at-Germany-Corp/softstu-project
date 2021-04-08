@@ -15,5 +15,8 @@ namespace softstu_project.Models {
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "0:{yyyy-MM-dd HH:mm:ss}", ApplyFormatInEditMode = true)]
         public DateTime updated { get; set; }
+        /////////////////////////////////////////////////////////////////////////
+        public virtual Labotaries labotary { get; set; }
+        public virtual Items item { get; set; }
     }
 }

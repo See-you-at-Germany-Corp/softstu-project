@@ -6,7 +6,7 @@ namespace softstu_project.Models {
     public class Items {
         public int id  { get; set; }
         [Required]
-        [StringLength(50)]
+        [StringLength(50, MinimumLength=1)]
         public string name  { get; set; }
         public Boolean is_available { get; set; }
         [DataType(DataType.Date)]
@@ -15,5 +15,7 @@ namespace softstu_project.Models {
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "0:{yyyy-MM-dd HH:mm:ss}", ApplyFormatInEditMode = true)]
         public DateTime updated  { get; set; }
+        /////////////////////////////////////////////////////////////////////////
+        public virtual Labotaries labotary { get; set; } 
     }
 }

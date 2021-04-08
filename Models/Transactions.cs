@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace softstu_project.Models {
     public  enum Transaction_type {
-        borrow, give, rated_give
+        borrow, give, lated_give
     }
     public class Transactions {
         public int id { get; set; }

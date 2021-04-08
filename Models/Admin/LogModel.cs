@@ -14,7 +14,7 @@ namespace soft_stu_project.Models
         {
         }
 
-        public LogModel(int id, string user_name, int item_id, int transaction_type, DateTime craeted)
+        public LogModel(int id, string user_name, int item_id, int transaction_type, DateTime created)
         {
             this.id = id;
             this.user_name = user_name;

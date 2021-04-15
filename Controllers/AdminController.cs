@@ -24,7 +24,7 @@ namespace soft_stu_project.Controllers
             for (int i = 0; i < 5; i++)
             {
                 labLists.Add(new LabListModel() { id = i + 1, name = "Lab_" + (i + 1), current_tool = i, total_tool = 5 });
-            }
+            } 
 
             IList<LogModel> logLists = new List<LogModel>();
             for (int i = 0; i < 10; i++)
@@ -35,6 +35,16 @@ namespace soft_stu_project.Controllers
             ViewData["LabLists"] = labLists;
             ViewData["LogLists"] = logLists;
 
+            return View();
+        }
+
+        public IActionResult Tools()
+        {
+            return View();
+        }
+
+        public IActionResult Blacklist()
+        {
             return View();
         }
 

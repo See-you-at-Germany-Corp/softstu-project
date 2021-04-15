@@ -1,0 +1,106 @@
+.navbar { 
+    background-color: #FBFBFB;
+    
+    position: -webkit-sticky;
+    position: sticky; 
+    top: 0;
+    z-index: 99; 
+}
+
+.nav-container {
+    display: flex;
+    height: 35px;
+    padding: 10px 15px;
+
+    flex-flow: row wrap;
+    justify-content: space-between;
+    align-items: center;
+
+    transition: height 0.5s;
+}
+
+.nav-container a {
+    text-decoration: none;
+    color: #1a91da;
+}
+
+.nav-brand-box {
+    display: flex;
+    flex-flow: row nowrap;
+}
+
+.nav-icon {
+    width: 30px;
+    height: 30px;
+    background-image: url("https://www.flaticon.com/svg/vstatic/svg/3655/3655592.svg?token=exp=1618481880~hmac=fd6e1a02b8cfaba36619216c669d8097");
+    background-size: contain;
+    margin-right: 10px;
+}
+
+.navbar-brand {
+    font-size: x-large;
+}
+
+.nav-menu {
+    display: flex;
+    flex-flow: row nowrap;
+}
+
+.nav-item,
+.nav-item-text {
+    display: flex;
+    margin: 0 5px 0 5px;
+    align-items: center;
+}
+
+.nav-item .text-link {
+    display: none;
+}
+
+.nav-item img {
+    width: 30px;
+    height: 30px;
+}
+
+.nav-expand {
+    display: none;
+}
+
+@media (max-width: 576px) {
+    .nav-container {
+        flex-flow: column nowrap;
+        align-items: flex-start;
+        overflow: hidden;
+        /* align-items: center; */
+    }
+
+    .nav-menu {
+        margin: 15px 0 15px 40px;
+        display: flex;
+        flex-flow: column nowrap;
+        font-size: large;
+    }
+
+    .nav-item .text-link {
+        display: block;
+    }
+
+    .nav-item .img-link {
+        display: none;
+    }
+
+    .nav-item img {
+        display: none;
+    }
+
+    .nav-expand {
+        display: block;
+    }
+
+    .nav-expand img {
+        display: block;
+        position: absolute;
+        right: 10px;
+        top: 12.5px;
+    }
+}

@@ -1,0 +1,68 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Double Lab</title>
+
+    @* Google Fonts Setup. *@
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Itim&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/admin_index_style.css">
+    <link rel="stylesheet" href="~/css/navbar_style.css">
+
+    <script src="~/js/navbar.js" asp-append-version="true"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <div class="nav-container">
+            <div class="nav-brand-box">
+                <div class="nav-icon"></div>
+                <a class="navbar-brand" asp-area="" asp-controller="Admin" asp-action="Index">Double Labs ADMIN</a>
+            </div>
+
+            <div class="nav-menu">
+                <div class="nav-item">
+                    <a class="img-link" asp-controller="Admin" asp-action="Tools"><img
+                            src="https://www.flaticon.com/svg/vstatic/svg/1786/1786661.svg?token=exp=1618482309~hmac=19ebfd594db2d0950c10bf0bfde00293"
+                            alt="tools"></a>
+                    <a class="text-link" asp-controller="Admin" asp-action="Tools">Tools</a>
+                </div>
+                <div class="nav-item">
+                    <a class="img-link" asp-controller="Admin" asp-action="Blacklist"><img
+                            src="https://www.flaticon.com/svg/vstatic/svg/2666/2666505.svg?token=exp=1618482439~hmac=34f77c55acb29786e8ecf144c0122670"
+                            alt="blacklist"></a>
+                    <a class="text-link" asp-controller="Admin" asp-action="Blacklist">Blacklist</a>
+                </div>
+                
+                <div class="nav-item-text">
+                    <a asp-controller="Home" asp-action="Index">Logout</a>
+                </div>
+                <div class="nav-item nav-expand" onclick="showNavbar()">
+                    <img src="https://www.flaticon.com/svg/vstatic/svg/3388/3388830.svg?token=exp=1618483047~hmac=a854318b49214435fd4519231678a928"
+                        alt="hambergur-menu">
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2021 - Double Lab - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    @RenderSection("Scripts", required: false)
+</body>
+
+</html>

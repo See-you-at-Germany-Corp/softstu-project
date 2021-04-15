@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+    <link href='https://fonts.googleapis.com/css?family=Itim' rel='stylesheet'>
+    <script src='script.js'></script>
+    <style>
+        .container {
+            border: 3px solid #64BDF8;
+            background-color: #FBFBFB;
+            margin: 0 auto;
+            width: 50%;
+            display: block;
+        }
+
+        .logo-lab {
+            margin: 0 auto;
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .logo-pic {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            margin-right: 5%;
+        }
+
+        .logo-text {
+            line-height: 50px;
+            display: flex;
+        }
+
+        .font-header {
+            font-size: 16px;
+            font-family: 'Itim';
+        }
+        .login {
+            border: 3px solid #64BDF8;
+            background-color: #FBFBFB;
+            margin: 0 auto;
+            width: 50%;
+        }
+
+        .login-input {
+            margin: 0 auto;
+            width: 90%;
+        }
+
+        .input {
+            width: 100%;
+            padding: 5px 10px 5px 10px;
+            margin: 5px auto;
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 16px;
+            font-family: 'Itim';
+        }
+
+        #username {
+            background-color: #f8f4f4;
+        }
+
+        #password {
+            background-color: #f8f4f4;
+        }
+
+        .login-btn {
+            width: 100%;
+            background-color: #64BDF8;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            max-width: 100%;
+            height: auto;
+
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="login">
+            <div class="logo-lab">
+                <img class="logo-pic" src="dog.jpg" alt="dog">
+                <div class="logo-text">
+                    <p class="font-header">Double Lab</p>
+                </div>
+            </div>
+            <div class="login-input">
+                <form class="input" action="">
+                    <input class="input" id="username" type="text" placeholder="username">
+                    <input class="input" id="password" type="password" placeholder="password">
+                </form>
+                <button class="login-btn" id="login" onclick="myFunction()">Log in</button>
+            </div>
+
+        </div>
+    </div>
+</body>
+<script>
+    function myFunction() {
+        console.log('Login already');
+    }
+</script>
+
+</html>

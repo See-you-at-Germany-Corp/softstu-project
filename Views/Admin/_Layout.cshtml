@@ -11,10 +11,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Itim&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="~/css/site.css" />
-    <link rel="stylesheet" href="~/css/admin_index_style.css">
+    <link rel="stylesheet" href="~/css/admin/index_style.css">
+    <link rel="stylesheet" href="~/css/admin/blacklist_style.css">
     <link rel="stylesheet" href="~/css/navbar_style.css">
+    <link rel="stylesheet" href="~/css/table_style.css">
 
     <script src="~/js/navbar.js" asp-append-version="true"></script>
+    <script src="~/js/admin/blacklist.js" asp-append-version="true"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
 </head>
 
@@ -29,13 +32,13 @@
             <div class="nav-menu">
                 <div class="nav-item">
                     <a class="img-link" asp-controller="Admin" asp-action="Tools"><img
-                            src="https://www.flaticon.com/svg/vstatic/svg/1786/1786661.svg?token=exp=1618482309~hmac=19ebfd594db2d0950c10bf0bfde00293"
+                            src="https://cdn.discordapp.com/attachments/817783466379968572/832547547260125214/tools.png"
                             alt="tools"></a>
                     <a class="text-link" asp-controller="Admin" asp-action="Tools">Tools</a>
                 </div>
                 <div class="nav-item">
                     <a class="img-link" asp-controller="Admin" asp-action="Blacklist"><img
-                            src="https://www.flaticon.com/svg/vstatic/svg/2666/2666505.svg?token=exp=1618482439~hmac=34f77c55acb29786e8ecf144c0122670"
+                            src="https://cdn.discordapp.com/attachments/817783466379968572/832547473720475688/checklist.png"
                             alt="blacklist"></a>
                     <a class="text-link" asp-controller="Admin" asp-action="Blacklist">Blacklist</a>
                 </div>
@@ -44,7 +47,7 @@
                     <a asp-controller="Home" asp-action="Index">Logout</a>
                 </div>
                 <div class="nav-item nav-expand" onclick="showNavbar()">
-                    <img src="https://www.flaticon.com/svg/vstatic/svg/3388/3388830.svg?token=exp=1618483047~hmac=a854318b49214435fd4519231678a928"
+                    <img src="https://cdn.discordapp.com/attachments/817783466379968572/832547946557341708/hamburger.png"
                         alt="hambergur-menu">
                 </div>
             </div>

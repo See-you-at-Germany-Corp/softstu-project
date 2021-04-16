@@ -4,7 +4,7 @@
 
 <div class="admin-page-container">
     <div class="lab-list-container">
-        <h3>รายการห้องแลป</h3>
+        <h2>รายการห้องแลป</h2>
         <div class="lab-list-item-box" id="lab-list">
             @foreach (var lab in ViewData["LabLists"] as IList<LabListModel>)
             {
@@ -17,7 +17,7 @@
     </div>
 
     <div class="device-history-container">
-        <h3>ประวัติการยืม/คืน อุปกรณ์</h3>
+        <h2>ประวัติการยืม/คืน อุปกรณ์</h2>
         <div class="device-history-table-container">
             <table class="device-history-table" id="device-history-table">
                 <thead>
@@ -38,6 +38,10 @@
                     }
                 </tbody>
             </table>
+        </div>
+
+        <div class="blacklist-link-box">
+            <a asp-controller="Admin" asp-action="Blacklist">ดูรายการที่ยังไม่ได้คืนทั้งหมดที่นี่</a>
         </div>
     </div>
 </div> 

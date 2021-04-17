@@ -48,9 +48,10 @@ namespace soft_stu_project
 
             app.UseEndpoints(endpoints =>
             {
+                //edit here
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Admin}/{action=Detail}/{id?}");
             });
         }
     }

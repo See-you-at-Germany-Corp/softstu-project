@@ -1,0 +1,124 @@
+.detail-container table,th, td {
+    /* border: 1px solid black; */
+    border-collapse: collapse;
+}
+
+.detail-container th {
+    position: sticky;
+    top: 0;
+    font-weight: 200;
+}
+
+.detail-container th,td {
+    padding: 4px 10px;
+    text-align: center;
+}
+
+.detail-container th {
+    background-color: #64bdf8;
+}
+
+.detail-container td {
+    max-width: 150px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.detail-container tr {
+    background-color: #fbfbfb;
+}
+
+.detail-container tr:nth-child(even) {
+    background-color: #e5e5e5;
+}
+
+@media (max-width: 992px) {
+    .detail-container th,
+    .detail-container td {
+        padding: 2px 2px;
+    }
+
+    .detail-container td {
+        max-width: 50px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+}
+
+.detail-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 80%;
+    margin: 0 auto;
+}
+/* #header {
+    border:1px solid #616161;
+    text-align: center;
+    padding:1px 40px 1px 40px;
+} */
+#number-input {
+    width: 50px;
+    text-align: center;
+}
+
+
+#accept, #cancel {
+    height: 50px;
+    width: 100px;
+    border-radius: 5px;
+   
+}
+
+#accept {
+     border: 2px solid #64bdf8;
+     background-color: white;
+     color: #64bdf8;
+}
+
+#accept:hover {
+    background-color: #64bdf8;
+    color: white;
+}
+
+#cancel {
+    border: none;
+    background-color: whitesmoke;
+}
+
+#cancel:hover {
+    background-color: #e5e5e5;
+}
+
+#change-notes {
+    width: 300px;
+    height: 150px;
+}
+#button-container {
+    margin-top: 20px;
+}
+#textarea-container {
+    margin-top: 20px;
+}
+
+#increment, #decrement {
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    border: none;
+    color: white;
+}
+#increment {
+    background-color: green;
+}
+#decrement {
+    background-color: red;
+}
+
+#editableTD {
+    background-color: white;
+    border: none;
+    width: 100px;
+}

@@ -1,0 +1,66 @@
+@{
+
+}
+
+<div class="detail-container">
+    <p>รายการ lab1 : LAB lin plin ta</p>
+    <table class="detail-table">
+        <thead >
+            <tr>
+                <th>ประเภทอุปกรณ์</th>
+                <th>ชื่ออุปกรณ์</th>
+                <th>จำนวนคงเหลือ</th>
+                <th>จำนวนทั้งหมด</th>
+                @* <th>col 3</th> *@
+            </tr>
+        </thead>
+        <tbody>
+            @{int index = 0;}
+            @foreach (var item in ViewData["LabItems"] as List<LabItem>) {
+                <tr>
+                    <td >
+                        @{index++;}
+                        @index
+                    </td>
+                    <td >
+                        @item.title
+                    </td>
+                    <td >
+                        @item.leftQuantity
+                    </td>
+                    <td >
+                        @item.quantity
+                    </td>
+                    <td id="editableTD">
+                        <button id="increment" onclick="increment(@index)">+</button>
+                        <button id="decrement" onclick="decrement(@index,@item.leftQuantity)">-</button>
+                        @* <input type="text" value=@item.newQuantity id="number-input"> *@
+                        @Html.TextBox("value"+@index,item.newQuantity.ToString())
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    
+
+    <div id="textarea-container">
+        <textarea rows="15" cols="40" id="change-notes"></textarea>
+    </div>
+
+    <div id="button-container">
+        <button id="accept">ยืนยัน</button>
+        <button id="cancel">ยกเลิก</button>
+    </div>
+
+    <script>
+        function increment(i) {
+            document.getElementById('value'+i).value = parseInt(document.getElementById('value'+i).value) + 1
+        }
+
+        function decrement(i,min) {
+            if (document.getElementById('value'+i).value > -1 * min) {
+                document.getElementById('value'+i).value = parseInt(document.getElementById('value'+i).value) - 1
+            }
+        }
+    </script>
+</div>

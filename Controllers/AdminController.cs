@@ -53,5 +53,17 @@ namespace soft_stu_project.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        public IActionResult Detail()
+        {
+            List<LabItem> items = new List<LabItem>();
+            items.Add(new LabItem("1","Vibrator",19,2));
+            items.Add(new LabItem("2","Pornography",19,3));
+            items.Add(new LabItem("3","Silicone Vagina",19,4));
+            items.Add(new LabItem("4","Red Bull",19,11));
+            ViewData["LabItems"] = items;
+            ViewData["Title"] = "test";
+            return View();
+        }
     }
 }

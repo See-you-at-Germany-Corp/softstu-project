@@ -1,6 +1,5 @@
-.container {
-  border: 3px solid #64bdf8;
-  background-color: #fbfbfb;
+.contain-login {
+  padding-top: 2%;
   margin: 0 auto;
   width: 50%;
   display: block;
@@ -28,33 +27,37 @@
 }
 
 .font-header {
-  font-size: 16px;
+  font-size: 20px;
   font-family: "Itim";
 }
 .login {
-  border: 3px solid pink;
-  background-color: #fbfbfb;
+  /* border: 3px solid pink; */
   margin: 0 auto;
-  width: 250px; /* or whatever width you want. */
-  max-width: 250px; /* or whatever width you want. */
-  /* display: inline-block; */
+  width: 250px;
+  max-width: 300px;
+  border: 2.5px solid #64bdf8;
+  border-radius: 5px;
+  background-color: #fbfbfb;
 }
 
 .login-input {
   margin: 0 auto;
   width: 90%;
 }
-
+.contain-input {
+  margin: 0 auto;
+  width: 90%;
+}
 .input {
   width: 100%;
   padding: 5px 10px 5px 10px;
   margin: 5px auto;
   display: inline-block;
-  border: 1px solid #ccc;
-  border-radius: 4px;
   box-sizing: border-box;
   font-size: 16px;
   font-family: "Itim";
+  border: 1px solid #999999;
+  border-radius: 4px;
 }
 
 #username {
@@ -65,15 +68,20 @@
   background-color: #f8f4f4;
 }
 
+.contain-btn {
+  margin: 0 auto;
+  width: 90%;
+}
 .login-btn {
-  width: 100%;
-  background-color: #64bdf8;
+  font-size: 16px;
+  font-family: "Itim";
+  background-color: #1a91da;
   color: white;
-  padding: 14px 20px;
-  margin: 8px 0;
+  padding: 8px 20px;
+  margin: 50px 0px 25px 0px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  max-width: 100%;
+  width: 100%;
   height: auto;
 }

@@ -1,111 +1,144 @@
 .lab-container {
-    border: 3px solid #64BDF8;
+  border: 3px solid #64bdf8;
 }
 
 .lab-in-container {
-    display: flex;
-    border: 5px solid red;
-    margin: 0 auto;
-    width: 50%;
-    flex-direction: row;
+  display: flex;
+  border: 5px solid violet;
+  margin: 0 auto;
+  width: 70%;
+  flex-direction: row;
+  height: auto;
+  max-width: 800px;
 }
 
 .lab-pic {
-    display: flex;
-    height:auto;
-    border: 5px solid green;
+  display: flex;
+  min-width: 150px;
+  min-height: 150px;
+  max-width: 200px;
+  max-height: 200px;
+  align-items: center;
+  height: auto;
+  border: 5px solid green;
 }
 
 #picture1 {
-    max-height:300px;
-    max-width:300px;
-    height:auto;
-    display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: auto;
+  display: flex;
 }
 
 .lab-content {
-    display: flex;
-    border: 5px solid black;
-    width: 100%;
-    flex-direction: column;
-
+  display: flex;
+  border: 5px solid black;
+  width: 90%;
+  flex-direction: column;
 }
 
 .lab-header-container {
-    border: 5px solid orange;
-    margin-left: 30px;
-    display: flex;
-    flex-direction: column;
+  border: 5px solid orange;
+  width: 70%;
+  display: flex;
+  flex-direction: column;
 }
 
 .lab-name {
-    display: flex;
+  display: flex;
 }
 
 .topic-content {
-    display: flex;
-    margin-top: -30px;
+  display: flex;
 }
 
-.lab-information {
-    display: flex;
-    flex-direction: row;
-    border: 5px solid red;
-    width: 100%;
+.lab-information-container {
+  display: flex;
+  flex-direction: row;
+  border: 5px solid red;
+  width: 70%;
 }
 
 .font-lab-detail {
-    display: flex;
-    border: 5px solid magenta;
-    width: 50%;
+  display: flex;
+  border: 5px solid magenta;
+  width: 50%;
 }
 
 .form-text {
-    display: flex;
-    border: 5px solid yellow;
-    width: 100%;
-    font-family: 'Itim';
+  display: flex;
+  border: 5px solid yellow;
+  width: 50%;
+  font-family: "Itim";
+  justify-content: center;
+  align-items: center;
 }
 .list-lab-left {
-    border: 5px solid yellow;
+  border: 5px solid green;
+  margin-right: 15px;
 }
+
 .vertical-line {
-    /* margin-left: 20px; */
-    border-left: 6px solid green;
-    height: 80px;
-    margin: 0 auto;
+
+  border-left: 2px solid grey;
+  height: 80px;
+  margin-top: 10px;
 }
 
 .list-lab-right {
-    border: 5px solid yellow;
+  border: 5px solid green;
+  margin-left: 15px;
 }
-
 .lab-name {
-    padding: 0px 0px 0px 0px;
 }
 
 .font-header1 {
-    font-size: 22px;
-    font-family: 'Itim';
+  font-size: 22px;
+  font-family: "Itim";
+  margin: 0;
 }
 
 .font-header2 {
-    font-size: 16px;
-    font-family: 'Itim';
+  font-size: 16px;
+  font-family: "Itim";
+  margin: 0;
 }
 
 .btn-container {
-    display: flex;
-    width: 50%;
-    border: 5px solid blueviolet;
-    justify-content: flex-end;
-    align-items: flex-end;
-    
+  display: flex;
+  width: 50%;
+  border: 5px solid blueviolet;
+  justify-content: flex-end;
+  align-items: flex-end;
 }
 
 .btn-more-inform {
-    width: 100px;
-    height: 40px;
-    background-color: #64BDF8;
-    font-family: 'Itim';
+  width: 100px;
+  height: 40px;
+  background-color: #64bdf8;
+  font-family: "Itim";
+  color: white;
+}
+ul {
+    padding: 0;
+}
+/* If the screen size is 601px wide or more, set the font-size of <div> to 80px */
+@media screen and (min-width: 801px) {
+  .list-lab-left {
+    font-size: 16px;
+  }
+  .list-lab-right {
+    font-size: 16px;
+  }
+}
+
+/* If the screen size is 600px wide or less, set the font-size of <div> to 30px */
+@media screen and (max-width: 800px) {
+  .list-lab-left {
+    font-size: 8px;
+  }
+  .list-lab-right {
+    font-size: 8px;
+  }
 }

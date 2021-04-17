@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using soft_stu_project.Models;
+#nullable enable
 
 namespace soft_stu_project.Controllers
 {
@@ -54,7 +55,7 @@ namespace soft_stu_project.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        public IActionResult Detail()
+        public IActionResult Detail(string? id)
         {
             List<LabItem> items = new List<LabItem>();
             items.Add(new LabItem("1","Vibrator",19,2));
@@ -62,7 +63,7 @@ namespace soft_stu_project.Controllers
             items.Add(new LabItem("3","Silicone Vagina",19,4));
             items.Add(new LabItem("4","Red Bull",19,11));
             ViewData["LabItems"] = items;
-            ViewData["Title"] = "test";
+            ViewData["Title"] = "test " + id?.ToString() ?? "";
             return View();
         }
     }

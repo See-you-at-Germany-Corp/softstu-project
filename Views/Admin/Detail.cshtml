@@ -4,6 +4,7 @@
 
 <div class="detail-container">
     <p>รายการ lab1 : LAB lin plin ta</p>
+    <p>@ViewData["Title"]</p>
     <table class="detail-table">
         <thead >
             <tr>
@@ -35,7 +36,7 @@
                         <button id="increment" onclick="increment(@index)">+</button>
                         <button id="decrement" onclick="decrement(@index,@item.leftQuantity)">-</button>
                         @* <input type="text" value=@item.newQuantity id="number-input"> *@
-                        @Html.TextBox("value"+@index,item.newQuantity.ToString())
+                        @Html.TextBox("value"+@index,"0")
                     </td>
                 </tr>
             }

@@ -1,0 +1,57 @@
+@{
+    string[] transactionName = { "ยืม", "คืน", "สาย" };
+}
+
+<div class="blacklist-page-container">
+    <div class="device-history-container">
+        <h2>ประวัติการยืม/คืน อุปกรณ์ ล่าสุด</h2>
+        <div class="device-history-table-container">
+            <table class="device-history-table" id="blacklist-device-history-table">
+                <thead>
+                    <th>วัน/เดือน/ปี</th>
+                    <th>หมายเลขอุปกรณ์</th>
+                    <th>ชื่อผู้ใช้งาน</th>
+                    <th>สถานะ</th>
+                </thead>
+                <tbody>
+                    @foreach (var log in ViewData["LogLists"] as IList<LogModel>)
+                    {
+                        <tr>
+                            <td>@log.created</td>
+                            <td>@log.item_id</td>
+                            <td>@log.user_name</td>
+                            <td>@transactionName[log.transaction_type]</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="device-blacklist-container">
+        <h2>รายการอุปกรณ์ที่ยังไม่ได้คืน</h2>
+        <div class="device-blacklist-table-container">
+            <table class="device-blacklist-table" id="device-blacklist-table">
+                <thead>
+                    <th>วัน/เดือน/ปี</th>
+                    <th>หมายเลขอุปกรณ์</th>
+                    <th>ชื่อผู้ใช้งาน</th>
+                    <th>ยืนยันการคืน</th>
+                </thead>
+                <tbody>
+                    @foreach (var log in ViewData["BlacklistLists"] as IList<LogModel>)
+                    {
+                        <tr id="blacklist-@log.item_id">
+                            <td>@log.created</td>
+                            <td>@log.item_id</td>
+                            <td>@log.user_name</td>
+                            <td><button onclick="returnItem(@log.item_id)" value="">ยืนยัน</button></td>
+                        </tr>
+                        /// remove item from borrowLists here.
+                        /// add item to Log here.
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

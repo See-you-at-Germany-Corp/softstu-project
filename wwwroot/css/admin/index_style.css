@@ -4,6 +4,12 @@
 
     justify-content: space-around;
     margin: 0 auto;
+    padding-top: 15px;
+    padding-bottom: 25px;
+}
+
+.admin-page-container {
+    font-weight: 200;
 }
 
 .lab-list-container {
@@ -21,8 +27,7 @@
 
 .lab-list-container .lab-item-box {
     display: flex;
-    background-color: #fbfbfb;
-    width: 100%;
+    background-color: #fbfbfb; 
     height: 25px;
 
     border: 1px solid black;
@@ -37,6 +42,21 @@
     padding: 0;
 }
 
+.lab-list-container a {
+    color: black;
+    text-decoration: none;
+}
+  
+.lab-list-container .lab-item-box:hover {
+    cursor: pointer;
+    filter: brightness(95%);
+}
+  
+.lab-list-container .lab-item-box:active {
+    cursor: pointer;
+    filter: brightness(90%);
+}
+
 .device-history-container {
     display: flex;
     width: 55%;
@@ -47,6 +67,7 @@
 
 .device-history-container .device-history-table-container {
     max-height: 300px;
+    margin-bottom: 20px;
     overflow: auto;
 }
 
@@ -57,47 +78,10 @@
     margin: 0;
 }
 
-.device-history-container table,
-th,
-td {
-    border: 1px solid black;
-    border-collapse: collapse; 
-}
-
-.device-history-container th {
-    position: sticky;
-    top: 0;
-}
-
-.device-history-container th,
-td {
-    padding: 4px 10px;
-    text-align: center;
-}
-
-.device-history-container th {
-    background-color: #64bdf8;
-}
-
-.device-history-container td {
-    max-width: 150px;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-}
-
-.device-history-container .device-history-table tr {
-    background-color: #fbfbfb;
-}
-
-.device-history-container .device-history-table tr:nth-child(even) {
-    background-color: #e5e5e5;
-}
-
 .device-history-container .device-history-option-container {
     /* display: flex;  */
     margin-top: 20px;
-}
+} 
 
 @media (max-width: 1200px) {
 }
@@ -121,21 +105,8 @@ td {
     }
 
     .device-history-container {
-        display: flex;
-        /* background-color: lightblue; */
+        display: flex; 
         width: 80%;
-    }
-  
-    .device-history-container th,
-    td {
-        padding: 2px 2px;
-    }
-
-    .device-history-container td {
-        max-width: 50px;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        overflow: hidden;
     }
 }
 

@@ -19,13 +19,15 @@ namespace soft_stu_project.Controllers
         }
 
         public IActionResult Index()
-        { 
+        {
+            /// get lab lists here.
             IList<LabListModel> labLists = new List<LabListModel>();
             for (int i = 0; i < 5; i++)
             {
                 labLists.Add(new LabListModel() { id = i + 1, name = "Lab_" + (i + 1), current_tool = i, total_tool = 5 });
-            } 
+            }
 
+            /// get item transaction log here.
             IList<LogModel> logLists = new List<LogModel>();
             for (int i = 0; i < 10; i++)
             {
@@ -45,6 +47,21 @@ namespace soft_stu_project.Controllers
 
         public IActionResult Blacklist()
         {
+            /// get item transaction log here.
+            IList<LogModel> logLists = new List<LogModel>();
+            for (int i = 0; i < 20; i++)
+            {
+                logLists.Add(new LogModel() { id = i, item_id = (i + 1), user_name = "Me " + (i + 1), transaction_type = i % 2, created = DateTime.Now });
+            }
+
+            /// get all borrowed items list.
+            IList<LogModel> blacklistLists = new List<LogModel>(
+                logLists.Where(log => log.transaction_type == 0).ToList()
+            );
+
+            ViewData["LogLists"] = logLists;
+            ViewData["BlacklistLists"] = blacklistLists;
+
             return View();
         }
 

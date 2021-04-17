@@ -1,38 +1,21 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-    <meta charset='utf-8'>
-    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
-    <link href='https://fonts.googleapis.com/css?family=Itim' rel='stylesheet'>
-</head>
-
-<body>
-    <div class="container">
-        <div class="login">
-            <div class="logo-lab">
-                <img class="logo-pic" src="dog.jpg" alt="dog">
-                <div class="logo-text">
-                    <p class="font-header">Double Lab</p>
-                </div>
+@{
+    ViewData["Title"] = "Login";
+}
+<div class="container">
+    <div class="login">
+        <div class="logo-lab">
+            <img class="logo-pic" src="dog.jpg" alt="dog">
+            <div class="logo-text">
+                <p class="font-header">Double Lab</p>
             </div>
-            <div class="login-input">
-                <form class="input" action="">
-                    <input class="input" id="username" type="text" placeholder="username">
-                    <input class="input" id="password" type="password" placeholder="password">
-                </form>
-                <button class="login-btn" id="login" onclick="myFunction()">Log in</button>
-            </div>
-
         </div>
-    </div>
-</body>
-<script>
-    function myFunction() {
-        console.log('Login already');
-    }
-</script>
+        <div class="login-input">
+            <form class="input" action="">
+                <input class="input" id="username" type="text" placeholder="username">
+                <input class="input" id="password" type="password" placeholder="password">
+            </form>
+            <button class="login-btn" id="login" onclick="myFunction()">Log in</button>
+        </div>
 
-</html>
+    </div>
+</div>

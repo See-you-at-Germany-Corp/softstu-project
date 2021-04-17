@@ -1,78 +1,79 @@
 .container {
-    border: 3px solid #64BDF8;
-    background-color: #FBFBFB;
-    margin: 0 auto;
-    width: 50%;
-    display: block;
+  border: 3px solid #64bdf8;
+  background-color: #fbfbfb;
+  margin: 0 auto;
+  width: 50%;
+  display: block;
 }
 
 .logo-lab {
-    margin: 0 auto;
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
+  margin: 0 auto;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
 }
 
 .logo-pic {
-    width: 50px;
-    height: 50px;
-    display: flex;
-    margin-right: 5%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  margin-right: 5%;
 }
 
 .logo-text {
-    line-height: 50px;
-    display: flex;
+  line-height: 50px;
+  display: flex;
 }
 
 .font-header {
-    font-size: 16px;
-    font-family: 'Itim';
+  font-size: 16px;
+  font-family: "Itim";
 }
 .login {
-    border: 3px solid #64BDF8;
-    background-color: #FBFBFB;
-    margin: 0 auto;
-    width: 50%;
+  border: 3px solid pink;
+  background-color: #fbfbfb;
+  margin: 0 auto;
+  width: 250px; /* or whatever width you want. */
+  max-width: 250px; /* or whatever width you want. */
+  /* display: inline-block; */
 }
 
 .login-input {
-    margin: 0 auto;
-    width: 90%;
+  margin: 0 auto;
+  width: 90%;
 }
 
 .input {
-    width: 100%;
-    padding: 5px 10px 5px 10px;
-    margin: 5px auto;
-    display: inline-block;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-    font-size: 16px;
-    font-family: 'Itim';
+  width: 100%;
+  padding: 5px 10px 5px 10px;
+  margin: 5px auto;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 16px;
+  font-family: "Itim";
 }
 
 #username {
-    background-color: #f8f4f4;
+  background-color: #f8f4f4;
 }
 
 #password {
-    background-color: #f8f4f4;
+  background-color: #f8f4f4;
 }
 
 .login-btn {
-    width: 100%;
-    background-color: #64BDF8;
-    color: white;
-    padding: 14px 20px;
-    margin: 8px 0;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    max-width: 100%;
-    height: auto;
-
+  width: 100%;
+  background-color: #64bdf8;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  max-width: 100%;
+  height: auto;
 }

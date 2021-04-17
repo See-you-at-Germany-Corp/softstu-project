@@ -1,0 +1,111 @@
+.lab-container {
+    border: 3px solid #64BDF8;
+}
+
+.lab-in-container {
+    display: flex;
+    border: 5px solid red;
+    margin: 0 auto;
+    width: 50%;
+    flex-direction: row;
+}
+
+.lab-pic {
+    display: flex;
+    height:auto;
+    border: 5px solid green;
+}
+
+#picture1 {
+    max-height:300px;
+    max-width:300px;
+    height:auto;
+    display: flex;
+}
+
+.lab-content {
+    display: flex;
+    border: 5px solid black;
+    width: 100%;
+    flex-direction: column;
+
+}
+
+.lab-header-container {
+    border: 5px solid orange;
+    margin-left: 30px;
+    display: flex;
+    flex-direction: column;
+}
+
+.lab-name {
+    display: flex;
+}
+
+.topic-content {
+    display: flex;
+    margin-top: -30px;
+}
+
+.lab-information {
+    display: flex;
+    flex-direction: row;
+    border: 5px solid red;
+    width: 100%;
+}
+
+.font-lab-detail {
+    display: flex;
+    border: 5px solid magenta;
+    width: 50%;
+}
+
+.form-text {
+    display: flex;
+    border: 5px solid yellow;
+    width: 100%;
+    font-family: 'Itim';
+}
+.list-lab-left {
+    border: 5px solid yellow;
+}
+.vertical-line {
+    /* margin-left: 20px; */
+    border-left: 6px solid green;
+    height: 80px;
+    margin: 0 auto;
+}
+
+.list-lab-right {
+    border: 5px solid yellow;
+}
+
+.lab-name {
+    padding: 0px 0px 0px 0px;
+}
+
+.font-header1 {
+    font-size: 22px;
+    font-family: 'Itim';
+}
+
+.font-header2 {
+    font-size: 16px;
+    font-family: 'Itim';
+}
+
+.btn-container {
+    display: flex;
+    width: 50%;
+    border: 5px solid blueviolet;
+    justify-content: flex-end;
+    align-items: flex-end;
+    
+}
+
+.btn-more-inform {
+    width: 100px;
+    height: 40px;
+    background-color: #64BDF8;
+    font-family: 'Itim';
+}

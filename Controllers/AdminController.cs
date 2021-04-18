@@ -5,9 +5,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using soft_stu_project.Models;
+using softstu_project.Models; 
 
-namespace soft_stu_project.Controllers
+namespace softstu_project.Controllers
 {
     public class AdminController : Controller
     {

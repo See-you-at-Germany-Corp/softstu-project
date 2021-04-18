@@ -9,7 +9,7 @@ namespace softstu_project.Models
         [Key]
         public int uuid { get; set; }
         [Required]
-        
+         
         public int laboratory_id { get; set; }
         [Required]
 
@@ -21,12 +21,11 @@ namespace softstu_project.Models
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "0:{yyyy-MM-dd HH:mm:ss}", ApplyFormatInEditMode = true)]
 
-
         public DateTime updated { get; set; }
         /////////////////////////////////////////////////////////////////////////
 
-        public virtual Laboratory laboratory { get; set; }
+        // public virtual Laboratory laboratory { get; set; }
 
-        public virtual Item item { get; set; }
+        // public virtual Item item { get; set; }
     }
 }

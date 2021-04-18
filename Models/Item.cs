@@ -24,6 +24,6 @@ namespace softstu_project.Models
         public DateTime updated { get; set; }
         /////////////////////////////////////////////////////////////////////////
 
-        public virtual Laboratory laboratory { get; set; }
+        // public virtual Laboratory laboratory { get; set; }
     }
 }

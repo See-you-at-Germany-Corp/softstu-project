@@ -1,18 +1,17 @@
 using System;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-using ConsoleApp.PostgreSQL;
 using softstu_project.Models;
-using Npgsql;
 
 namespace ConsoleApp.PostgreSQL
 {
-    public class LabDatabase : Controller {
+    public class LabDatabase
+    {
         public LabDatabase() { }
 
-        public static async Task<List<Laboratory>> GetAllLab() {
+        public static async Task<List<Laboratory>> GetAllLab()
+        {
             using (var db = new SoftwareStudioContext())
             {
                 var lab = await db.laboratories.FromSqlRaw("SELECT * FROM laboratories").ToListAsync();
@@ -20,13 +19,34 @@ namespace ConsoleApp.PostgreSQL
                 return lab;
             }
         }
-        public static Laboratory GetLabByID(int labID) {
+        public static Laboratory GetLabByID(int labID)
+        {
             using (var db = new SoftwareStudioContext())
             {
                 var lab = db.laboratories.Find(labID);
 
                 return lab;
             }
+        }
+
+        public async static Task<IList<LabListModel>> GetLabList()
+        {
+            IList<LabListModel> labLists = new List<LabListModel>();
+
+            using (var db = new SoftwareStudioContext())
+            {
+                var labs = await GetAllLab();
+                var allItems = await LabItemDatabase.GetAllItem();
+                var currentItems = await LabItemDatabase.GetCurrentItem();
+
+                for (int i = 0; i < 5; i++)
+                {
+                    Laboratory lab = labs[i];
+                    labLists.Add(new LabListModel() { id = lab.uuid, name = lab.name, current_tool = currentItems[i], total_tool = allItems[i] });
+                }
+            }
+
+            return labLists;
         }
     }
 }

@@ -21,11 +21,11 @@ namespace softstu_project.Models
         [DisplayFormat(DataFormatString = "0:{yyyy-MM-dd HH:mm:ss}", ApplyFormatInEditMode = true)]
         
         public DateTime updated { get; set; }
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "0:{yyyy-MM-dd HH:mm:ss}", ApplyFormatInEditMode = true)]
+        // [DataType(DataType.Date)]
+        // [DisplayFormat(DataFormatString = "0:{yyyy-MM-dd HH:mm:ss}", ApplyFormatInEditMode = true)]
         ///////////////////////////////////////////////////////////////////////
 
-        public virtual ICollection<Laboratory_item> laboratory_Items { get; set; }
+        // public virtual ICollection<Laboratory_item> laboratory_Items { get; set; }
 
         public Laboratory() {
             

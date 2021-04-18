@@ -39,4 +39,27 @@ namespace WebApi.Controllers
             return LabDatabase.GetLabByID(labID);
         }
     }
+
+    [Route("api/lab_item")]
+    public class LabItem : Controller
+    {
+        public LabItem() { }
+
+        [HttpGet("")]
+        public ActionResult<IEnumerable<string>> Gets()
+        {
+            return new string[] { "value1", "value2" };
+        }
+
+        [HttpGet("{type}/{labID}")]
+        public async Task<ActionResult<List<Laboratory_item>>> Gets(string type, int labID)
+        {
+            if (type == "all") 
+                return await LabItemDatabase.GetAllItemByLabID(labID);
+            else if (type == "current") 
+                return await LabItemDatabase.GetCurrentItemByLabID(labID);
+            else 
+                return null;
+        }  
+    }
 }

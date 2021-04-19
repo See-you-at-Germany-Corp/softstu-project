@@ -36,13 +36,12 @@ namespace ConsoleApp.PostgreSQL
             using (var db = new SoftwareStudioContext())
             {
                 var labs = await GetAllLab();
-                var allItems = await LabItemDatabase.GetAllItem();
-                var currentItems = await LabItemDatabase.GetCurrentItem();
+                var allItems = await LabItemDatabase.GetAllItem(); 
 
                 for (int i = 0; i < 5; i++)
                 {
                     Laboratory lab = labs[i];
-                    labLists.Add(new LabListModel() { id = lab.uuid, name = lab.name, current_tool = currentItems[i], total_tool = allItems[i] });
+                    labLists.Add(new LabListModel() { id = lab.uuid, name = lab.name, total_tool = allItems[i] });
                 }
             }
 

@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace softstu_project.Models
 {
-    public enum Role
+    public enum User_role
     {
         user, admin, super_admin
     }
@@ -15,9 +15,8 @@ namespace softstu_project.Models
         [StringLength(50, MinimumLength = 1)]
         [Required]
  
-        public string role { get; set; }
-        [Required]
-        [StringLength(20, MinimumLength = 8)]
+        public User_role role_id { get; set; }
+        [Required] 
 
         public string username { get; set; }
         [Required]
@@ -26,6 +25,16 @@ namespace softstu_project.Models
         public string password { get; set; }
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "0:{yyyy-MM-dd HH:mm:ss}", ApplyFormatInEditMode = true)]
+
+        public string fname { get; set; }
+
+        public string lname { get; set; }
+        
+        public int student_id { get; set; }
+
+        public string faculty { get; set; }
+
+        public string department { get; set; }
 
         public string email { get; set; }
 

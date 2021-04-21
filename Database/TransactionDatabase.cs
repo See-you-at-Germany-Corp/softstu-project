@@ -10,35 +10,27 @@ namespace ConsoleApp.PostgreSQL
     {
         public TransactionDatabase() { }
 
-        public static void AddTransaction(Transaction transaction)
-        {
-            var db = new SoftwareStudioContext();
-
-            db.transactions.Add(transaction);
-            db.SaveChanges();
-        }
-
-        public static async Task<List<Transaction>> GetAllTransaction()
+        public static async Task<List<Transaction>> GetAll()
         {
             var db = new SoftwareStudioContext();
 
             string queryString = $"SELECT * FROM transactions";
-            var transactions = await db.transactions.FromSqlRaw(queryString).ToListAsync();
+            List<Transaction> transactions = await db.transactions.FromSqlRaw(queryString).ToListAsync();
 
             return transactions;
         }
 
-        public static async Task<List<Transaction>> GetTransactionByDate(DateTime date)
+        public static async Task<List<Transaction>> GetByDate(DateTime date)
         {
             var db = new SoftwareStudioContext();
 
             string queryString = $"SELECT * FROM transactions WHERE book_date = '{date}'";
-            var transactions = await db.transactions.FromSqlRaw(queryString).ToListAsync();
+            List<Transaction> transactions = await db.transactions.FromSqlRaw(queryString).ToListAsync();
 
             return transactions;
         }
 
-        public static async Task<List<Transaction>> GetTransactionByLabID(int labID)
+        public static async Task<List<Transaction>> GetByLabID(int labID)
         {
             var db = new SoftwareStudioContext();
 
@@ -53,12 +45,12 @@ namespace ConsoleApp.PostgreSQL
                 };
             var reqString = db.ListToString(reqList);
             string queryString = $"SELECT {reqString} FROM transactions LEFT JOIN laboratory_items ON laboratory_id = {labID} WHERE transactions.item_id = laboratory_items.item_id; ";
-            var transactions = await db.transactions.FromSqlRaw(queryString).ToListAsync();
+            List<Transaction> transactions = await db.transactions.FromSqlRaw(queryString).ToListAsync();
 
             return transactions;
         }
 
-        public static async Task<List<Transaction>> GetTransactionByLabIDAndDate(int labID, DateTime date)
+        public static async Task<List<Transaction>> GetByLabIDAndDate(int labID, DateTime date)
         {
             var db = new SoftwareStudioContext();
 
@@ -73,19 +65,54 @@ namespace ConsoleApp.PostgreSQL
                 };
             var reqString = db.ListToString(reqList);
             string queryString = $"SELECT {reqString} FROM transactions LEFT JOIN laboratory_items ON laboratory_id = {labID} WHERE transactions.item_id = laboratory_items.item_id AND book_date = '{date}'; ";
-            var transactions = await db.transactions.FromSqlRaw(queryString).ToListAsync();
+            List<Transaction> transactions = await db.transactions.FromSqlRaw(queryString).ToListAsync();
 
             return transactions;
         }
 
-        public static async Task<List<Transaction>> GetTransactionByUserID(int userID)
+        public static async Task<List<Transaction>> GetByUserID(int userID)
         {
             var db = new SoftwareStudioContext();
 
             string queryString = $"SELECT * FROM transactions WHERE user_id = {userID}";
-            var transactions = await db.transactions.FromSqlRaw(queryString).ToListAsync();
+            List<Transaction> transactions = await db.transactions.FromSqlRaw(queryString).ToListAsync();
 
             return transactions;
         }
+
+        public static void AddTransaction(Transaction transaction)
+        {
+            var db = new SoftwareStudioContext();
+
+            db.transactions.Add(transaction);
+            db.logs.Add(new Log(transaction));
+            db.SaveChanges();
+        }
+
+        public static void Delete(Transaction transaction)
+        {
+            var db = new SoftwareStudioContext();
+
+            if (transaction != null)
+            {
+                db.transactions.Remove(transaction);
+                transaction.transaction_type = (int)Transaction_type.give;
+                db.logs.Add(new Log(transaction));
+                db.SaveChanges();
+            }
+        }
     }
 }
+
+/*
+    * unittest
+    new Transaction(11, 1, 0, 1, DateTime.Now)
+
+    TransactionDatabase.AddTransaction(new Transaction(6, 1, 0, 1, DateTime.Now));
+    TransactionDatabase.AddTransaction(new Transaction(6, 4, 0, 1, DateTime.Now.AddDays(1)));
+    TransactionDatabase.AddTransaction(new Transaction(6, 5, 0, 1, DateTime.Now.AddDays(5)));
+    TransactionDatabase.AddTransaction(new Transaction(6, 13, 0, 1, DateTime.Now.AddDays(2)));
+    TransactionDatabase.AddTransaction(new Transaction(6, 19, 0, 1, DateTime.Now.AddDays(8)));
+    TransactionDatabase.AddTransaction(new Transaction(6, 25, 0, 1, DateTime.Now.AddDays(4)));
+    TransactionDatabase.AddTransaction(new Transaction(6, 1, 0, 1, DateTime.Now.AddDays(1)));
+*/

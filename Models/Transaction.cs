@@ -42,14 +42,14 @@ namespace softstu_project.Models
 
         }
 
-        public Transaction(int user_id, int item_id, int transaction_type, int time_id, DateTime created, DateTime book_date)
+        public Transaction(int user_id, int item_id, int transaction_type, int time_id, DateTime book_date)
         {
             this.user_id = user_id;
             this.item_id = item_id;
             this.transaction_type = transaction_type;
             this.time_id = time_id;
-            this.created = created;
             this.book_date = book_date;
+            this.created = DateTime.Now;
         }
 
         public string ToColumnString()

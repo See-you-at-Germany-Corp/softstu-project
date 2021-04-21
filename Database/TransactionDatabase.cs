@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using softstu_project.Models;
-using Npgsql;
 
 namespace ConsoleApp.PostgreSQL
 {
@@ -13,40 +12,37 @@ namespace ConsoleApp.PostgreSQL
 
         public static void AddTransaction(Transaction transaction)
         {
-            using (var db = new SoftwareStudioContext())
-            {
-                db.transactions.Add(transaction);
-                db.SaveChanges();
-            }
+            var db = new SoftwareStudioContext();
+
+            db.transactions.Add(transaction);
+            db.SaveChanges();
         }
 
         public static async Task<List<Transaction>> GetAllTransaction()
         {
-            using (var db = new SoftwareStudioContext())
-            {
-                string queryString = $"SELECT * FROM transactions";
-                var transactions = await db.transactions.FromSqlRaw(queryString).ToListAsync();
+            var db = new SoftwareStudioContext();
 
-                return transactions;
-            }
+            string queryString = $"SELECT * FROM transactions";
+            var transactions = await db.transactions.FromSqlRaw(queryString).ToListAsync();
+
+            return transactions;
         }
 
         public static async Task<List<Transaction>> GetTransactionByDate(DateTime date)
         {
-            using (var db = new SoftwareStudioContext())
-            {
-                string queryString = $"SELECT * FROM transactions WHERE book_date = '{date}'";
-                var transactions = await db.transactions.FromSqlRaw(queryString).ToListAsync();
+            var db = new SoftwareStudioContext();
 
-                return transactions;
-            }
+            string queryString = $"SELECT * FROM transactions WHERE book_date = '{date}'";
+            var transactions = await db.transactions.FromSqlRaw(queryString).ToListAsync();
+
+            return transactions;
         }
 
         public static async Task<List<Transaction>> GetTransactionByLabID(int labID)
         {
-            using (var db = new SoftwareStudioContext())
-            {
-                List<string> reqList = new List<string>{
+            var db = new SoftwareStudioContext();
+
+            List<string> reqList = new List<string>{
                     "transactions.uuid",
                     "book_date",
                     "transactions.created",
@@ -54,20 +50,19 @@ namespace ConsoleApp.PostgreSQL
                     "time_id",
                     "transaction_type",
                     "transactions.user_id"
-                };  
-                var reqString = db.ListToString(reqList);
-                string queryString = $"SELECT {reqString} FROM transactions LEFT JOIN laboratory_items ON laboratory_id = {labID} WHERE transactions.item_id = laboratory_items.item_id; ";
-                var transactions = await db.transactions.FromSqlRaw(queryString).ToListAsync();
+                };
+            var reqString = db.ListToString(reqList);
+            string queryString = $"SELECT {reqString} FROM transactions LEFT JOIN laboratory_items ON laboratory_id = {labID} WHERE transactions.item_id = laboratory_items.item_id; ";
+            var transactions = await db.transactions.FromSqlRaw(queryString).ToListAsync();
 
-                return transactions;
-            }
+            return transactions;
         }
 
         public static async Task<List<Transaction>> GetTransactionByLabIDAndDate(int labID, DateTime date)
         {
-            using (var db = new SoftwareStudioContext())
-            {
-                List<string> reqList = new List<string>{
+            var db = new SoftwareStudioContext();
+
+            List<string> reqList = new List<string>{
                     "transactions.uuid",
                     "book_date",
                     "transactions.created",
@@ -75,24 +70,22 @@ namespace ConsoleApp.PostgreSQL
                     "time_id",
                     "transaction_type",
                     "transactions.user_id"
-                };  
-                var reqString = db.ListToString(reqList);
-                string queryString = $"SELECT {reqString} FROM transactions LEFT JOIN laboratory_items ON laboratory_id = {labID} WHERE transactions.item_id = laboratory_items.item_id AND book_date = '{date}'; ";
-                var transactions = await db.transactions.FromSqlRaw(queryString).ToListAsync();
+                };
+            var reqString = db.ListToString(reqList);
+            string queryString = $"SELECT {reqString} FROM transactions LEFT JOIN laboratory_items ON laboratory_id = {labID} WHERE transactions.item_id = laboratory_items.item_id AND book_date = '{date}'; ";
+            var transactions = await db.transactions.FromSqlRaw(queryString).ToListAsync();
 
-                return transactions;
-            }
+            return transactions;
         }
 
         public static async Task<List<Transaction>> GetTransactionByUserID(int userID)
         {
-            using (var db = new SoftwareStudioContext())
-            {  
-                string queryString = $"SELECT * FROM transactions WHERE user_id = {userID}";
-                var transactions = await db.transactions.FromSqlRaw(queryString).ToListAsync();
+            var db = new SoftwareStudioContext();
 
-                return transactions;
-            }
+            string queryString = $"SELECT * FROM transactions WHERE user_id = {userID}";
+            var transactions = await db.transactions.FromSqlRaw(queryString).ToListAsync();
+
+            return transactions;
         }
     }
 }

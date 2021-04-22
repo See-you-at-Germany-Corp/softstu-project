@@ -5,9 +5,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using soft_stu_project.Models;
+using softstu_project.Models; 
+using ConsoleApp.PostgreSQL;
 
-namespace soft_stu_project.Controllers
+namespace softstu_project.Controllers
 {
     public class AdminController : Controller
     {
@@ -18,14 +19,10 @@ namespace soft_stu_project.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            /// get lab lists here.
-            IList<LabListModel> labLists = new List<LabListModel>();
-            for (int i = 0; i < 5; i++)
-            {
-                labLists.Add(new LabListModel() { id = i + 1, name = "Lab_" + (i + 1), current_tool = i, total_tool = 5 });
-            }
+            /// get lab lists here. 
+            IList<LabListModel> labLists = await LabDatabase.GetListAsync();
 
             /// get item transaction log here.
             IList<LogModel> logLists = new List<LogModel>();
@@ -62,6 +59,11 @@ namespace soft_stu_project.Controllers
             ViewData["LogLists"] = logLists;
             ViewData["BlacklistLists"] = blacklistLists;
 
+            return View();
+        }
+
+        public IActionResult Detail()
+        {
             return View();
         }
 

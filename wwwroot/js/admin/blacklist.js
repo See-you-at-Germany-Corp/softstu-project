@@ -25,8 +25,10 @@ function insertToHistoryTable(
     tr = document.createElement("tr")
 ) {
     const table = document.querySelector(`#${tablename}`);
+    const tbody = table.getElementsByTagName("tbody")[0];
+    
     tr.getElementsByTagName("td")[3].innerHTML = "คืน";
 
-    // table.appendChild(tr);
-    table.prepend(tr);
+    tbody.prepend(tr);
+    // table.prepend(tr);
 }

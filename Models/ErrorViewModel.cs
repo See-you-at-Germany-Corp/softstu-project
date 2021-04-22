@@ -1,6 +1,6 @@
 using System;
 
-namespace soft_stu_project.Models
+namespace softstu_project.Models
 {
     public class ErrorViewModel
     {

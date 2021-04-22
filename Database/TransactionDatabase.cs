@@ -36,12 +36,12 @@ namespace ConsoleApp.PostgreSQL
 
             List<string> reqList = new List<string>{
                     "transactions.uuid",
-                    "book_date",
-                    "transactions.created",
                     "transactions.item_id",
+                    "transactions.user_id",
                     "time_id",
+                    "book_date",
                     "transaction_type",
-                    "transactions.user_id"
+                    "transactions.created",
                 };
             var reqString = db.ListToString(reqList);
             string queryString = $"SELECT {reqString} FROM transactions LEFT JOIN laboratory_items ON laboratory_id = {labID} WHERE transactions.item_id = laboratory_items.item_id; ";

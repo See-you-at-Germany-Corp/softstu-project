@@ -80,7 +80,7 @@ namespace ConsoleApp.PostgreSQL
             return transactions;
         }
 
-        public static void AddTransaction(Transaction transaction)
+        public static void Add(Transaction transaction)
         {
             var db = new SoftwareStudioContext();
 

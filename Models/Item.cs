@@ -9,13 +9,10 @@ namespace softstu_project.Models
         [Key]
         public int uuid { get; set; }
         [Required]
-        [StringLength(50, MinimumLength = 1)]
 
         public string name { get; set; }
   
         public DateTime created { get; set; }
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "0:{yyyy-MM-dd HH:mm:ss}", ApplyFormatInEditMode = true)]
 
         public DateTime updated { get; set; } 
 

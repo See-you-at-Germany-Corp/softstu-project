@@ -72,5 +72,36 @@ namespace ConsoleApp.PostgreSQL
 
             return items;
         }
+
+        public static int Add(Item item)
+        {
+            var db = new SoftwareStudioContext();
+
+            if (item != null)
+            {
+                var change = db.items.Add(item);
+                db.SaveChanges();
+
+                return change.Entity.uuid;
+            }
+            else return -1;
+        }
+
+        public static void Remove(Item item)
+        {
+            var db = new SoftwareStudioContext();
+
+            if (item != null)
+            {
+                db.Remove(item);
+                db.SaveChanges(); 
+            } 
+        }
     }
 }
+
+/*
+    * unittest
+    int itemID = ItemDatabase.Add(new Item("keyboard_7"));
+    LabItemDatabase.AddItem(1, itemID);
+*/

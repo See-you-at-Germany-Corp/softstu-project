@@ -19,9 +19,9 @@ namespace ConsoleApp.PostgreSQL
             return items;
         }
 
-        public static async Task<IList<int>> GetAllQuantityAsync()
+        public static async Task<List<int>> GetAllQuantityAsync()
         {
-            IList<int> allItems = new List<int>();
+            List<int> allItems = new List<int>();
             var db = new SoftwareStudioContext();
             string queryString = $"SELECT * FROM laboratory_items";
             List<Laboratory_item> items = await db.laboratory_items.FromSqlRaw(queryString).ToListAsync();
@@ -54,25 +54,97 @@ namespace ConsoleApp.PostgreSQL
             return items;
         }
 
-        public static void AddItemToLab(int labID, int itemID)
+        public static async Task<List<List<int>>> GetCurrentQuantityByDateAsync()
         {
             var db = new SoftwareStudioContext();
-            Laboratory_item item = new Laboratory_item(labID, itemID);
+ 
+            List<int> allItemsAM = await GetAllQuantityAsync();
+            List<int> allItemsPM = await GetAllQuantityAsync();
 
-            if (item != null) 
+            for (int i = 0; i < 5; i++)
             {
-                db.Add(item);
+                List<Transaction> transactions = await TransactionDatabase.GetByLabIDAndDateAsync(i + 1, DateTime.Now);
+
+                for (int j = 0; j < transactions.Count; j++)
+                {
+                    switch (transactions[j].time_id)
+                    {
+                        case (int)Time_id_type.none:
+                            allItemsAM[i]++;
+                            allItemsPM[i]++;
+                            break;
+                        case (int)Time_id_type.am:
+                            allItemsAM[i]--;
+                            break;
+                        case (int)Time_id_type.pm:
+                            allItemsPM[i]++;
+                            break;
+                        case (int)Time_id_type.day:
+                            allItemsAM[i]--;
+                            allItemsPM[i]--;
+                            break;
+                    }
+                }
+            }
+
+            return new List<List<int>> { allItemsAM, allItemsPM };
+        }
+
+        public static async Task<List<List<int>>> GetCurrentQuantityByDateAsync(DateTime date)
+        {
+            var db = new SoftwareStudioContext();
+ 
+            List<int> allItemsAM = await GetAllQuantityAsync();
+            List<int> allItemsPM = await GetAllQuantityAsync();
+
+            for (int i = 0; i < 5; i++)
+            {
+                List<Transaction> transactions = await TransactionDatabase.GetByLabIDAndDateAsync(i + 1, date);
+
+                for (int j = 0; j < transactions.Count; j++)
+                {
+                    switch (transactions[j].time_id)
+                    {
+                        case (int)Time_id_type.none:
+                            allItemsAM[i]++;
+                            allItemsPM[i]++;
+                            break;
+                        case (int)Time_id_type.am:
+                            allItemsAM[i]--;
+                            break;
+                        case (int)Time_id_type.pm:
+                            allItemsPM[i]++;
+                            break;
+                        case (int)Time_id_type.day:
+                            allItemsAM[i]--;
+                            allItemsPM[i]--;
+                            break;
+                    }
+                }
+            }
+
+            return new List<List<int>> { allItemsAM, allItemsPM };
+        }
+
+        public static void AddItem(int labID, int itemID)
+        {
+            var db = new SoftwareStudioContext();
+            Laboratory_item labItem = new Laboratory_item(labID, itemID);
+
+            if (labItem != null)
+            {
+                db.laboratory_items.Add(labItem);
                 db.SaveChanges();
             }
         }
 
-        public static void RemoveItemFromLab(Laboratory_item item)
+        public static void RemoveItem(Laboratory_item labItem)
         {
             var db = new SoftwareStudioContext();
 
-            if (item != null)
+            if (labItem != null)
             {
-                db.Remove(item);
+                db.Remove(labItem);
                 db.SaveChanges();
             }
         }

@@ -10,7 +10,7 @@ namespace ConsoleApp.PostgreSQL
     {
         public LabItemDatabase() { }
 
-        public static async Task<IList<Laboratory_item>> GetAll()
+        public static async Task<IList<Laboratory_item>> GetAllAsync()
         {
             var db = new SoftwareStudioContext();
             string queryString = $"SELECT * FROM laboratory_items";
@@ -19,7 +19,7 @@ namespace ConsoleApp.PostgreSQL
             return items;
         }
 
-        public static async Task<IList<int>> GetAllQuantity()
+        public static async Task<IList<int>> GetAllQuantityAsync()
         {
             IList<int> allItems = new List<int>();
             var db = new SoftwareStudioContext();
@@ -45,7 +45,7 @@ namespace ConsoleApp.PostgreSQL
             return allItems;
         }
 
-        public static async Task<List<Laboratory_item>> GetAllByLabID(int labID)
+        public static async Task<List<Laboratory_item>> GetAllByLabIDAsync(int labID)
         {
             var db = new SoftwareStudioContext();
             string queryString = $"SELECT * FROM laboratory_items WHERE laboratory_id = {labID}";

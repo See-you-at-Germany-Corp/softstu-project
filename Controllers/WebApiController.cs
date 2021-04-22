@@ -31,7 +31,7 @@ namespace WebApi.Controllers
         [HttpGet("")]
         public async Task<ActionResult<List<Laboratory>>> Gets()
         {
-            return await LabDatabase.GetAll();
+            return await LabDatabase.GetAllAsync();
         }
 
         [HttpGet("{labID}")]
@@ -49,7 +49,7 @@ namespace WebApi.Controllers
         [HttpGet("{labID}")]
         public async Task<ActionResult<List<Laboratory_item>>> Gets(int labID)
         {
-            return await LabItemDatabase.GetAllByLabID(labID);
+            return await LabItemDatabase.GetAllByLabIDAsync(labID);
         }
     }
 
@@ -61,7 +61,7 @@ namespace WebApi.Controllers
         [HttpGet("")]
         public async Task<ActionResult<List<Transaction>>> Gets()
         {
-            return await TransactionDatabase.GetAll(); 
+            return await TransactionDatabase.GetAllAsync(); 
         }
 
         [HttpPost("")]

@@ -22,7 +22,7 @@ namespace softstu_project.Controllers
         public async Task<IActionResult> Index()
         {
             /// get lab lists here. 
-            IList<LabListModel> labLists = await LabDatabase.GetList();
+            IList<LabListModel> labLists = await LabDatabase.GetListAsync();
 
             /// get item transaction log here.
             IList<LogModel> logLists = new List<LogModel>();

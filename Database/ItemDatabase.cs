@@ -10,7 +10,7 @@ namespace ConsoleApp.PostgreSQL
     {
         public ItemDatabase() { }
 
-        public static async Task<List<Item>> GetAll()
+        public static async Task<List<Item>> GetAllAsync()
         {
             var db = new SoftwareStudioContext();
             string queryString = $"SELECT * FROM items;";
@@ -19,7 +19,7 @@ namespace ConsoleApp.PostgreSQL
             return items;
         }
 
-        public static async Task<List<Item>> GetByID(int itemID)
+        public static async Task<List<Item>> GetByIDAsync(int itemID)
         {
             var db = new SoftwareStudioContext();
             string queryString = $"SELECT * FROM items WHERE uuid = {itemID}";
@@ -28,7 +28,7 @@ namespace ConsoleApp.PostgreSQL
             return items;
         }
 
-        public static async Task<List<ItemDetail>> GetAllDetail()
+        public static async Task<List<ItemDetail>> GetAllDetailAsync()
         {
             var db = new SoftwareStudioContext();
             List<string> reqList = new List<string>{
@@ -43,7 +43,7 @@ namespace ConsoleApp.PostgreSQL
             return items;
         }
 
-        public static async Task<List<ItemDetail>> GetDetailByID(int itemID)
+        public static async Task<List<ItemDetail>> GetDetailByIDAsync(int itemID)
         {
             var db = new SoftwareStudioContext();
             List<string> reqList = new List<string>{
@@ -58,7 +58,7 @@ namespace ConsoleApp.PostgreSQL
             return items;
         }
 
-        public static async Task<List<ItemDetail>> GetAllDetailByLabID(int labID)
+        public static async Task<List<ItemDetail>> GetAllDetailByLabIDAsync(int labID)
         {
             var db = new SoftwareStudioContext();
             List<string> reqList = new List<string>{

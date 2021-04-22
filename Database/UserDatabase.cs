@@ -10,7 +10,7 @@ namespace ConsoleApp.PostgreSQL
     { 
         public UserDatabase() { }
 
-        public static async Task<List<User>> GetByID(int userID)
+        public static async Task<List<User>> GetByIDAsync(int userID)
         {
             using (var db = new SoftwareStudioContext())
             {
@@ -35,7 +35,7 @@ namespace ConsoleApp.PostgreSQL
             return 0;
         }
 
-        public async static Task<int> Login(string username, string password)
+        public async static Task<int> LoginAsync(string username, string password)
         {
             var db = new SoftwareStudioContext();
 

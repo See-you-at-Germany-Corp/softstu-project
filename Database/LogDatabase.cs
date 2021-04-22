@@ -10,7 +10,7 @@ namespace ConsoleApp.PostgreSQL
     {
         public LogDatabase() { }
 
-        public static async Task<List<Log>> GetAll()
+        public static async Task<List<Log>> GetAllAsync()
         {
             var db = new SoftwareStudioContext();
             List<Log> logs = await db.logs.FromSqlRaw("SELECT * FROM logs").ToListAsync();

@@ -10,7 +10,7 @@ namespace ConsoleApp.PostgreSQL
     {
         public TransactionDatabase() { }
 
-        public static async Task<List<Transaction>> GetAll()
+        public static async Task<List<Transaction>> GetAllAsync()
         {
             var db = new SoftwareStudioContext();
 
@@ -20,7 +20,7 @@ namespace ConsoleApp.PostgreSQL
             return transactions;
         }
 
-        public static async Task<List<Transaction>> GetByDate(DateTime date)
+        public static async Task<List<Transaction>> GetByDateAsync(DateTime date)
         {
             var db = new SoftwareStudioContext();
 
@@ -30,7 +30,7 @@ namespace ConsoleApp.PostgreSQL
             return transactions;
         }
 
-        public static async Task<List<Transaction>> GetByLabID(int labID)
+        public static async Task<List<Transaction>> GetByLabIDAsync(int labID)
         {
             var db = new SoftwareStudioContext();
 
@@ -50,7 +50,7 @@ namespace ConsoleApp.PostgreSQL
             return transactions;
         }
 
-        public static async Task<List<Transaction>> GetByLabIDAndDate(int labID, DateTime date)
+        public static async Task<List<Transaction>> GetByLabIDAndDateAsync(int labID, DateTime date)
         {
             var db = new SoftwareStudioContext();
 
@@ -70,7 +70,7 @@ namespace ConsoleApp.PostgreSQL
             return transactions;
         }
 
-        public static async Task<List<Transaction>> GetByUserID(int userID)
+        public static async Task<List<Transaction>> GetByUserIDAsync(int userID)
         {
             var db = new SoftwareStudioContext();
 

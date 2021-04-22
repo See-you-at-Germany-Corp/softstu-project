@@ -10,13 +10,14 @@ namespace ConsoleApp.PostgreSQL
     {
         public LabDatabase() { }
 
-        public static async Task<List<Laboratory>> GetAll()
+        public static async Task<List<Laboratory>> GetAllAsync()
         {
             var db = new SoftwareStudioContext();
             List<Laboratory> labs = await db.laboratories.FromSqlRaw("SELECT * FROM laboratories").ToListAsync();
 
             return labs;
         }
+
         public static Laboratory GetByID(int labID)
         {
             var db = new SoftwareStudioContext();
@@ -25,13 +26,13 @@ namespace ConsoleApp.PostgreSQL
             return lab;
         }
 
-        public async static Task<IList<LabListModel>> GetList()
+        public async static Task<IList<LabListModel>> GetListAsync()
         {
             IList<LabListModel> labLists = new List<LabListModel>();
 
             var db = new SoftwareStudioContext();
-            List<Laboratory> labs = await GetAll();
-            var allItems = await LabItemDatabase.GetAllQuantity();
+            List<Laboratory> labs = await GetAllAsync();
+            var allItems = await LabItemDatabase.GetAllQuantityAsync();
 
             for (int i = 0; i < 5; i++)
             {

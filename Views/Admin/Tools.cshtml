@@ -1,0 +1,33 @@
+<div class="detail-container">
+    <p>รายการ lab1 : LAB lin plin ta</p>
+    <p>@ViewData["Title"]</p>
+    <table class="detail-table">
+        <thead >
+            <tr>
+                <th>ประเภทอุปกรณ์</th>
+                <th>ชื่ออุปกรณ์</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{int index = 0;}
+            @foreach (var item in ViewData["LabItems"] as List<LabItem>) {
+                <tr>
+                    <td >
+                        @{index++;}
+                        @index
+                    </td>
+                    <td >
+                        @item.title
+                    </td>
+                    
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div id="button-container">
+        <button id="accept">ยืนยัน</button>
+        <button id="cancel">ยกเลิก</button>
+    </div>
+
+</div>

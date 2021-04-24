@@ -32,12 +32,13 @@ namespace ConsoleApp.PostgreSQL
 
             var db = new SoftwareStudioContext();
             List<Laboratory> labs = await GetAllAsync();
-            var allItems = await LabItemDB.GetAllQuantityAsync();
+            List<int> allItems = await LabItemDB.GetAllQuantityAsync();
+            List<List<int>> currentItems = await LabItemDB.GetCurrentQuantityByDateAsync();
 
             for (int i = 0; i < 5; i++)
             {
                 Laboratory lab = labs[i];
-                labLists.Add(new LabListModel() { id = lab.uuid, name = lab.name, total_tool = allItems[i] });
+                labLists.Add(new LabListModel() { id = lab.uuid, name = lab.name, total_tool = allItems[i], current_tool_am = currentItems[0][i], current_tool_pm = currentItems[1][i] });
             }
 
             return labLists;

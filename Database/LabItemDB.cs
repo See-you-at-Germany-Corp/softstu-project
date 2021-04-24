@@ -6,9 +6,9 @@ using softstu_project.Models;
 
 namespace ConsoleApp.PostgreSQL
 {
-    public class LabItemDatabase
+    public class LabItemDB
     {
-        public LabItemDatabase() { }
+        public LabItemDB() { }
 
         public static async Task<IList<Laboratory_item>> GetAllAsync()
         {
@@ -63,7 +63,7 @@ namespace ConsoleApp.PostgreSQL
 
             for (int i = 0; i < 5; i++)
             {
-                List<Transaction> transactions = await TransactionDatabase.GetByLabIDAndDateAsync(i + 1, DateTime.Now);
+                List<Transaction> transactions = await TransactionDB.GetByLabIDAndDateAsync(i + 1, DateTime.Now);
 
                 for (int j = 0; j < transactions.Count; j++)
                 {
@@ -99,7 +99,7 @@ namespace ConsoleApp.PostgreSQL
 
             for (int i = 0; i < 5; i++)
             {
-                List<Transaction> transactions = await TransactionDatabase.GetByLabIDAndDateAsync(i + 1, date);
+                List<Transaction> transactions = await TransactionDB.GetByLabIDAndDateAsync(i + 1, date);
 
                 for (int j = 0; j < transactions.Count; j++)
                 {

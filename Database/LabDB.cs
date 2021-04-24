@@ -6,9 +6,9 @@ using softstu_project.Models;
 
 namespace ConsoleApp.PostgreSQL
 {
-    public class LabDatabase
+    public class LabDB
     {
-        public LabDatabase() { }
+        public LabDB() { }
 
         public static async Task<List<Laboratory>> GetAllAsync()
         {
@@ -32,7 +32,7 @@ namespace ConsoleApp.PostgreSQL
 
             var db = new SoftwareStudioContext();
             List<Laboratory> labs = await GetAllAsync();
-            var allItems = await LabItemDatabase.GetAllQuantityAsync();
+            var allItems = await LabItemDB.GetAllQuantityAsync();
 
             for (int i = 0; i < 5; i++)
             {

@@ -6,9 +6,9 @@ using softstu_project.Models;
 
 namespace ConsoleApp.PostgreSQL
 {
-    public class UserDatabase
+    public class UserDB
     { 
-        public UserDatabase() { }
+        public UserDB() { }
 
         public static async Task<List<User>> GetByIDAsync(int userID)
         {

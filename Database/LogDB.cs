@@ -6,9 +6,9 @@ using softstu_project.Models;
 
 namespace ConsoleApp.PostgreSQL
 {
-    public class LogDatabase
+    public class LogDB
     {
-        public LogDatabase() { }
+        public LogDB() { }
 
         public static async Task<List<Log>> GetAllAsync()
         {

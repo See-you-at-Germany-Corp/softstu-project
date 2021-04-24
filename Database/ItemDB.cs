@@ -6,9 +6,9 @@ using softstu_project.Models;
 
 namespace ConsoleApp.PostgreSQL
 {
-    public class ItemDatabase
+    public class ItemDB
     {
-        public ItemDatabase() { }
+        public ItemDB() { }
 
         public static async Task<List<Item>> GetAllAsync()
         {

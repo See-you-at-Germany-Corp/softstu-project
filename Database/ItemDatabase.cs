@@ -102,6 +102,12 @@ namespace ConsoleApp.PostgreSQL
 
 /*
     * unittest
+    * Add
     int itemID = ItemDatabase.Add(new Item("keyboard_7"));
     LabItemDatabase.AddItem(1, itemID);
-*/
+    
+    * Remove
+    item
+    ItemDatabase.Remove(item);
+    LabItemDatabase.RemoveItem(item.itemID);
+*/ 

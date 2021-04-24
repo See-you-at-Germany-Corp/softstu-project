@@ -138,9 +138,10 @@ namespace ConsoleApp.PostgreSQL
             }
         }
 
-        public static void RemoveItem(Laboratory_item labItem)
+        public static async void RemoveItem(int itemID)
         {
             var db = new SoftwareStudioContext();
+            Laboratory_item labItem = await db.laboratory_items.FirstOrDefaultAsync(labItem => labItem.item_id == itemID);
 
             if (labItem != null)
             {

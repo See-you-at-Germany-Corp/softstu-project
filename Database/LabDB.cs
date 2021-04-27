@@ -26,9 +26,9 @@ namespace ConsoleApp.PostgreSQL
             return lab;
         }
 
-        public async static Task<IList<LabListModel>> GetListAsync()
+        public async static Task<List<LabListModel>> GetListAsync()
         {
-            IList<LabListModel> labLists = new List<LabListModel>();
+            List<LabListModel> labLists = new List<LabListModel>();
 
             var db = new SoftwareStudioContext();
             List<Laboratory> labs = await GetAllAsync();

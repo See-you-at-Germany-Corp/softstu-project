@@ -22,14 +22,11 @@ namespace softstu_project.Controllers
         public async Task<IActionResult> Index()
         {
             /// get lab lists here. 
-            IList<LabListModel> labLists = await LabDB.GetListAsync();
+            List<LabListModel> labLists = await LabDB.GetListAsync();
 
             /// get item transaction log here.
-            IList<LogModel> logLists = new List<LogModel>();
-            for (int i = 0; i < 10; i++)
-            {
-                logLists.Add(new LogModel() { id = i, item_id = (i + 1), user_name = "Me " + (i + 1), transaction_type = 0, created = DateTime.Now });
-            }
+            List<Log> logLists = await LogDB.GetAllAsync(); 
+            logLists.Sort((x, y) => DateTime.Compare(y.created, x.created));
 
             ViewData["LabLists"] = labLists;
             ViewData["LogLists"] = logLists;
@@ -42,24 +39,32 @@ namespace softstu_project.Controllers
             return View();
         }
 
-        public IActionResult Blacklist()
+        public async Task<IActionResult> Blacklist()
         {
             /// get item transaction log here.
-            IList<LogModel> logLists = new List<LogModel>();
-            for (int i = 0; i < 20; i++)
-            {
-                logLists.Add(new LogModel() { id = i, item_id = (i + 1), user_name = "Me " + (i + 1), transaction_type = i % 2, created = DateTime.Now });
-            }
+            List<Log> logLists = await LogDB.GetAllAsync();
+            logLists.Sort((x, y) => DateTime.Compare(y.created, x.created));
 
             /// get all borrowed items list.
-            IList<LogModel> blacklistLists = new List<LogModel>(
-                logLists.Where(log => log.transaction_type == 0).ToList()
-            );
+            List<Transaction> blacklistLists = await TransactionDB.GetAllAsync();
+            blacklistLists.Sort((x, y) => DateTime.Compare(x.book_date, y.book_date));
 
             ViewData["LogLists"] = logLists;
             ViewData["BlacklistLists"] = blacklistLists;
 
             return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> OnDeleteTransaction(int transactionID) 
+        {   
+            if (transactionID > 0)
+            {
+                List<Transaction> transactions = await TransactionDB.GetAsync(transactionID);
+                TransactionDB.Delete(transactions[0]);  
+            }
+
+            return RedirectToAction("Blacklist");
         }
 
         public IActionResult Detail()

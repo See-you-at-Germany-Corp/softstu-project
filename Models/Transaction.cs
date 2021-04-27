@@ -11,7 +11,7 @@ namespace softstu_project.Models
 
     public enum Transaction_type
     {
-        borrow, give
+        borrow, give, cancel
     }
     public class Transaction
     {

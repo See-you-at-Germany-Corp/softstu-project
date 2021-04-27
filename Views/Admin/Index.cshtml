@@ -10,7 +10,7 @@
             @{
                 int labID = 1;
             }
-            @foreach (var lab in ViewData["LabLists"] as IList<LabListModel>)
+            @foreach (var lab in ViewData["LabLists"] as List<LabListModel>)
             {
                 <a href="Admin/Detail?labID=@labID">
                     <div class="lab-item-box">
@@ -44,18 +44,20 @@
         <div class="device-history-table-container">
             <table class="device-history-table" id="device-history-table">
                 <thead>
-                    <th>วัน/เดือน/ปี</th>
+                    <th>วันดำเนินการ</th>
+                    <th>วันที่จอง</th>
                     <th>หมายเลขอุปกรณ์</th>
-                    <th>ชื่อผู้ใช้งาน</th>
+                    <th>รหัสผู้ใช้งาน</th>
                     <th>สถานะ</th>
                 </thead>
                 <tbody>
-                    @foreach (var log in ViewData["LogLists"] as IList<LogModel>)
+                    @foreach (var log in ViewData["LogLists"] as List<Log>)
                     {
                         <tr>
-                            <td>@log.created</td>
+                            <td>@log.created.ToShortDateString()</td>
+                            <td>@log.book_date.ToShortDateString()</td>
                             <td>@log.item_id</td>
-                            <td>@log.user_name</td>
+                            <td>@log.user_id</td>
                             <td>@transactionName[log.transaction_type]</td>
                         </tr>
                     }

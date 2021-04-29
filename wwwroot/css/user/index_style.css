@@ -176,7 +176,7 @@
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1000px) {
   .pf-cont {
     top: 0;
     position: relative;

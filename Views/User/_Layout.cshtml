@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -9,17 +9,21 @@
     @* Google Fonts Setup. *@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link
-        href="https://fonts.googleapis.com/css2?family=Prompt:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-        rel="stylesheet">
-    <link
         href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
         rel="stylesheet">
 
+    @* eiei *@
     <link rel="stylesheet" href="~/css/site.css" />
-    <link rel="stylesheet" href="~/css/admin_index_style.css">
     <link rel="stylesheet" href="~/css/navbar_style.css">
+    <link rel="stylesheet" href="~/css/user/index_style.css">
+
+    @* ADMIN *@
+    <link rel="stylesheet" href="~/css/admin/index_style.css">
+    <link rel="stylesheet" href="~/css/admin/blacklist_style.css">
+    <link rel="stylesheet" href="~/css/table_style.css">
 
     <script src="~/js/navbar.js" asp-append-version="true"></script>
+    <script src="~/js/admin/blacklist.js" asp-append-version="true"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
 </head>
 
@@ -28,31 +32,26 @@
         <div class="nav-container">
             <div class="nav-brand-box">
                 <div class="nav-icon"></div>
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Double Labs</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Admin" asp-action="Index">Double Labs</a>
             </div>
 
             <div class="nav-menu">
-                <div class="nav-item">
-                    <a class="img-link" asp-controller="Home" asp-action="Profile"><img
-                            src="https://www.flaticon.com/svg/vstatic/svg/2922/2922510.svg?token=exp=1618485501~hmac=7734c0bf434cc27dceba121cf0c4ebcb"
-                            alt="profile"></a>
-                    <a class="text-link" asp-controller="Home" asp-action="Profile">Profile</a>
-                </div>
 
                 <div class="nav-item-text">
                     <a asp-controller="Home" asp-action="Index">Logout</a>
                 </div>
+
                 <div class="nav-item nav-expand" onclick="showNavbar()">
-                    <img src="https://www.flaticon.com/svg/vstatic/svg/3388/3388830.svg?token=exp=1618483047~hmac=a854318b49214435fd4519231678a928"
+                    <img src="https://cdn.discordapp.com/attachments/817783466379968572/832547946557341708/hamburger.png"
                         alt="hambergur-menu">
                 </div>
+
             </div>
         </div>
     </nav>
+
     <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+        @RenderBody()
     </div>
 
     <footer class="border-top footer text-muted">

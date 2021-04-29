@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using System.Net.Http;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using ConsoleApp.PostgreSQL;
@@ -10,14 +11,14 @@ using Npgsql;
 namespace WebApi.Controllers
 {
     [Route("api/simple")]
-    public class Simplecontroller : Controller
+    public class SimpleController : Controller
     {
-        public Simplecontroller() { }
+        public SimpleController() { }
 
         // GET api/simple
         [HttpGet("")]
         public ActionResult<IEnumerable<string>> Gets()
-        {
+        { 
             return new string[] { "value1", "value2" };
         }
     }
@@ -30,36 +31,46 @@ namespace WebApi.Controllers
         [HttpGet("")]
         public async Task<ActionResult<List<Laboratory>>> Gets()
         {
-            return await LabDatabase.GetAllLab();
+            return await LabDB.GetAllAsync();
         }
 
         [HttpGet("{labID}")]
         public ActionResult<Laboratory> Gets(int labID)
         {
-            return LabDatabase.GetLabByID(labID);
+            return LabDB.GetByID(labID);
         }
     }
 
     [Route("api/lab_item")]
-    public class LabItem : Controller
+    public class LabItemController : Controller
     {
-        public LabItem() { }
+        public LabItemController() { }
+  
+        [HttpGet("{labID}")]
+        public async Task<ActionResult<List<Laboratory_item>>> Gets(int labID)
+        {
+            return await LabItemDB.GetAllByLabIDAsync(labID);
+        }
+    }
+
+    [Route("api/transaction")]
+    public class TransactionController : Controller
+    {
+        public TransactionController() { }
 
         [HttpGet("")]
-        public ActionResult<IEnumerable<string>> Gets()
+        public async Task<ActionResult<List<Transaction>>> Gets()
         {
-            return new string[] { "value1", "value2" };
+            return await TransactionDB.GetAllAsync(); 
         }
 
-        [HttpGet("{type}/{labID}")]
-        public async Task<ActionResult<List<Laboratory_item>>> Gets(string type, int labID)
+        [HttpPost("")]
+        public ActionResult<HttpResponseMessage> Posts(HttpRequestMessage requestMessage)
         {
-            if (type == "all") 
-                return await LabItemDatabase.GetAllItemByLabID(labID);
-            else if (type == "current") 
-                return await LabItemDatabase.GetCurrentItemByLabID(labID);
-            else 
-                return null;
-        }  
+            /// create transaction from FORM DATA here.
+            // Transaction transaction = new Transaction(1, 6, (int)Transaction_type.borrow, (int)Time_id_type.am, DateTime.Now, DateTime.Now);
+            // TransactionDatabase.AddTransaction(transaction);
+            return StatusCode(201);
+        }
     }
 }

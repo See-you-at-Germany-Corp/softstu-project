@@ -3,17 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace softstu_project.Models
-{
-    public enum Time_id_type
-    {
-        none, am, pm, day
-    }
-
-    public enum Transaction_type
-    {
-        borrow, give
-    }
-    public class Transaction
+{  
+    public class Log
     {
         [Key]
         public int uuid { get; set; }
@@ -30,14 +21,14 @@ namespace softstu_project.Models
 
         public DateTime book_date { get; set; }
 
-        public DateTime created { get; set; }
+        public DateTime created { get; set; } 
 
-        public Transaction()
+        public Log()
         {
 
         }
 
-        public Transaction(int user_id, int item_id, int transaction_type, int time_id, DateTime book_date)
+        public Log(int user_id, int item_id, int transaction_type, int time_id, DateTime book_date)
         {
             this.user_id = user_id;
             this.item_id = item_id;
@@ -47,14 +38,14 @@ namespace softstu_project.Models
             this.created = DateTime.Now;
         }
 
-        public string ToColumnString()
+        public Log(Transaction transaction)
         {
-            return $"(user_id, item_id, transaction_type, time_id, created, book_date)";
-        }
-
-        public string ToValueString()
-        {
-            return $"({this.user_id}, {this.item_id}, {this.transaction_type}, {this.time_id}, '{this.created}', '{this.book_date}')";
+            this.user_id = transaction.user_id;
+            this.item_id = transaction.item_id;
+            this.transaction_type = transaction.transaction_type;
+            this.time_id = transaction.time_id;
+            this.book_date = transaction.book_date;
+            this.created = DateTime.Now;
         }
     }
 }

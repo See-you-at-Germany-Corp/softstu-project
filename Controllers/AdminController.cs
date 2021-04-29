@@ -54,8 +54,7 @@ namespace softstu_project.Controllers
 
             return View();
         }
-
-        [HttpPost]
+ 
         public async Task<IActionResult> OnDeleteTransaction(int transactionID) 
         {   
             if (transactionID > 0)
@@ -63,6 +62,13 @@ namespace softstu_project.Controllers
                 List<Transaction> transactions = await TransactionDB.GetAsync(transactionID);
                 TransactionDB.Delete(transactions[0]);  
             }
+
+            return RedirectToAction("Blacklist");
+        }
+ 
+        public IActionResult OnHomeLogDateChange(string homedate) 
+        {   
+            Console.WriteLine("homedate " + homedate);
 
             return RedirectToAction("Blacklist");
         }

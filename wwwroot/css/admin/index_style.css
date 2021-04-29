@@ -92,6 +92,24 @@
     overflow: auto;
 }
 
+.filter-box {
+    margin-bottom: 15px;
+}
+
+.filter {
+    width: 150px;
+    height: 30px;
+    margin: 0;
+    margin-right: 5px;
+    padding: 5px;
+}
+
+.inputdate {
+    width: calc(150px - 4px);
+    height: 26px; 
+    padding: 0px 5px;
+}
+
 .device-history-container .device-history-table {
     width: 100%;
     position: sticky;

@@ -10,6 +10,16 @@ namespace ConsoleApp.PostgreSQL
     {
         public TransactionDB() { }
 
+        public static async Task<List<Transaction>> GetAsync(int transactionID)
+        {
+            var db = new SoftwareStudioContext();
+
+            string queryString = $"SELECT * FROM transactions WHERE uuid = {transactionID}";
+            List<Transaction> transactions = await db.transactions.FromSqlRaw(queryString).ToListAsync();
+
+            return transactions;
+        }
+
         public static async Task<List<Transaction>> GetAllAsync()
         {
             var db = new SoftwareStudioContext();
@@ -101,6 +111,19 @@ namespace ConsoleApp.PostgreSQL
                 db.SaveChanges();
             }
         }
+
+        public static void Cancel(Transaction transaction)
+        {
+            var db = new SoftwareStudioContext();
+
+            if (transaction != null)
+            {
+                db.transactions.Remove(transaction);
+                transaction.transaction_type = (int)Transaction_type.cancel;
+                db.logs.Add(new Log(transaction));
+                db.SaveChanges();
+            }
+        }
     }
 }
 
@@ -108,11 +131,11 @@ namespace ConsoleApp.PostgreSQL
     * unittest
     new Transaction(11, 1, 0, 1, DateTime.Now)
 
-    TransactionDatabase.AddTransaction(new Transaction(6, 1, 0, 1, DateTime.Now));
-    TransactionDatabase.AddTransaction(new Transaction(6, 4, 0, 1, DateTime.Now.AddDays(1)));
-    TransactionDatabase.AddTransaction(new Transaction(6, 5, 0, 1, DateTime.Now.AddDays(5)));
-    TransactionDatabase.AddTransaction(new Transaction(6, 13, 0, 1, DateTime.Now.AddDays(2)));
-    TransactionDatabase.AddTransaction(new Transaction(6, 19, 0, 1, DateTime.Now.AddDays(8)));
-    TransactionDatabase.AddTransaction(new Transaction(6, 25, 0, 1, DateTime.Now.AddDays(4)));
-    TransactionDatabase.AddTransaction(new Transaction(6, 1, 0, 1, DateTime.Now.AddDays(1)));
+    TransactionDB.Add(new Transaction(6, 1, 0, 1, DateTime.Now));
+    TransactionDB.Add(new Transaction(6, 4, 0, 1, DateTime.Now.AddDays(1)));
+    TransactionDB.Add(new Transaction(6, 5, 0, 1, DateTime.Now.AddDays(5)));
+    TransactionDB.Add(new Transaction(6, 13, 0, 1, DateTime.Now.AddDays(2)));
+    TransactionDB.Add(new Transaction(6, 19, 0, 1, DateTime.Now.AddDays(8)));
+    TransactionDB.Add(new Transaction(6, 25, 0, 1, DateTime.Now.AddDays(4)));
+    TransactionDB.Add(new Transaction(6, 1, 0, 1, DateTime.Now.AddDays(1)));
 */

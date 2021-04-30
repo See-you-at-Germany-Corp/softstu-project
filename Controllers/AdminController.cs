@@ -41,13 +41,18 @@ namespace softstu_project.Controllers
 
         public async Task<IActionResult> Tools(string? id)
         {
+
+            int labID = Int16.Parse(id ?? "1");
+            Laboratory lab = LabDatabase.GetByID(Int16.Parse(id ?? "1"));
             List<LabItem> items = new List<LabItem>();
             IList<ItemDetail> labItems = await ItemDatabase.GetAllDetailByLabIDAsync(Int16.Parse(id ?? "1"));
-            for(int i = 0; i < labItems.Count; i++) {
-                // items.Add(new LabItem(labItems[i].uuid.ToString()+"EIEI",labItems[i].name,19,2));
-            }
-            ViewData["LabItems"] = items;
-            ViewData["Title"] = "test " + id?.ToString() ?? "";
+            List<Laboratory> labList = await LabDatabase.GetAllAsync();
+
+            
+            ViewData["LabItems"] = labItems;
+            ViewData["Title"] = labList;
+            ViewData["Description"] = lab.description;
+            ViewData["LabID"] = id;
             return View();
         }
 

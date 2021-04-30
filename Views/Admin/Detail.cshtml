@@ -20,7 +20,12 @@
         <p style="font-size: 30px;">รายการ Lab :</p>
         <select id="lab-title" style="font-size: 30px;" onchange="labSelected()">
             @foreach(var lab in labList) {
-                <option value=@lab.uuid  >@lab.name</option>
+                if (lab.uuid.ToString() == labID.ToString()) {
+                    <option value=@lab.uuid selected >@lab.name</option>
+                }
+                else {
+                    <option value=@lab.uuid  >@lab.name</option>
+                }
             }
         </select>
         </div>
@@ -149,7 +154,7 @@
             var date = document.getElementById("date").value
             @* console.log(date) *@
             date += " 00:00"
-            location.href=`../?id=2&date=${date}`
+            location.href=`../Detail/?id=2&date=${date}`
         }
 
         function labSelected() {
@@ -157,7 +162,7 @@
             var date = document.getElementById("date").value
             @* console.log(date) *@
             date += " 00:00"
-            location.href=`../?id=${lab}&date=${date}`
+            location.href=`../Detail/?id=${lab}&date=${date}`
         }
 
         function submit() {

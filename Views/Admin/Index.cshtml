@@ -7,13 +7,30 @@
     <div class="lab-list-container">
         <h2>รายการห้องแลป</h2>
         <div class="lab-list-item-box" id="lab-list">
-            @{int labID = 1;}
-            @foreach (var lab in ViewData["LabLists"] as IList<LabListModel>)
+            @{
+                int labID = 1;
+            }
+            @foreach (var lab in ViewData["LabLists"] as List<LabListModel>)
             {
                 <a href="Admin/Detail?labID=@labID">
                     <div class="lab-item-box">
                         <p>@lab.name</p>
-                        <p>@lab.total_tool</p>
+                        <div class="item-box">
+                            <div>
+                                <p class="emoticon">🌞</p>
+                                <div>
+                                    <p>@lab.current_tool_am/</p>
+                                    <p>@lab.total_tool</p>
+                                </div>
+                            </div>
+                            <div>
+                                <p class="emoticon">🌙</p>
+                                <div>
+                                    <p>@lab.current_tool_pm/</p>
+                                    <p>@lab.total_tool</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </a>
 
@@ -24,21 +41,32 @@
 
     <div class="device-history-container">
         <h2>ประวัติการยืม/คืน อุปกรณ์</h2>
+        <div class="filter-box">
+            <select class="filter" id="home-filter-input" onchange="onFilterChange()">
+                <option value="0" disabled selected>กรองด้วย</option>
+                <option value="0">ทั้งหมด</option>
+                <option value="created">วันที่ดำเนินการ</option>
+                <option value="book_date">วันที่จอง</option>
+            </select>
+            <input class="filter inputdate" id="home-inputdate" type="date" onchange="onDateChange(onDateParams)">
+        </div>
         <div class="device-history-table-container">
             <table class="device-history-table" id="device-history-table">
                 <thead>
-                    <th>วัน/เดือน/ปี</th>
+                    <th>วันดำเนินการ</th>
+                    <th>วันที่จอง</th>
                     <th>หมายเลขอุปกรณ์</th>
-                    <th>ชื่อผู้ใช้งาน</th>
+                    <th>รหัสผู้ใช้งาน</th>
                     <th>สถานะ</th>
                 </thead>
-                <tbody>
-                    @foreach (var log in ViewData["LogLists"] as IList<LogModel>)
+                <tbody id="log-tbody">
+                    @foreach (var log in ViewData["LogLists"] as List<Log>)
                     {
                         <tr>
-                            <td>@log.created</td>
+                            <td>@log.created.ToShortDateString()</td>
+                            <td>@log.book_date.ToShortDateString()</td>
                             <td>@log.item_id</td>
-                            <td>@log.user_name</td>
+                            <td>@log.user_id</td>
                             <td>@transactionName[log.transaction_type]</td>
                         </tr>
                     }
@@ -51,3 +79,36 @@
         </div>
     </div>
 </div>
+
+<script>
+    const originTbody = document.querySelector("#log-tbody");
+    const trCollection = originTbody.getElementsByTagName("tr");
+    const trLists = [...trCollection];
+
+    const onDateParams = {
+        inputdateID: "home-inputdate",
+        tableID: "device-history-table",
+        tbodyID: "log-tbody",
+        filterWith: "0",
+        originTrLists: trLists,
+        isFilter: false,
+    };
+
+    window.onload = () => {
+        onDateLoad("home-inputdate");
+        onDateChange(onDateParams);
+    };
+
+    function onFilterChange() {
+        const filter = document.querySelector(`#home-filter-input`);
+        const value = filter.value;
+
+        if (value !== "0") {
+            onDateParams.filterWith = value;
+            onDateParams.isFilter = false;
+        }
+        else onDateParams.isFilter = true;
+
+        onDateChange(onDateParams);
+    }
+</script>

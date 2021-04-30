@@ -6,14 +6,23 @@ using softstu_project.Models;
 
 namespace ConsoleApp.PostgreSQL
 {
-    public class LogDatabase
+    public class LogDB
     {
-        public LogDatabase() { }
+        public LogDB() { }
 
         public static async Task<List<Log>> GetAllAsync()
         {
             var db = new SoftwareStudioContext();
             List<Log> logs = await db.logs.FromSqlRaw("SELECT * FROM logs").ToListAsync();
+
+            return logs;
+        }
+
+        public static async Task<List<Log>> GetByBookDateAsync(DateTime bookDate)
+        {
+            var db = new SoftwareStudioContext();
+            string queryString = $"SELECT * FROM logs WHERE book_date = {bookDate}";
+            List<Log> logs = await db.logs.FromSqlRaw(queryString).ToListAsync();
 
             return logs;
         }

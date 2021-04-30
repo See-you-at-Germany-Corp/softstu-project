@@ -11,12 +11,12 @@ namespace softstu_project.Models
     public class User
     {
         [Key]
-        public int uuid { get; set; } 
+        public int uuid { get; set; }
         [StringLength(50, MinimumLength = 1)]
         [Required]
- 
+      
         public User_role role_id { get; set; }
-        [Required] 
+        [Required]
 
         public string username { get; set; }
         [Required]
@@ -29,7 +29,7 @@ namespace softstu_project.Models
         public string fname { get; set; }
 
         public string lname { get; set; }
-        
+      
         public int student_id { get; set; }
 
         public string faculty { get; set; }

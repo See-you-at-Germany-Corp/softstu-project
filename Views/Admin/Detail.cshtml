@@ -1,67 +1,204 @@
 @{
+    var labItems = ViewData["LabItems"] as List<LabItem>;
+    var availAM = (@ViewData["Available"] as List<int>)[0];
+    var amColor = availAM == 0 ? "--color: red" : "--color: #00b84c";
+    var pmColor = availAM == 0 ? "--color: red" : "--color: #00b84c";
+    var availPM = (@ViewData["Available"] as List<int>)[1];
+    var labList = ViewData["Title"] as List<Laboratory>;
+    var labID = ViewData["LabID"];
 
+    string getColor(string text) {
+        if (text == "YES") {
+            return "green";
+        }
+        return "red";
+    }
 }
 
 <div class="detail-container">
-    <p>รายการ lab1 : LAB lin plin ta</p>
-    <p>@ViewData["Title"]</p>
+    <div style="display:flex; margin-top: 10px;">
+        <p style="font-size: 30px;">รายการ Lab :</p>
+        <select id="lab-title" style="font-size: 30px;" onchange="labSelected()">
+            @foreach(var lab in labList) {
+                <option value=@lab.uuid  >@lab.name</option>
+            }
+        </select>
+        </div>
+    <p>@ViewData["Description"]</p>
+
+    
+    <div class="datepicker-container">
+        <input type="date" id="date" name="trip-start"
+        value=@ViewData["Date"]
+        min="2018-01-01" max="2022-12-12"
+        onchange="dateSelected()"
+        >
+        <div></div>
+        <div class="available">
+            <div class="available-number" style="@amColor">
+                <p>ว่างเช้า</p>
+                <h3>@availAM</h3>
+            </div>
+            <div class="available-number" style="@pmColor">
+                <p>ว่างบ่าย</p>
+                <h3>@availPM</h3>
+            </div>
+        </div>
+    </div>
     <table class="detail-table">
         <thead >
             <tr>
-                <th>ประเภทอุปกรณ์</th>
+                <th>No.</th>
                 <th>ชื่ออุปกรณ์</th>
-                <th>จำนวนคงเหลือ</th>
-                <th>จำนวนทั้งหมด</th>
+                <th>เช้า</th>
+                <th>บ่าย</th>
                 @* <th>col 3</th> *@
             </tr>
         </thead>
-        <tbody>
+        <tbody id="table-body">
             @{int index = 0;}
-            @foreach (var item in ViewData["LabItems"] as List<LabItem>) {
-                <tr>
+            @foreach (var item in labItems) {
+                <tr >
                     <td >
                         @{index++;}
-                        @index
+                        @item.id
                     </td>
-                    <td >
+                    <td id="table-title" >
+                        <p id="exist-item @index">
                         @item.title
+                        </p>
                     </td>
-                    <td >
-                        @item.leftQuantity
+                    <td style="color: @getColor(@item.am)">
+                        @item.am
                     </td>
-                    <td >
-                        @item.quantity
+                    <td style="color: @getColor(@item.pm)">
+                        @item.pm
                     </td>
-                    <td id="editableTD">
-                        <button id="increment" onclick="increment(@index)">+</button>
-                        <button id="decrement" onclick="decrement(@index,@item.leftQuantity)">-</button>
-                        @* <input type="text" value=@item.newQuantity id="number-input"> *@
-                        @Html.TextBox("value"+@index,"0")
+                    <td id="delete-td" >
+                        <button id="decrement @index" onclick="delExistItem(@index,@item.id)">X</button>
+                        <button id="increment @index" onclick="cancelDelExistItem(@index,@item.id)" hidden>-</button>
                     </td>
                 </tr>
             }
         </tbody>
     </table>
-    
 
-    <div id="textarea-container">
-        <textarea rows="15" cols="40" id="change-notes"></textarea>
+
+    <div class="add-container">
+        <button id="increment" onclick="addItemTable()">+</button>
+        <p>Add item </p>
+        
     </div>
 
     <div id="button-container">
-        <button id="accept">ยืนยัน</button>
-        <button id="cancel">ยกเลิก</button>
+        <button id="accept" onclick="submit()" >ยืนยัน</button>
+        <button id="cancel" onclick="cancel()">ยกเลิก</button>
     </div>
+    
 
     <script>
-        function increment(i) {
-            document.getElementById('value'+i).value = parseInt(document.getElementById('value'+i).value) + 1
+
+        var newItemCount = 0;
+        var existItemID = [];
+
+        function increment() {
+            document.getElementById('numberinput').value = parseInt(document.getElementById('numberinput').value) + 1
         }
 
-        function decrement(i,min) {
-            if (document.getElementById('value'+i).value > -1 * min) {
-                document.getElementById('value'+i).value = parseInt(document.getElementById('value'+i).value) - 1
+        function delNewItem(id) {
+            document.getElementById(`new-item-edit${id}`).remove()
+        }
+
+        function delExistItem(elementid, itemID) {
+            document.getElementById(`exist-item ${elementid}`).style.textDecoration = "line-through"
+            document.getElementById(`exist-item ${elementid}`).style.color = "grey"
+            document.getElementById(`decrement ${elementid}`).hidden = true;
+            document.getElementById(`increment ${elementid}`).hidden = false;
+            existItemID.push(itemID);
+            console.log(existItemID)
+        }
+
+        function cancelDelExistItem(elementid, itemID) {
+            document.getElementById(`exist-item ${elementid}`).style.textDecoration = "none"
+            document.getElementById(`exist-item ${elementid}`).style.color = "black"
+            document.getElementById(`decrement ${elementid}`).hidden = false;
+            document.getElementById(`increment ${elementid}`).hidden = true;
+            for(i = 0; i < existItemID.length; i++) {
+                if(existItemID[i] == itemID) {
+                    existItemID.splice(i,1);
+                }
             }
+            console.log(existItemID)
+        }
+
+        function cancel() {
+            var elems = document.querySelectorAll('[id^="exist-item "]')
+            var index = 0, length = elems.length;
+            for ( ; index < length; index++) {
+                elems[index].style.textDecoration = "none";
+                elems[index].style.color = "black";
+            }
+            for(var i = 0; i < newItemCount; i++) {
+                document.getElementById(`new-item-edit${i}`).remove()
+            }
+            newItemCount = 0;
+            existItemID = [];
+        }
+
+        function dateSelected() {
+            var date = document.getElementById("date").value
+            @* console.log(date) *@
+            date += " 00:00"
+            location.href=`../?id=2&date=${date}`
+        }
+
+        function labSelected() {
+            var lab = document.getElementById("lab-title").value
+            var date = document.getElementById("date").value
+            @* console.log(date) *@
+            date += " 00:00"
+            location.href=`../?id=${lab}&date=${date}`
+        }
+
+        function submit() {
+            let queryString = ""
+            for(i = 0; i < newItemCount; i++) {
+                let itemName = document.getElementById(`item-name${i}`).value
+                queryString += `&itemnames=${itemName}`
+            }
+            
+            for(i = 0; i < existItemID.length; i++) {
+                let itemID = existItemID[i]
+                queryString += `&removeid=${itemID}`
+            }
+            console.log(queryString)
+            location.href="@Url.Action("Update", "Admin")" + "?id=" + @labID + queryString
+        }
+
+
+        function addItemTable() {
+            let tr = document.createElement("tr")
+            tr.className="new-item-edit"
+            tr.id= `new-item-edit${newItemCount}`
+            tr.innerHTML = `
+                    <td >
+                        
+                    </td>
+                    <td id="table-title" >
+                        <input id="item-name${newItemCount}" value="">
+                    </td>
+                    <td >
+                        
+                    </td>
+                    <td >
+                        
+                    </td>
+                    <td id="delete-td" >
+                        <button id="decrement" onclick="delNewItem(${newItemCount} )">-</button>
+                    </td>
+                `
+            newItemCount+=1
+            document.getElementById('table-body').appendChild(tr)
         }
     </script>
 </div>

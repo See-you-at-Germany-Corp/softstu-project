@@ -25,6 +25,12 @@ a {
     color: #0366d6;
 }
 
+h2 {
+    font-weight: 200;
+    margin: 0;
+    margin-bottom: 20px;
+}
+
 .btn-primary {
     color: #fff;
     background-color: #1b6ec2;

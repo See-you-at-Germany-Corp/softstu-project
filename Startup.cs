@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.EntityFrameworkCore;
+using ConsoleApp.PostgreSQL;
 
 namespace soft_stu_project
 {
@@ -24,6 +26,10 @@ namespace soft_stu_project
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+
+            // services.AddDbContext<SoftwareStudioContext>(options =>
+            // options.UseNpgsql(Configuration.GetConnectionString("SoftwareStudioContext")));
+            // services.AddDatabaseDeveloperPageExceptionFilter();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -51,7 +57,7 @@ namespace soft_stu_project
                 //edit here
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Admin}/{action=Tools}/{id?}");
+                    pattern: "{controller=Admin}/{action=Detail}/{id?}");
             });
         }
     }

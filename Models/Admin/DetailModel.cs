@@ -1,16 +1,16 @@
-namespace soft_stu_project.Models{
+namespace softstu_project.Models{
     public class LabItem{
-        public LabItem(string id, string title, int quantity, int leftQuantity){
+        public LabItem(string id, string title, string am, string pm){
             this.id = id;
             this.title = title;
-            this.quantity = quantity;
+            this.am = am;
             this.newQuantity = 0;
-            this.leftQuantity = leftQuantity;
+            this.pm = pm;
         }
-        string id {get;}
+        public string id {get;}
         public string title {get; set;}
-        public int quantity {get; set;}
+        public string am {get; set;}
         public int newQuantity {get; set;}
-        public int leftQuantity {get; set;}
+        public string pm {get; set;}
     }
 }

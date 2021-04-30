@@ -1,51 +1,3 @@
-.detail-container table,th, td {
-    /* border: 1px solid black; */
-    border-collapse: collapse;
-}
-
-.detail-container th {
-    position: sticky;
-    top: 0;
-    font-weight: 200;
-}
-
-.detail-container th,td {
-    padding: 4px 10px;
-    text-align: center;
-}
-
-.detail-container th {
-    background-color: #64bdf8;
-}
-
-.detail-container td {
-    max-width: 150px;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-}
-
-.detail-container tr {
-    background-color: #fbfbfb;
-}
-
-.detail-container tr:nth-child(even) {
-    background-color: #e5e5e5;
-}
-
-@media (max-width: 992px) {
-    .detail-container th,
-    .detail-container td {
-        padding: 2px 2px;
-    }
-
-    .detail-container td {
-        max-width: 50px;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        overflow: hidden;
-    }
-}
 
 .detail-container {
     display: flex;
@@ -54,13 +6,9 @@
     width: 80%;
     margin: 0 auto;
 }
-/* #header {
-    border:1px solid #616161;
-    text-align: center;
-    padding:1px 40px 1px 40px;
-} */
-#number-input {
-    width: 50px;
+
+#numberinput {
+    width: 30px;
     text-align: center;
 }
 
@@ -92,33 +40,94 @@
     background-color: #e5e5e5;
 }
 
-#change-notes {
-    width: 300px;
-    height: 150px;
-}
 #button-container {
     margin-top: 20px;
 }
-#textarea-container {
-    margin-top: 20px;
-}
-
-#increment, #decrement {
-    height: 20px;
-    width: 20px;
+button[id^="increment"], button[id^="decrement"] {
+    height: 30px;
+    width: 30px;
     border-radius: 50%;
-    border: none;
+    border: none ;
+    text-align: center;
     color: white;
 }
-#increment {
+button[id^="increment"] {
     background-color: green;
-}
-#decrement {
-    background-color: red;
+    margin-right: 5px;
 }
 
-#editableTD {
+button[id^="increment"]:hover {
+    background-color: limegreen;
+}
+
+button[id^="increment"]:active {
+    background-color: seagreen;
+}
+
+button[id^="decrement"] {
+    background-color: red;
+    margin-right: 5px;
+}
+
+button[id^="decrement"]:hover {
+    background-color: #ff6161;
+}
+
+button[id^="decrement"]:active {
+    background-color: #9c3b3b;
+}
+.datepicker-container, .add-container{
+    display: flex;
+    margin-bottom: 10px;
+    margin-top:10px;
+}
+
+.datepicker-container{
+    justify-content: space-between;
+}
+
+#date {
+    align-self: center;
+    height: 20px;
+}
+
+.available {
+    display: flex;
+    margin-right: 70px;
+}
+
+.available-number {
+    background-color: var(--color);
+    width: 60px;
+    text-align: center;
+    margin-left: 10px;
+    border-radius: 5px;
+    height: 60px;
+    color: white;
+}
+
+.available-number h3, p {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+#delete-td {
+    /* border-style : hidden!important; */
+    border:none;
+    width: 50px !important;
     background-color: white;
-    border: none;
-    width: 100px;
+}
+
+.new-item-edit input {
+    width: 100%;
+}
+
+#table-title {
+    width: 400px;
+}
+
+#lab-title {
+    border: 1px solid gainsboro;
+    background-color: whitesmoke;
+    border-radius: 5px;
 }

@@ -4,6 +4,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace softstu_project.Models
 {
+    public enum Types
+    {
+        
+    }
     public class Item
     {
         [Key]
@@ -11,10 +15,11 @@ namespace softstu_project.Models
         [Required]
 
         public string name { get; set; }
-  
+        public int type_id { get; set; }
+
         public DateTime created { get; set; }
 
-        public DateTime updated { get; set; } 
+        public DateTime updated { get; set; }
 
         public Item()
         {
@@ -26,6 +31,6 @@ namespace softstu_project.Models
             this.name = name;
             this.created = DateTime.Now;
             this.updated = DateTime.Now;
-        } 
+        }
     }
 }

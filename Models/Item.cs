@@ -15,7 +15,7 @@ namespace softstu_project.Models
         [Required]
 
         public string name { get; set; }
-        public int type_id { get; set; }
+        public int type { get; set; }
 
         public DateTime created { get; set; }
 

@@ -1,23 +1,27 @@
+@using softstu_project.Models;
+@{
+    var user = ViewData["UserInfo"] as User;
+}
 <div class="profile-container">
     <div class="pf-cont">
         <img class="pf-img" alt="pf-img" src="https://fq.lnwfile.com/zp2qee.jpg" />
         <div class="pf-detail-cont">
-            <div class="student-name">พรรษา บุญทวีกุลสวัสดิ์</div>
+            <div class="student-name">@user.fname @user.lname</div>
             <div class=" pf-detail">
                 <img class="detail-icon" src="~/images/user-profile/id.svg" />
-                <div>61011405</div>
-            </div>
-            <div class="pf-detail">
-                <img class="detail-icon" src="~/images/user-profile/faculty.svg" />
-                <div>คณะวิศวกรรมศาสตร์</div>
-            </div>
-            <div class="pf-detail">
-                <img class="detail-icon" src="~/images/user-profile/department.svg" />
-                <div>ภาควิชาวิศวกรรมคอมพิวเตอร์</div>
+                <div>@user.student_id</div>
             </div>
             <div class="pf-detail">
                 <img class="detail-icon" alt="" src="~/images/user-profile/email.svg" />
-                <div>61011405@kmitl.ac.th</div>
+                <div>@user.email</div>
+            </div>
+            <div class="pf-detail">
+                <img class="detail-icon" src="~/images/user-profile/faculty.svg" />
+                <div>@($"คณะ{user.faculty}")</div>
+            </div>
+            <div class="pf-detail">
+                <img class="detail-icon" src="~/images/user-profile/department.svg" />
+                <div>@($"ภาควิชา{user.department}")</div>
             </div>
         </div>
     </div>

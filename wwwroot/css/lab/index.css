@@ -1,0 +1,62 @@
+.lab-container { 
+    display: flex;
+    flex-flow: column nowrap;
+    width: 80%;
+
+    margin: 0 auto;
+    margin-top: 25px;
+}
+
+.lab-detail-box { 
+    display: flex;
+    flex-flow: column nowrap;
+    width: 60%; 
+
+    margin: 0 auto;
+    margin-bottom: 25px;
+}
+
+.lab-detail-box p {
+    word-break: break-all;
+
+    margin: 0 auto;
+    padding: 0;
+}
+
+.lab-device-list-table-container {
+    display: flex;
+    flex-flow: column nowrap;
+    width: 100%;
+    max-width: 500px;
+
+    align-items: center;
+    margin: 0 auto;
+}
+
+.lab-device-list-table-container table {
+    width: 100%;
+    /* max-width: 500px; */
+}
+
+.lab-device-list-table-container table th, td {
+    width: 200px;
+}
+
+.button-box {
+    display: flex;
+    width: 100%;
+
+    justify-content: flex-end;
+    margin: 0 auto;
+    margin-top: 25px;
+}
+
+.button-box button {
+    margin-left: 10px;
+}
+
+@media (max-width: 992px) {
+    .lab-detail-box {  
+        width: 100%; 
+    }
+}

@@ -34,6 +34,7 @@ namespace ConsoleApp.PostgreSQL
             List<string> reqList = new List<string>{
                 "items.uuid",
                 "items.name",
+                "items.type",
                 "laboratory_items.laboratory_id",
             };
             string reqStr = db.ListToString(reqList);
@@ -49,6 +50,7 @@ namespace ConsoleApp.PostgreSQL
             List<string> reqList = new List<string>{
                 "items.uuid",
                 "items.name",
+                "items.type",
                 "laboratory_items.laboratory_id",
             };
             string reqStr = db.ListToString(reqList);
@@ -64,6 +66,7 @@ namespace ConsoleApp.PostgreSQL
             List<string> reqList = new List<string>{
                 "items.uuid",
                 "items.name",
+                "items.type",
                 "laboratory_items.laboratory_id",
             };
             string reqStr = db.ListToString(reqList);
@@ -71,6 +74,43 @@ namespace ConsoleApp.PostgreSQL
             List<ItemDetail> items = await db.itemDetails.FromSqlRaw(queryString).ToListAsync();
 
             return items;
+        }
+
+        public static async Task<List<int>> GetAllQuantityByLabIDAsync(int labID)
+        {
+            List<Item> items = await GetAllAsync();
+            List<int> itemSet = new List<int>();
+            List<int> itemQuantity = new List<int>();
+
+            items.ForEach(item =>
+            {
+                if (!itemSet.Contains(item.type)) 
+                {
+                    itemSet.Add(item.type);
+                    itemQuantity.Add(0);
+                }
+
+                int index = itemSet.IndexOf(item.type);
+                itemQuantity[index]++;
+            });
+
+            return itemQuantity;
+        }
+
+        public static async Task<List<int>> GetItemSetByLabIDAsync(int labID)
+        {
+            List<Item> items = await GetAllAsync();
+            List<int> itemSet = new List<int>(); 
+
+            items.ForEach(item =>
+            {
+                if (!itemSet.Contains(item.type))
+                {
+                    itemSet.Add(item.type); 
+                } 
+            });
+
+            return itemSet;
         }
 
         public static int Add(Item item)
@@ -94,8 +134,8 @@ namespace ConsoleApp.PostgreSQL
             if (item != null)
             {
                 db.Remove(item);
-                db.SaveChanges(); 
-            } 
+                db.SaveChanges();
+            }
         }
     }
 }

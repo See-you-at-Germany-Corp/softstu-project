@@ -1,0 +1,39 @@
+@using ConsoleApp.PostgreSQL;
+@{
+    Laboratory labDetail = ViewData["LabDetail"] as Laboratory;
+    List<int> itemSet = ViewData["ItemSet"] as List<int>;
+    List<int> itemQuantity = ViewData["ItemQuantity"] as List<int>;
+    int labID = (int)ViewData["LabID"];
+}
+
+<div class="lab-container">
+    <div class="lab-detail-box">
+        <h2>@labDetail.name</h2>
+        <p>@labDetail.description</p>
+    </div>
+    <div class="lab-device-list-table-container">
+        <table>
+            <thead>
+                <th>อุปกรณ์</th>
+                <th>จำนวนทั้งหมด</th>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < itemSet.Count; i++)
+                {
+                    <tr>
+                        <td>@Item.getName(itemSet[i])</td>
+                        <td>@itemQuantity[i]</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div class="button-box">
+            <button class="ghost-button">
+                <a asp-controller="Home" asp-action="Index">กลับ</a>
+            </button>
+            <button class="ghost-button">
+                <a href="@labID/Booking">จอง</a> 
+            </button>
+        </div>
+    </div>
+</div>

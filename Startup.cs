@@ -57,7 +57,7 @@ namespace soft_stu_project
                 //edit here
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Admin}/{action=Detail}/{id?}");
+                    pattern: "{controller=Home}/{action=Page}/{id?}");
             });
         }
     }

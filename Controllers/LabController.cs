@@ -38,12 +38,6 @@ namespace softstu_project.Controllers
 
             }
             Console.WriteLine(labItem.Count);
-            // if (items)
-            // for (int i = 0; i < labItem.Count; i++)
-            // {
-            //     myType = labItem.Distinct().ToList();
-            //     Console.WriteLine(myType);
-            // }
 
             for (int i = 0; i < labItem.Count; i++)
             {

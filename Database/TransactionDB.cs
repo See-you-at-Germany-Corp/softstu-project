@@ -94,9 +94,27 @@ namespace ConsoleApp.PostgreSQL
         {
             var db = new SoftwareStudioContext();
 
-            db.transactions.Add(transaction);
-            db.logs.Add(new Log(transaction));
-            db.SaveChanges();
+            DateTime datetime_now = DateTime.Now;
+            int hour;
+            if (transaction.time_id == (int)Time_id_type.pm)
+            {
+                hour = 12;
+            }
+            else
+            {
+                hour = 8;
+            }
+            DateTime book_date = new DateTime(transaction.book_date.Year,
+                                              transaction.book_date.Month,
+                                              transaction.book_date.Day,
+                                              hour, 0, 0);
+            int result = DateTime.Compare(datetime_now, book_date);
+            if (result <= 0)
+            {
+                db.transactions.Add(transaction);
+                db.logs.Add(new Log(transaction));
+                db.SaveChanges();
+            }
         }
 
         public static void Delete(Transaction transaction)

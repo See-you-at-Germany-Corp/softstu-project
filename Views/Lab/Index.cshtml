@@ -1,5 +1,6 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
+    string[] displayType = {"","Keyboard", "Mouse", "Monitor", "UPS", "Speaker"};
 }
 <div class="container">
     @foreach (var labName in ViewData["name"] as List<Laboratory>)
@@ -26,13 +27,14 @@
                             <form class="form-text" action="">
                                 <div class="list-lab-left">
                                     <ul>
-                                        @foreach (var lab in ViewData["labItem"] as List<List<ItemDetail>>)
+                                        @foreach (var lab in ViewData["myType"] as List<List<ItemDetail>>)
                                         {
+                                            @* <p>@lab[0].type</p> *@
                                             @if (lab[0].laboratory_id == labName.uuid)
                                             {
                                                 @foreach (var item in lab)
                                                 {
-                                                    <li>@item.name</li>
+                                                    <li>@displayType[item.type]</li>
                                                 }
                                             }
                                         }

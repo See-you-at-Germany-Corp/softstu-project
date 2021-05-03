@@ -15,11 +15,15 @@ namespace WebApi.Controllers
     {
         public SimpleController() { }
 
-        // GET api/simple
-        [HttpGet("")]
-        public ActionResult<IEnumerable<string>> Gets()
-        { 
-            return new string[] { "value1", "value2" };
+        // // GET api/simple
+        // [HttpGet("")]
+        // public ActionResult<IEnumerable<string>> Gets()
+        // { 
+        //     return new string[] { "value1", "value2" };
+        // }
+         public async Task<List<ItemDetail>> GetAllDetailAsync()
+        {
+            return await ItemDB.GetAllDetailAsync();
         }
     }
 

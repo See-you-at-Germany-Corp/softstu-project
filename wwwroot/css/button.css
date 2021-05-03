@@ -1,0 +1,22 @@
+.ghost-button {
+    min-width: 70px;
+    min-height: 35px;
+    background-color: #fbfbfb;
+    color: #1A91DA;
+    border: 2px solid #1A91DA;
+    border-radius: 5px;
+    outline: none;
+    font-size: 1rem;
+}
+
+.ghost-button a {
+    text-decoration: none;
+}
+
+.ghost-button:hover {
+    background-color: rgba(26, 145, 218, 0.1); 
+}
+
+.ghost-button:active {
+    background-color: rgba(26, 145, 218, 0.3); 
+}

@@ -45,6 +45,40 @@ namespace ConsoleApp.PostgreSQL
             return allItems;
         }
 
+        public static async Task<List<int>> GetCurrentQuantityByLabIDAsync(int labID)
+        {
+            var db = new SoftwareStudioContext();
+ 
+            int allQuantity = (await GetAllByLabIDAsync(labID)).Count;
+            int allItemsAM = allQuantity;
+            int allItemsPM = allQuantity;
+
+            List<Transaction> transactions = await TransactionDB.GetByLabIDAndDateAsync(labID, DateTime.Now);
+
+            for (int j = 0; j < transactions.Count; j++)
+            {
+                switch (transactions[j].time_id)
+                {
+                    case (int)Time_id_type.none:
+                        allItemsAM++;
+                        allItemsPM++;
+                        break;
+                    case (int)Time_id_type.am:
+                        allItemsAM--;
+                        break;
+                    case (int)Time_id_type.pm:
+                        allItemsPM++;
+                        break;
+                    case (int)Time_id_type.day:
+                        allItemsAM--;
+                        allItemsPM--;
+                        break;
+                }
+            }
+
+            return new List<int> { allItemsAM, allItemsPM };
+        }
+
         public static async Task<List<Laboratory_item>> GetAllByLabIDAsync(int labID)
         {
             var db = new SoftwareStudioContext();
@@ -58,8 +92,9 @@ namespace ConsoleApp.PostgreSQL
         {
             var db = new SoftwareStudioContext();
  
-            List<int> allItemsAM = await GetAllQuantityAsync();
-            List<int> allItemsPM = await GetAllQuantityAsync();
+            List<int> allQuantity = await GetAllQuantityAsync();
+            List<int> allItemsAM = allQuantity;
+            List<int> allItemsPM = allQuantity;
 
             for (int i = 0; i < 5; i++)
             {

@@ -19,7 +19,7 @@
             </thead>
             <tbody>
                 @for (int i = 0; i < itemSet.Count; i++)
-                {
+                { 
                     <tr>
                         <td>@Item.getName(itemSet[i])</td>
                         <td>@itemQuantity[i]</td>
@@ -29,7 +29,7 @@
         </table>
         <div class="button-box">
             <button class="ghost-button">
-                <a asp-controller="Home" asp-action="Index">กลับ</a>
+                <a asp-controller="Lab" asp-action="Index">กลับ</a>
             </button>
             <button class="ghost-button">
                 <a href="@labID/Booking">จอง</a> 

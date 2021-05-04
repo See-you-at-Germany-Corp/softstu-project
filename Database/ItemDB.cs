@@ -78,11 +78,11 @@ namespace ConsoleApp.PostgreSQL
 
         public static async Task<List<int>> GetAllQuantityByLabIDAsync(int labID)
         {
-            List<Item> items = await GetAllAsync();
+            List<ItemDetail> itemDetails = await ItemDB.GetAllDetailByLabIDAsync(labID);
             List<int> itemSet = new List<int>();
             List<int> itemQuantity = new List<int>();
 
-            items.ForEach(item =>
+            itemDetails.ForEach(item =>
             {
                 if (!itemSet.Contains(item.type)) 
                 {
@@ -99,15 +99,12 @@ namespace ConsoleApp.PostgreSQL
 
         public static async Task<List<int>> GetItemSetByLabIDAsync(int labID)
         {
-            List<Item> items = await GetAllAsync();
+            List<ItemDetail> itemDetails = await ItemDB.GetAllDetailByLabIDAsync(labID);
             List<int> itemSet = new List<int>(); 
 
-            items.ForEach(item =>
+            itemDetails.ForEach(item =>
             {
-                if (!itemSet.Contains(item.type))
-                {
-                    itemSet.Add(item.type); 
-                } 
+                if (!itemSet.Contains(item.type)) itemSet.Add(item.type);
             });
 
             return itemSet;

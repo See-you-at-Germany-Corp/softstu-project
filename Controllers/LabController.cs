@@ -65,7 +65,7 @@ namespace softstu_project.Controllers
         {
             Laboratory labDetail = LabDB.GetByID(labID);
             List<ItemDetail> itemDetails = await ItemDB.GetAllDetailByLabIDAsync(labID);
-            List<int> itemSet = new List<int>();
+            List<int> itemSet = await ItemDB.GetItemSetByLabIDAsync(labID);
             List<int> itemQuantity = await ItemDB.GetAllQuantityByLabIDAsync(labID);
 
             itemDetails.ForEach(item =>

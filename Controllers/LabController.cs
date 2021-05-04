@@ -48,7 +48,6 @@ namespace softstu_project.Controllers
                         myType[i].Add(labItem[i][j]);
                         checkList.Add(labItem[i][j].type);
                     }
-
                 }
                 checkList.Clear();
 

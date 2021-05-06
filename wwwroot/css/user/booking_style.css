@@ -1,0 +1,128 @@
+.booking-container {
+  width: fit-content;
+
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+
+  margin: 20px auto 0px auto;
+}
+
+.booking-container form {
+  gap: 20px;
+  display: flex;
+  flex-direction: column;
+  max-width: 1200px;
+}
+
+.lab-header {
+  display: flex;
+  align-self: flex-start;
+
+  font-size: 32px;
+  margin: 10px 0;
+}
+
+.input-form {
+  gap: 40px;
+  display: flex;
+}
+
+.input-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-container > input,
+.input-container > select {
+  height: 30px;
+  width: 150px;
+
+  padding-left: 5px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+
+.input-time-select {
+  gap: 4px;
+  display: flex;
+  flex-direction: column;
+}
+
+.radio-container {
+  gap: 10px;
+  display: flex;
+}
+
+input[type="radio"] {
+  display: none;
+  position: absolute;
+  visibility: hidden;
+}
+
+input[type="radio"] + label {
+  cursor: pointer;
+  padding: 4px 10px;
+  border-radius: 5px;
+
+  color: rgb(26, 145, 218);
+  background-color: rgb(205, 236, 255);
+}
+input[type="radio"]:disabled + label {
+  cursor: default;
+  background-color: rgb(229, 229, 229);
+}
+
+input[type="radio"]:checked + label {
+  color: white;
+  background-color: rgb(94, 158, 255);
+}
+
+.booking-container form > button {
+  align-self: flex-end;
+  width: fit-content;
+
+  cursor: pointer;
+  margin-top: 20px;
+  padding: 4px 10px;
+
+  border: 0;
+  border-radius: 5px;
+
+  font-size: 16px;
+  color: white;
+  background-color: rgb(26, 145, 218);
+}
+
+@media (max-width: 576px) {
+  .booking-container {
+    max-width: 280px;
+    /* background-color: red; */
+  }
+  .booking-container form {
+    gap: 10px;
+    max-width: 100vw;
+  }
+
+  .input-form {
+    gap: 5px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .input-container > input,
+  .input-container > select {
+    width: 280px;
+    height: 35px;
+    margin-bottom: 10px;
+
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+  }
+}
+
+@media (max-width: 1000px) {
+}

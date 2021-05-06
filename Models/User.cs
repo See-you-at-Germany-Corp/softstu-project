@@ -6,17 +6,17 @@ namespace softstu_project.Models
 {
     public enum User_role
     {
-        user, admin, super_admin
+        user, admin
     }
     public class User
     {
         [Key]
-        public int uuid { get; set; } 
+        public int uuid { get; set; }
         [StringLength(50, MinimumLength = 1)]
         [Required]
- 
+      
         public User_role role_id { get; set; }
-        [Required] 
+        [Required]
 
         public string username { get; set; }
         [Required]
@@ -29,7 +29,7 @@ namespace softstu_project.Models
         public string fname { get; set; }
 
         public string lname { get; set; }
-        
+      
         public int student_id { get; set; }
 
         public string faculty { get; set; }
@@ -48,7 +48,22 @@ namespace softstu_project.Models
         {
         }
 
+        public User(User_role role_id, string username, string password, string fname, string lname, int student_id, string facaulty, string department, string email)
+        {
+            this.role_id = role_id;
+            this.username = username;
+            this.password = password;
+            this.fname = fname;
+            this.lname = lname;
+            this.student_id = student_id;
+            this.faculty = facaulty;
+            this.department = department;
+            this.email = email;
+            this.created = DateTime.Now;
+            this.updated = DateTime.Now;
+        }
+
         /////////////////////////////////////////////////////////////////////////
         // public virtual ICollection<Transactions> transactions { get; set; }
     }
-}
+} 

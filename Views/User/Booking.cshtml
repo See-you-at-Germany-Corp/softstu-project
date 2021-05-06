@@ -1,0 +1,103 @@
+@using softstu_project.Models;
+@{
+    var lab = ViewData["LabInfo"] as Laboratory;
+    var items = ViewData["LabItems"] as List<ItemDetail>;
+    var transactions = ViewData["LabTransactions"] as List<Transaction>;
+}
+<div class="booking-container">
+    <div class="lab-header">@lab.name</div>
+    <form action="">
+        <div class="input-form">
+            <div class="input-container">
+                <label for="">อุปกรณ์</label>
+                <select name="" id="item-selector">
+                    @foreach (var item in items)
+                    {
+                        <option value=@($"item-{item.uuid}")>@item.name</option>
+                    }
+                </select>
+            </div>
+            <div class="input-container">
+                <label for="">วันที่</label>
+                <input type="date" name="" id="selected-date" onchange="selectDate()" />
+            </div>
+            <div class="input-container">
+                <label for="">จำนวน</label>
+                <select name="" id="item-amount-selector" onselect="selectAmount()">
+                </select>
+            </div>
+        </div>
+        <div class="input-time-select">
+            <label>ช่วงเวลาที่สามารถจองได้</label>
+            <div class="radio-container">
+                <input type="radio" name="select-time" id="time-1" disabled>
+                <label for="time-1" class="radio-label">09:00 - 12:00</label>
+                <input type="radio" name="select-time" id="time-2" disabled>
+                <label for="time-2" class="radio-label">13:00 - 16:00</label>
+            </div>
+        </div>
+        <button>Submit</button>
+    </form>
+
+</div>
+@section Scripts {
+<script>
+    const items = @Html.Raw(Json.Serialize(items));
+
+    const transactions = @Html.Raw(Json.Serialize(transactions));
+    transactions.forEach(transaction => {
+        transaction.created = new Date(transaction.created).setHours(0, 0, 0, 0)
+        transaction.book_date = new Date(transaction.book_date).setHours(0, 0, 0, 0)
+    })
+
+    function selectDate() {
+        const selectedDate = new Date(document.getElementById("selected-date").value).setHours(0, 0, 0, 0)
+        @* console.log(transactions) *@
+
+        const availableTimeSlot = {
+            am: items?.length,
+            pm: items?.length,
+        }
+
+        transactions.forEach(transaction => {
+            if (transaction.book_date !== selectedDate) return
+
+            switch (transaction.time_id) {
+                case 1:
+                    availableTimeSlot.am -= 1
+                    break;
+                case 2:
+                    availableTimeSlot.pm -= 1
+                    break;
+                case 3:
+                    availableTimeSlot.am -= 1
+                    availableTimeSlot.pm -= 1
+                    break;
+                default:
+                    break;
+            }
+        })
+        @* console.log("TIMESLOT",availableTimeSlot) *@
+
+        const maxAvailableTimeSlot = availableTimeSlot.am > availableTimeSlot.pm ? availableTimeSlot.am : availableTimeSlot.pm
+        @* console.log("MAX TIMESLOT", maxAvailableTimeSlot) *@
+
+        const itemsAmountSelector = document.getElementById("item-amount-selector")
+        @* console.log("CHILD COUNT", itemsAmountSelector.childElementCount) *@
+
+        if (maxAvailableTimeSlot !== itemsAmountSelector.childElementCount) {
+            itemsAmountSelector.innerHTML = ''
+
+            itemsAmountSelector.options.add(new Option(1, 1, true));
+            for (let i = 2; i <= maxAvailableTimeSlot; ++i) {
+                itemsAmountSelector.options.add(new Option(i, i));
+            }
+        }
+    }
+
+    function selectAmount() {
+        console.log("SELECT")
+    }
+
+</script>
+}

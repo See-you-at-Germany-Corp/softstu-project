@@ -1,0 +1,59 @@
+@using softstu_project.Models;
+@{
+    var user = ViewData["UserInfo"] as User;
+}
+<div class="profile-container">
+    <div class="pf-cont">
+        <img class="pf-img" alt="pf-img" src="https://fq.lnwfile.com/zp2qee.jpg" />
+        <div class="pf-detail-cont">
+            <div class="student-name">@user.fname @user.lname</div>
+            <div class=" pf-detail">
+                <img class="detail-icon" src="~/images/user-profile/id.svg" />
+                <div>@user.student_id</div>
+            </div>
+            <div class="pf-detail">
+                <img class="detail-icon" alt="" src="~/images/user-profile/email.svg" />
+                <div>@user.email</div>
+            </div>
+            <div class="pf-detail">
+                <img class="detail-icon" src="~/images/user-profile/faculty.svg" />
+                <div>@($"คณะ{user.faculty}")</div>
+            </div>
+            <div class="pf-detail">
+                <img class="detail-icon" src="~/images/user-profile/department.svg" />
+                <div>@($"ภาควิชา{user.department}")</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="transaction-list-cont">
+        <div class="transaction-list-header">
+            <div>
+                รายการยืมอุปกรณ์
+            </div>
+        </div>
+        <div class="transaction-list">
+            <div class="transaction-item">
+                <div class="item-img"></div>
+                <div class="item-detail-cont">
+                    <div class="item-id">[รหัส] ชื่ออุปกรณ์</div>
+                    <div class="item-trans-date">วันที่ยืม</div>
+                </div>
+                <button class="cancel-booking" title="ยกเลิกการจอง" type="submit" onclick="alert('cancel')">
+                    <img alt="cancel-icon" src="~/images/user-profile/cancel.svg" />
+                </button>
+            </div>
+            <div class="transaction-item">
+                <div class="item-img"></div>
+                <div class="item-detail-cont">
+                    <div class="item-id">[รหัส] ชื่ออุปกรณ์</div>
+                    <div class="item-trans-date">วันที่ยืม</div>
+                </div>
+                <button class="cancel-booking" title="ยกเลิกการจอง" type="submit" onclick="alert('cancel')">
+                    <img alt="cancel-icon" src="~/images/user-profile/cancel.svg" />
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

@@ -18,7 +18,7 @@ namespace WebApi.Controllers
         // GET api/simple
         [HttpGet("")]
         public ActionResult<IEnumerable<string>> Gets()
-        {
+        { 
             return new string[] { "value1", "value2" };
         }
     }
@@ -31,13 +31,13 @@ namespace WebApi.Controllers
         [HttpGet("")]
         public async Task<ActionResult<List<Laboratory>>> Gets()
         {
-            return await LabDatabase.GetAllLab();
+            return await LabDB.GetAllAsync();
         }
 
         [HttpGet("{labID}")]
         public ActionResult<Laboratory> Gets(int labID)
         {
-            return LabDatabase.GetLabByID(labID);
+            return LabDB.GetByID(labID);
         }
     }
 
@@ -49,7 +49,7 @@ namespace WebApi.Controllers
         [HttpGet("{labID}")]
         public async Task<ActionResult<List<Laboratory_item>>> Gets(int labID)
         {
-            return await LabItemDatabase.GetAllItemByLabID(labID);
+            return await LabItemDB.GetAllByLabIDAsync(labID);
         }
     }
 
@@ -61,7 +61,7 @@ namespace WebApi.Controllers
         [HttpGet("")]
         public async Task<ActionResult<List<Transaction>>> Gets()
         {
-            return await TransactionDatabase.GetAllTransaction(); 
+            return await TransactionDB.GetAllAsync(); 
         }
 
         [HttpPost("")]

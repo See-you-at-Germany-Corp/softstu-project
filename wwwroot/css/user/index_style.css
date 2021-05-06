@@ -1,0 +1,189 @@
+.profile-container {
+  gap: 60px;
+  display: flex;
+  justify-content: center;
+
+  max-width: 1200px;
+  position: relative;
+  margin: 20px auto 0px auto;
+
+  font-size: 16px;
+  /* background-color: #f3f5fa; */
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                   Profile                                  */
+/* -------------------------------------------------------------------------- */
+.pf-cont {
+  font-size: inherit;
+
+  min-width: 300px;
+  height: fit-content;
+
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+  top: 76px;
+  position: sticky;
+  position: -webkit-sticky;
+}
+
+.pf-img {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.pf-detail-cont {
+  min-width: 280px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+
+  font-size: 16px;
+}
+
+.pf-detail-cont > .student-name {
+  font-size: 1.625em;
+  margin-bottom: 10px;
+}
+
+.pf-detail-cont > .pf-detail {
+  font-size: 1.2em;
+
+  width: 100%;
+  margin-bottom: 5px;
+
+  gap: 8px;
+  display: flex;
+  align-items: center;
+}
+
+.pf-detail-cont > .pf-detail .detail-icon {
+  width: 30px;
+  height: 30px;
+  margin: 5px 0px;
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                 Transaction                                */
+/* -------------------------------------------------------------------------- */
+.transaction-list-cont {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.transaction-list,
+.transaction-list-header {
+  width: clamp(300px, 90vw, 600px);
+}
+
+.transaction-list-header {
+  display: flex;
+  font-size: 20px;
+  padding-left: 10px;
+}
+
+.transaction-list {
+  gap: 15px;
+  display: grid;
+}
+
+.transaction-item {
+  gap: 10px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+
+  border-radius: 10px;
+  box-shadow: 0px 4px 16px -10px #000000;
+  -webkit-box-shadow: 0px 4px 16px -10px #000000;
+}
+
+.transaction-item > .item-img {
+  width: 100px;
+  height: 100px;
+
+  border-radius: 10px;
+
+  background-color: black;
+}
+
+.transaction-item > .item-detail-cont {
+  flex: 1;
+  display: flex;
+  align-self: flex-start;
+  flex-direction: column;
+}
+
+.transaction-item > .cancel-booking {
+  display: flex;
+  align-self: flex-start;
+
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  border-radius: 50%;
+  background-color: transparent;
+}
+
+.cancel-booking img {
+  width: 30px;
+  height: 30px;
+}
+
+@media (max-width: 576px) {
+  .pf-cont {
+    max-width: 200px;
+  }
+  .pf-img {
+    width: 90px;
+    height: 90px;
+  }
+  .pf-detail-cont {
+    font-size: 14px;
+  }
+  .pf-detail-cont > .student-name {
+    margin-bottom: 2px;
+  }
+  .pf-detail-cont > .pf-detail {
+    gap: 5px;
+    margin-bottom: 0;
+  }
+  .pf-detail-cont > .pf-detail .detail-icon {
+    width: 20px;
+    height: 20px;
+    margin: 0;
+  }
+
+  .transaction-list-header {
+    font-size: 18px;
+  }
+  .transaction-item > .item-img {
+    width: 60px;
+    height: 60px;
+  }
+  .transaction-item > .cancel-booking img {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+@media (max-width: 1000px) {
+  .pf-cont {
+    top: 0;
+    position: relative;
+  }
+  .profile-container {
+    gap: 10px;
+    align-items: center;
+    flex-direction: column;
+  }
+}

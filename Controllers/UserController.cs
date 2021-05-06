@@ -26,8 +26,15 @@ namespace softstu_project.Controllers
             ViewData["UserInfo"] = users[0];
             return View();
         }
-        public IActionResult Booking()
+        public async Task<IActionResult> Booking()
         {
+            int id = 1;
+            Laboratory lab = LabDB.GetByID(id);
+            ViewData["LabInfo"] = lab;
+            List<ItemDetail> items = await ItemDB.GetAllDetailByLabIDAsync(id);
+            ViewData["LabItems"] = items;
+            List<Transaction> transactions = await TransactionDB.GetByLabIDAsync(id);
+            ViewData["LabTransactions"] = transactions;
             return View();
         }
 

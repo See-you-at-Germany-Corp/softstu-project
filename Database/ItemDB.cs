@@ -94,8 +94,8 @@ namespace ConsoleApp.PostgreSQL
             if (item != null)
             {
                 db.Remove(item);
-                db.SaveChanges(); 
-            } 
+                db.SaveChanges();
+            }
         }
     }
 }

@@ -39,6 +39,7 @@
   height: 30px;
   width: 150px;
 
+  padding-left: 5px;
   box-sizing: border-box;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
@@ -70,6 +71,7 @@ input[type="radio"] + label {
   background-color: rgb(205, 236, 255);
 }
 input[type="radio"]:disabled + label {
+  cursor: default;
   background-color: rgb(229, 229, 229);
 }
 
@@ -110,13 +112,10 @@ input[type="radio"]:checked + label {
     justify-content: center;
   }
 
-  .input-container {
-  }
-
   .input-container > input,
   .input-container > select {
     width: 280px;
-    height: 30px;
+    height: 35px;
     margin-bottom: 10px;
 
     box-sizing: border-box;

@@ -52,6 +52,8 @@ namespace WebApi.Controllers
                 date: {1},
             }}";
 
+            Console.WriteLine(date.ToString("yyyy-MM-dd"));
+
             JObject result = JObject.Parse(jsonString);
 
             return Json(result);

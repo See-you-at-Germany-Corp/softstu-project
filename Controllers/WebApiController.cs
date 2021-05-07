@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using ConsoleApp.PostgreSQL;
 using softstu_project.Models;
 using Npgsql;
+using Newtonsoft.Json.Linq;
 
 namespace WebApi.Controllers
 {
@@ -18,7 +19,7 @@ namespace WebApi.Controllers
         // GET api/simple
         [HttpGet("")]
         public ActionResult<IEnumerable<string>> Gets()
-        { 
+        {
             return new string[] { "value1", "value2" };
         }
     }
@@ -39,13 +40,29 @@ namespace WebApi.Controllers
         {
             return LabDB.GetByID(labID);
         }
+
+        [HttpGet("quantity")]
+        public JsonResult Get(int labID, int itemType, long timestamp)
+        {
+            DateTime date = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
+            date = date.AddMilliseconds(timestamp);
+            string jsonString = $@"{{
+                am: {1},
+                pm: {1},
+                date: {1},
+            }}";
+
+            JObject result = JObject.Parse(jsonString);
+
+            return Json(result);
+        }
     }
 
     [Route("api/lab_item")]
     public class LabItemController : Controller
     {
         public LabItemController() { }
-  
+
         [HttpGet("{labID}")]
         public async Task<ActionResult<List<Laboratory_item>>> Gets(int labID)
         {
@@ -61,7 +78,7 @@ namespace WebApi.Controllers
         [HttpGet("")]
         public async Task<ActionResult<List<Transaction>>> Gets()
         {
-            return await TransactionDB.GetAllAsync(); 
+            return await TransactionDB.GetAllAsync();
         }
 
         [HttpPost("")]

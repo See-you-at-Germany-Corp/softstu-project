@@ -1,7 +1,8 @@
 @using softstu_project.Models;
 @{
     var lab = ViewData["LabInfo"] as Laboratory;
-    var items = ViewData["LabItems"] as List<ItemDetail>;
+    var itemSet = ViewData["LabItemSet"] as List<int>;
+
     var transactions = ViewData["LabTransactions"] as List<Transaction>;
 }
 <div class="booking-container">
@@ -10,20 +11,22 @@
         <div class="input-form">
             <div class="input-container">
                 <label for="">อุปกรณ์</label>
-                <select name="" id="item-selector">
-                    @foreach (var item in items)
+                <select name="" id="item-selector" onchange="selectItem()">
+                    <option value="DUMMY" selected>เลือกอุปกรณ์</option>
+                    @foreach (var index in itemSet)
                     {
-                        <option value=@($"item-{item.uuid}")>@item.name</option>
+                        <option value="@index">@((ItemTypes)index)</option>
                     }
                 </select>
             </div>
             <div class="input-container">
                 <label for="">วันที่</label>
-                <input type="date" name="" id="selected-date" onchange="selectDate()" />
+                <input type="date" name="" id="date-selector" onchange="selectDate()" />
             </div>
             <div class="input-container">
                 <label for="">จำนวน</label>
-                <select name="" id="item-amount-selector" onselect="selectAmount()">
+                <select name="" id="quantity-selector" onselect="selectQuantity()">
+                    <option value="DUMMY">เลือกจำนวนอุปกรณ์</option>
                 </select>
             </div>
         </div>
@@ -41,8 +44,73 @@
 
 </div>
 @section Scripts {
+@* เลือกวันที่ -> ไปขอจำนวน item ที่ว่างในแต่ละช่วงเวลา am, pm (process อื่น ไปทำใน controller)*@
 <script>
-    const items = @Html.Raw(Json.Serialize(items));
+
+    const itemSelector = document.getElementById('item-selector');
+    const dateSelector = document.getElementById('date-selector');
+    const quantitySelector = document.getElementById('quantity-selector');
+
+    const itemQuantity = {
+        am: 2,
+        pm: 4,
+    }
+
+    function selectItem() {
+        /*
+        if (dateSelector.value === "") return
+        if (itemSelector.value === "DUMMY") {
+            console.log("EMPTY ITEM")
+            clearForm();
+            return
+        }
+        */
+
+        /* Query */
+        getItemTimeSlot();
+        console.log("SELECT ITEM", itemSelector.value)
+    }
+
+    function selectDate() {
+        console.log(dateSelector.value)
+        if (itemSelector.value === "DUMMY") return
+        if (dateSelector.value === "") {
+            console.log("EMPTY DATE")
+            clearForm();
+            return
+        }
+
+        /* Query */
+
+        console.log("SELECT DATE", dateSelector.value)
+    }
+
+    function selectQuantity() {
+        console.log("SELECT")
+    }
+
+    function getItemTimeSlot() {
+        fetch(`/api/lab/quantity?labID=@lab.uuid&itemType=${1}&timestamp=${1620371953505}`, {
+            method: 'get',
+            headers: {
+                'Content-Type': 'application/json',
+                Accept: 'application/json',
+            }
+        })
+            .then(res => {
+                return res.json()
+            })
+            .then(res => {
+                console.log(res)
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }
+
+    /* -------------------------------------------------------------------------- */
+    /*                                      x                                     */
+    /* -------------------------------------------------------------------------- */
 
     const transactions = @Html.Raw(Json.Serialize(transactions));
     transactions.forEach(transaction => {
@@ -50,7 +118,7 @@
         transaction.book_date = new Date(transaction.book_date).setHours(0, 0, 0, 0)
     })
 
-    function selectDate() {
+    function selectDatex() {
         const selectedDate = new Date(document.getElementById("selected-date").value).setHours(0, 0, 0, 0)
         @* console.log(transactions) *@
 
@@ -86,17 +154,21 @@
         @* console.log("CHILD COUNT", itemsAmountSelector.childElementCount) *@
 
         if (maxAvailableTimeSlot !== itemsAmountSelector.childElementCount) {
-            itemsAmountSelector.innerHTML = ''
+            itemsAmountSelector.innerHTML = ""
 
-            itemsAmountSelector.options.add(new Option(1, 1, true));
-            for (let i = 2; i <= maxAvailableTimeSlot; ++i) {
+            itemsAmountSelector.options.add(new Option("เลือกจำนวนอุปกรณ์", "DUMMY"));
+            for (let i = 1; i <= maxAvailableTimeSlot; ++i) {
                 itemsAmountSelector.options.add(new Option(i, i));
             }
         }
     }
 
-    function selectAmount() {
-        console.log("SELECT")
+    function clearItemQuantity() {
+        console.log("claer quantity")
+    }
+
+    function clearForm() {
+        console.log("clear form")
     }
 
 </script>

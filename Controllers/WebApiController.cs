@@ -90,7 +90,7 @@ namespace WebApi.Controllers
     {
         public BookedItems() { }
         [HttpGet("{user_id}")]
-        public async Task<ActionResult<List<ItemsLaboratoryTransaction>>> Gets(int user_id)  // not sure about "Item"
+        public async Task<ActionResult<List<Transaction>>> Gets(int user_id)  // not sure about "Item"
         {
             return await UserDB.GetBookedItems(user_id);
         }

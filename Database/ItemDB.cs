@@ -139,8 +139,8 @@ namespace ConsoleApp.PostgreSQL
         {
             var db = new SoftwareStudioContext();
             
-            List<ItemsLaboratoryTransaction> items_am = await db.available_items.FromSqlRaw(getAvailableItemsQueryString((int)Time_id_type.am, booking_datetime)).ToListAsync();
-            List<ItemsLaboratoryTransaction> items_pm = await db.available_items.FromSqlRaw(getAvailableItemsQueryString((int)Time_id_type.pm, booking_datetime)).ToListAsync();
+            List<ItemsLaboratoryTransaction> items_am = await db.items_laboratory_transaction.FromSqlRaw(getAvailableItemsQueryString((int)Time_id_type.am, booking_datetime)).ToListAsync();
+            List<ItemsLaboratoryTransaction> items_pm = await db.items_laboratory_transaction.FromSqlRaw(getAvailableItemsQueryString((int)Time_id_type.pm, booking_datetime)).ToListAsync();
 
             return new List<List<ItemsLaboratoryTransaction>> { items_am, items_pm };
         }

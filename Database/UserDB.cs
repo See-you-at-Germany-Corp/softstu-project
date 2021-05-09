@@ -52,11 +52,13 @@ namespace ConsoleApp.PostgreSQL
                 else return -1;
             } 
         }
-        public static async Task<List<ItemsLaboratoryTransaction>> GetBookedItems(int user_id)
+        public static async Task<List<Transaction>> GetBookedItems(int user_id)
         {
             var db = new SoftwareStudioContext();
-            
-            return new List<ItemsLaboratoryTransaction>();
+            string query_string = $@"SELECT * FROM transactions WHERE transactions.user_id = {user_id}";
+
+            List<Transaction> booked_items = await db.transactions.FromSqlRaw(query_string).ToListAsync();
+            return booked_items;
         }
     }
 }

@@ -52,6 +52,12 @@ namespace ConsoleApp.PostgreSQL
                 else return -1;
             } 
         }
+        public static async Task<List<ItemsLaboratoryTransaction>> GetBookedItems(int user_id)
+        {
+            var db = new SoftwareStudioContext();
+            
+            return new List<ItemsLaboratoryTransaction>();
+        }
     }
 }
 

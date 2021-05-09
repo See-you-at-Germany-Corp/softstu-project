@@ -135,14 +135,14 @@ namespace ConsoleApp.PostgreSQL
             }
         }
 
-        public static async Task<List<List<AvailableItemsModel>>> GetAvailableItems(DateTime booking_datetime)
+        public static async Task<List<List<ItemsLaboratoryTransaction>>> GetAvailableItems(DateTime booking_datetime)
         {
             var db = new SoftwareStudioContext();
             
-            List<AvailableItemsModel> items_am = await db.available_items.FromSqlRaw(getAvailableItemsQueryString((int)Time_id_type.am, booking_datetime)).ToListAsync();
-            List<AvailableItemsModel> items_pm = await db.available_items.FromSqlRaw(getAvailableItemsQueryString((int)Time_id_type.pm, booking_datetime)).ToListAsync();
+            List<ItemsLaboratoryTransaction> items_am = await db.available_items.FromSqlRaw(getAvailableItemsQueryString((int)Time_id_type.am, booking_datetime)).ToListAsync();
+            List<ItemsLaboratoryTransaction> items_pm = await db.available_items.FromSqlRaw(getAvailableItemsQueryString((int)Time_id_type.pm, booking_datetime)).ToListAsync();
 
-            return new List<List<AvailableItemsModel>> { items_am, items_pm };
+            return new List<List<ItemsLaboratoryTransaction>> { items_am, items_pm };
         }
 
         public static string getAvailableItemsQueryString(int time_id, DateTime datetime){

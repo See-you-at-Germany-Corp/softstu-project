@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace softstu_project.Models
 {
-    public class AvailableItemsModel
+    public class ItemsLaboratoryTransaction
     {
         [Key]
         public int uuid { get; set; }

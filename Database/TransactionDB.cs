@@ -90,7 +90,7 @@ namespace ConsoleApp.PostgreSQL
             return transactions;
         }
 
-        public static void Add(Transaction transaction)
+        public static int Add(Transaction transaction)
         {
             var db = new SoftwareStudioContext();
 
@@ -114,7 +114,9 @@ namespace ConsoleApp.PostgreSQL
                 db.transactions.Add(transaction);
                 db.logs.Add(new Log(transaction));
                 db.SaveChanges();
+                return 0;
             }
+            return 1;
         }
 
         public static void Delete(Transaction transaction)

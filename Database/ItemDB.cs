@@ -84,7 +84,7 @@ namespace ConsoleApp.PostgreSQL
 
             itemDetails.ForEach(item =>
             {
-                if (!itemSet.Contains(item.type)) 
+                if (!itemSet.Contains(item.type))
                 {
                     itemSet.Add(item.type);
                     itemQuantity.Add(0);
@@ -100,7 +100,7 @@ namespace ConsoleApp.PostgreSQL
         public static async Task<List<int>> GetItemSetByLabIDAsync(int labID)
         {
             List<ItemDetail> itemDetails = await ItemDB.GetAllDetailByLabIDAsync(labID);
-            List<int> itemSet = new List<int>(); 
+            List<int> itemSet = new List<int>();
 
             itemDetails.ForEach(item =>
             {
@@ -133,6 +133,32 @@ namespace ConsoleApp.PostgreSQL
                 db.Remove(item);
                 db.SaveChanges();
             }
+        }
+
+        public static async Task<List<List<AvailableItemsModel>>> GetAvailableItems(DateTime booking_datetime)
+        {
+            var db = new SoftwareStudioContext();
+            
+            List<AvailableItemsModel> items_am = await db.available_items.FromSqlRaw(getAvailableItemsQueryString((int)Time_id_type.am, booking_datetime)).ToListAsync();
+            List<AvailableItemsModel> items_pm = await db.available_items.FromSqlRaw(getAvailableItemsQueryString((int)Time_id_type.pm, booking_datetime)).ToListAsync();
+
+            return new List<List<AvailableItemsModel>> { items_am, items_pm };
+        }
+
+        public static string getAvailableItemsQueryString(int time_id, DateTime datetime){
+            string x = $@"SELECT items.uuid, items.name, items.type, laboratory_items.laboratory_id, 
+                            COALESCE(transactions.time_id, {time_id}) as time_id FROM items
+                                INNER JOIN laboratory_items ON 
+                                    laboratory_items.item_id = items.uuid 
+                                LEFT JOIN transactions ON 
+                                    transactions.item_id != items.uuid 
+                                    AND transactions.book_date = '{datetime.ToString("yyyy-MM-dd")}'
+                                WHERE items.uuid NOT IN (
+                                    SELECT transactions.item_id FROM transactions WHERE 
+                                        transactions.book_date = '{datetime.ToString("yyyy-MM-dd")}'
+                                        AND transactions.time_id = {time_id})
+                            ORDER BY items.uuid";
+            return x;
         }
     }
 }

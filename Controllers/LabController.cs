@@ -21,12 +21,12 @@ namespace softstu_project.Controllers
 
         public async Task<IActionResult> Index()
         {
-            List<Laboratory> name = await LabDB.GetAllAsync();
+            List<Laboratory> nameLab = await LabDB.GetAllAsync();
             List<ItemDetail> items = await ItemDB.GetAllDetailAsync();
             List<List<ItemDetail>> labItem = new List<List<ItemDetail>>();
             List<List<ItemDetail>> myType = new List<List<ItemDetail>>();
             List<Int64> checkList = new List<Int64>();
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < nameLab.Count; i++)
             {
                 labItem.Add(new List<ItemDetail>());
                 myType.Add(new List<ItemDetail>());
@@ -53,7 +53,7 @@ namespace softstu_project.Controllers
 
             }
             Console.WriteLine(labItem.Count);
-            ViewData["name"] = name;
+            ViewData["nameLab"] = nameLab;
             ViewData["myType"] = myType;
             ViewData["labItem"] = labItem;
             return View();

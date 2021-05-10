@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using softstu_project.Models;
+using ConsoleApp.PostgreSQL;
 
 namespace softstu_project.Controllers
 {
@@ -18,8 +19,22 @@ namespace softstu_project.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            int id = 10;
+            List<User> users = await UserDB.GetByIDAsync(id);
+            ViewData["UserInfo"] = users[0];
+            return View();
+        }
+        public async Task<IActionResult> Booking()
+        {
+            int id = 1;
+            Laboratory lab = LabDB.GetByID(id);
+            ViewData["LabInfo"] = lab;
+            List<ItemDetail> items = await ItemDB.GetAllDetailByLabIDAsync(id);
+            ViewData["LabItems"] = items;
+            List<Transaction> transactions = await TransactionDB.GetByLabIDAsync(id);
+            ViewData["LabTransactions"] = transactions;
             return View();
         }
 

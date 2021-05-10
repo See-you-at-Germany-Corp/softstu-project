@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using softstu_project.Models;
+using ConsoleApp.PostgreSQL;
+
 namespace soft_stu_project.Controllers
 {
     public class LoginController : Controller
@@ -17,8 +19,11 @@ namespace soft_stu_project.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index(string username, string password)
         {
+            int user = await UserDB.LoginAsync(username, password);
+
+
             return View();
         }
 

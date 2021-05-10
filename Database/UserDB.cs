@@ -7,7 +7,7 @@ using softstu_project.Models;
 namespace ConsoleApp.PostgreSQL
 {
     public class UserDB
-    { 
+    {
         public UserDB() { }
 
         public static async Task<List<User>> GetByIDAsync(int userID)
@@ -24,7 +24,7 @@ namespace ConsoleApp.PostgreSQL
         public static int Register(User user)
         {
             var db = new SoftwareStudioContext();
-            
+
             /// hash password.
             string hashedPassword = BCrypt.Net.BCrypt.HashPassword(user.password);
 
@@ -48,9 +48,27 @@ namespace ConsoleApp.PostgreSQL
                 /// verify incoming password with in db password.
                 bool result = BCrypt.Net.BCrypt.Verify(password, user.password);
 
-                if (result) return user.uuid; 
+                if (result) return user.uuid;
                 else return -1;
-            } 
+            }
+        }
+        public static async Task<List<Transaction>> GetBookedItems(int user_id)
+        {
+            var db = new SoftwareStudioContext();
+            string query_string = $@"SELECT * FROM transactions WHERE transactions.user_id = {user_id}";
+
+            List<Transaction> booked_items = await db.transactions.FromSqlRaw(query_string).ToListAsync();
+            return booked_items;
+        }
+        public static int BookItems(int user_id, int item_id, int time_id, string date_string)
+        {
+            Transaction transaction = new Transaction(user_id,
+                                                      item_id, 
+                                                      (int)Transaction_type.borrow, 
+                                                      time_id, 
+                                                      DateTime.ParseExact(date_string, "yyyy-MM-dd", null));
+            int result = TransactionDB.Add(transaction);
+            return result;
         }
     }
 }

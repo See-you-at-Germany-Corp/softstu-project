@@ -15,15 +15,11 @@ namespace WebApi.Controllers
     {
         public SimpleController() { }
 
-        // // GET api/simple
-        // [HttpGet("")]
-        // public ActionResult<IEnumerable<string>> Gets()
-        // { 
-        //     return new string[] { "value1", "value2" };
-        // }
-         public async Task<List<ItemDetail>> GetAllDetailAsync()
+        // GET api/simple
+        [HttpGet("")]
+        public ActionResult<IEnumerable<string>> Gets()
         {
-            return await ItemDB.GetAllDetailAsync();
+            return new string[] { "value1", "value2" };
         }
     }
 
@@ -49,7 +45,7 @@ namespace WebApi.Controllers
     public class LabItemController : Controller
     {
         public LabItemController() { }
-  
+
         [HttpGet("{labID}")]
         public async Task<ActionResult<List<Laboratory_item>>> Gets(int labID)
         {
@@ -65,7 +61,7 @@ namespace WebApi.Controllers
         [HttpGet("")]
         public async Task<ActionResult<List<Transaction>>> Gets()
         {
-            return await TransactionDB.GetAllAsync(); 
+            return await TransactionDB.GetAllAsync();
         }
 
         [HttpPost("")]
@@ -75,6 +71,37 @@ namespace WebApi.Controllers
             // Transaction transaction = new Transaction(1, 6, (int)Transaction_type.borrow, (int)Time_id_type.am, DateTime.Now, DateTime.Now);
             // TransactionDatabase.AddTransaction(transaction);
             return StatusCode(201);
+        }
+    }
+    [Route("api/available_items")]
+    public class AvailableItems : Controller
+    {
+        public AvailableItems() { }
+        [HttpGet("{datetime_str}")]
+        public async Task<ActionResult<List<List<ItemsLaboratoryTransaction>>>> Gets(string datetime_str)  // not sure about "Item"
+        {
+            DateTime booking_datetime = DateTime.ParseExact(datetime_str, "yyyy-MM-dd", null);
+            return await ItemDB.GetAvailableItems(booking_datetime);
+        }
+    }
+
+    [Route("api/booked_items")]
+    public class BookedItems : Controller
+    {
+        public BookedItems() { }
+        [HttpGet("{user_id}")]
+        public async Task<ActionResult<List<Transaction>>> Gets(int user_id)  // not sure about "Item"
+        {
+            return await UserDB.GetBookedItems(user_id);
+        }
+        [HttpPost("{user_id}/{item_id}/{time_id}/{date}")]
+        public ActionResult<HttpResponseMessage> Post(int user_id, int item_id, int time_id, string date)  // not sure about "Item"
+        {
+            int status = UserDB.BookItems(user_id, item_id, time_id, date);
+            if (status == 0) 
+                return StatusCode(201);
+            else 
+                return StatusCode(400);
         }
     }
 }

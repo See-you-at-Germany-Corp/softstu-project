@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+    @* Admin Navbar. *@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Double Lab</title>
@@ -25,6 +26,7 @@
     <script src="~/js/navbar.js" asp-append-version="true"></script>
     <script src="~/js/admin/log_table_management.js" asp-append-version="true"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/cookies.js" asp-append-version="true"></script>
 </head>
 
 <body>
@@ -50,7 +52,7 @@
                 </div>
 
                 <div class="nav-item-text">
-                    <a asp-controller="Home" asp-action="Index">Logout</a>
+                    <a class="login-btn" href="/Login">Login</a>
                 </div>
                 <div class="nav-item nav-expand" onclick="showNavbar()">
                     <img src="https://cdn.discordapp.com/attachments/817783466379968572/832547946557341708/hamburger.png"
@@ -73,5 +75,24 @@
     </footer>
     @RenderSection("Scripts", required: false)
 </body>
+
+<script>
+    checkCookies();
+
+    function checkCookies() {
+        const userID = getCookie("userID");
+        const login = document.querySelector(".login-btn");
+
+        if (!parseInt(userID)) {
+            login.innerHTML = "Login";
+            login.href = "/Login";
+            login.removeEventListener("click", setUserID);
+        } else {
+            login.innerHTML = "Logout";
+            login.href = "/";
+            login.addEventListener("click", setUserID);
+        }
+    }
+</script>
 
 </html>

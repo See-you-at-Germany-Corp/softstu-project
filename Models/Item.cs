@@ -6,7 +6,12 @@ namespace softstu_project.Models
 {
     public enum ItemTypes
     {
-        none, keyboard, mouse, monitor, ups, speaker,
+        None,
+        Keyboard,
+        Mouse,
+        Monitor,
+        Ups,
+        Speaker,
     }
 
     public class Item
@@ -16,7 +21,7 @@ namespace softstu_project.Models
         [Required]
 
         public string name { get; set; }
-        
+
         public int type { get; set; }
 
         public DateTime created { get; set; }
@@ -39,14 +44,14 @@ namespace softstu_project.Models
         public static string getName(ItemTypes itemType)
         {
             List<string> itemNames = new List<string>() { "none", "keyboard", "mouse", "monitor", "ups", "speaker" };
-            
+
             return itemNames[(int)itemType];
         }
 
         public static string getName(int itemType)
         {
             List<string> itemNames = new List<string>() { "none", "keyboard", "mouse", "monitor", "ups", "speaker" };
-            
+
             return itemNames[itemType];
         }
     }

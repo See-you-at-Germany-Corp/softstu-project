@@ -48,7 +48,7 @@ namespace ConsoleApp.PostgreSQL
         public static async Task<List<int>> GetCurrentQuantityByLabIDAsync(int labID)
         {
             var db = new SoftwareStudioContext();
- 
+
             int allQuantity = (await GetAllByLabIDAsync(labID)).Count;
             int allItemsAM = allQuantity;
             int allItemsPM = allQuantity;
@@ -91,7 +91,7 @@ namespace ConsoleApp.PostgreSQL
         public static async Task<List<List<int>>> GetCurrentQuantityByDateAsync()
         {
             var db = new SoftwareStudioContext();
- 
+
             List<int> allQuantity = await GetAllQuantityAsync();
             List<int> allItemsAM = allQuantity;
             List<int> allItemsPM = allQuantity;
@@ -128,7 +128,7 @@ namespace ConsoleApp.PostgreSQL
         public static async Task<List<List<int>>> GetCurrentQuantityByDateAsync(DateTime date)
         {
             var db = new SoftwareStudioContext();
- 
+
             List<int> allItemsAM = await GetAllQuantityAsync();
             List<int> allItemsPM = await GetAllQuantityAsync();
 
@@ -159,6 +159,22 @@ namespace ConsoleApp.PostgreSQL
             }
 
             return new List<List<int>> { allItemsAM, allItemsPM };
+        }
+
+        public static async Task<int> GetLabItemCountByLabIDAndType(int labID, int itemType)
+        {
+            var db = new SoftwareStudioContext();
+
+            string queryString = $@"
+                SELECT laboratory_items.uuid
+                FROM laboratory_items
+                LEFT JOIN items ON laboratory_items.item_id = items.uuid
+                WHERE laboratory_items.laboratory_id = {labID} AND items.type = {itemType}
+            ";
+
+            int labItemCount = await db.laboratory_items.FromSqlRaw(queryString).CountAsync();
+
+            return labItemCount;
         }
 
         public static void AddItem(int labID, int itemID)

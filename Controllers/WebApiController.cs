@@ -42,21 +42,52 @@ namespace WebApi.Controllers
         }
 
         [HttpGet("quantity")]
-        public JsonResult Get(int labID, int itemType, long timestamp)
+        public async Task<ActionResult> Get(int labID, int itemType, int timestamp)
         {
             DateTime date = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
-            date = date.AddMilliseconds(timestamp);
+            date = date.AddSeconds(timestamp);
+
+            List<Transaction> transactions = await TransactionDB.GetByLabIDTypeAndDateAsync(labID, itemType, date);
+
+            int allItems = await LabItemDB.GetLabItemCountByLabIDAndType(1, 1);
+            int amTimeSlot = allItems;
+            int pmTimeSlot = allItems;
+
+            foreach (var transaction in transactions)
+            {
+                switch (transaction.time_id)
+                {
+                    case (int)Time_id_type.none:
+                        break;
+                    case (int)Time_id_type.am:
+                        amTimeSlot--;
+                        break;
+                    case (int)Time_id_type.pm:
+                        pmTimeSlot--;
+                        break;
+                    case (int)Time_id_type.day:
+                        amTimeSlot--;
+                        pmTimeSlot--;
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+
             string jsonString = $@"{{
-                am: {1},
-                pm: {1},
-                date: {1},
+                am: {(date.Day == 1 ? 0 : amTimeSlot)},
+                pm: {(date.Day == 1 ? 0 : pmTimeSlot)},
             }}";
-
-            Console.WriteLine(date.ToString("yyyy-MM-dd"));
-
             JObject result = JObject.Parse(jsonString);
 
             return Json(result);
+        }
+
+        [HttpPost("booking")]
+        public async Task<ActionResult> Booking()
+        {
+            return Json("");
         }
     }
 

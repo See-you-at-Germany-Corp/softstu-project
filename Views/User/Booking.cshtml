@@ -7,7 +7,7 @@
 }
 <div class="booking-container">
     <div class="lab-header">@lab.name</div>
-    <form action="">
+    <div class="form-container">
         <div class="input-form">
             <div class="input-container">
                 <label for="">อุปกรณ์</label>
@@ -15,7 +15,7 @@
                     <option value="DUMMY" selected>เลือกอุปกรณ์</option>
                     @foreach (var index in itemSet)
                     {
-                        <option value="@index">@((ItemTypes)index)</option>
+                        <option value=@index>@((ItemTypes)index)</option>
                     }
                 </select>
             </div>
@@ -25,54 +25,63 @@
             </div>
             <div class="input-container">
                 <label for="">จำนวน</label>
-                <select name="" id="quantity-selector" onselect="selectQuantity()">
+                <select name="" id="quantity-selector" onchange="setFormTimeSlot()">
                     <option value="DUMMY">เลือกจำนวนอุปกรณ์</option>
                 </select>
             </div>
         </div>
         <div class="input-time-select">
             <label>ช่วงเวลาที่สามารถจองได้</label>
-            <div class="radio-container">
-                <input type="radio" name="select-time" id="time-1" disabled>
-                <label for="time-1" class="radio-label">09:00 - 12:00</label>
-                <input type="radio" name="select-time" id="time-2" disabled>
-                <label for="time-2" class="radio-label">13:00 - 16:00</label>
+            <div class="radio-container" id="time-slot-selector">
+                <input type="checkbox" name="time-selector" id="time-slot-1" value="1" disabled>
+                <label for="time-slot-1" class="radio-label">09:00 - 12:00</label>
+                <input type="checkbox" name="time-selector" id="time-slot-2" value="2" disabled>
+                <label for="time-slot-2" class="radio-label">13:00 - 16:00</label>
             </div>
         </div>
-        <button>Submit</button>
-    </form>
+        <button onclick="bookItem()">Submit</button>
+    </div>
 
 </div>
 @section Scripts {
-@* เลือกวันที่ -> ไปขอจำนวน item ที่ว่างในแต่ละช่วงเวลา am, pm (process อื่น ไปทำใน controller)*@
 <script>
-
     const itemSelector = document.getElementById('item-selector');
     const dateSelector = document.getElementById('date-selector');
     const quantitySelector = document.getElementById('quantity-selector');
+    const timeSlotSelector = document.getElementsByName('time-selector');
 
-    const itemQuantity = {
-        am: 2,
-        pm: 4,
+    let timeSlot = {
+        am: 0,
+        pm: 0
+    };
+
+    async function updateForm() {
+        clearItemQuantity()
+        clearFormTimeSlot()
+
+        timeSlot = await getItemTimeSlot()
+
+        let { maxQuantity } = getMinMaxQuantity()
+
+        if (maxQuantity === 0) {
+            quantitySelector.options[0].text = "ไม่มีอุปกรณ์ว่าง";
+            return
+        }
+        setQuantitySeletor(maxQuantity)
     }
 
     function selectItem() {
-        /*
         if (dateSelector.value === "") return
         if (itemSelector.value === "DUMMY") {
             console.log("EMPTY ITEM")
             clearForm();
             return
         }
-        */
 
-        /* Query */
-        getItemTimeSlot();
-        console.log("SELECT ITEM", itemSelector.value)
+        updateForm()
     }
 
     function selectDate() {
-        console.log(dateSelector.value)
         if (itemSelector.value === "DUMMY") return
         if (dateSelector.value === "") {
             console.log("EMPTY DATE")
@@ -80,17 +89,27 @@
             return
         }
 
-        /* Query */
-
-        console.log("SELECT DATE", dateSelector.value)
+        updateForm()
     }
 
-    function selectQuantity() {
-        console.log("SELECT")
+    function getMinMaxQuantity() {
+        let minQuantity, maxQuantity;
+
+        if (timeSlot.am > timeSlot.pm) {
+            minQuantity = timeSlot.pm
+            maxQuantity = timeSlot.am
+        } else {
+            minQuantity = timeSlot.am
+            maxQuantity = timeSlot.pm
+        }
+
+        return { minQuantity, maxQuantity }
     }
 
     function getItemTimeSlot() {
-        fetch(`/api/lab/quantity?labID=@lab.uuid&itemType=${1}&timestamp=${1620371953505}`, {
+        const timestamp = Date.parse(dateSelector.value) / 1000
+
+        return fetch(`/api/lab/quantity?labID=@lab.uuid&itemType=${itemSelector.value}&timestamp=${timestamp}`, {
             method: 'get',
             headers: {
                 'Content-Type': 'application/json',
@@ -101,75 +120,61 @@
                 return res.json()
             })
             .then(res => {
-                console.log(res)
+                return res
             })
             .catch(err => {
                 console.log(err)
             })
     }
 
-    /* -------------------------------------------------------------------------- */
-    /*                                      x                                     */
-    /* -------------------------------------------------------------------------- */
+    function setFormTimeSlot() {
+        let { minQuantity, maxQuantity } = getMinMaxQuantity()
+        const timeSlot1 = document.getElementById('time-slot-1')
+        const timeSlot2 = document.getElementById('time-slot-2')
 
-    const transactions = @Html.Raw(Json.Serialize(transactions));
-    transactions.forEach(transaction => {
-        transaction.created = new Date(transaction.created).setHours(0, 0, 0, 0)
-        transaction.book_date = new Date(transaction.book_date).setHours(0, 0, 0, 0)
-    })
-
-    function selectDatex() {
-        const selectedDate = new Date(document.getElementById("selected-date").value).setHours(0, 0, 0, 0)
-        @* console.log(transactions) *@
-
-        const availableTimeSlot = {
-            am: items?.length,
-            pm: items?.length,
-        }
-
-        transactions.forEach(transaction => {
-            if (transaction.book_date !== selectedDate) return
-
-            switch (transaction.time_id) {
-                case 1:
-                    availableTimeSlot.am -= 1
-                    break;
-                case 2:
-                    availableTimeSlot.pm -= 1
-                    break;
-                case 3:
-                    availableTimeSlot.am -= 1
-                    availableTimeSlot.pm -= 1
-                    break;
-                default:
-                    break;
+        if (minQuantity !== maxQuantity && parseInt(quantitySelector.value) > minQuantity) {
+            if (timeSlot.am > timeSlot.pm) {
+                timeSlot1.disabled = false;
+                timeSlot2.disabled = true;
+            } else {
+                timeSlot1.disabled = true;
+                timeSlot2.disabled = false;
             }
-        })
-        @* console.log("TIMESLOT",availableTimeSlot) *@
+        } else {
+            timeSlot1.disabled = false;
+            timeSlot2.disabled = false;
+        }
+    }
 
-        const maxAvailableTimeSlot = availableTimeSlot.am > availableTimeSlot.pm ? availableTimeSlot.am : availableTimeSlot.pm
-        @* console.log("MAX TIMESLOT", maxAvailableTimeSlot) *@
-
-        const itemsAmountSelector = document.getElementById("item-amount-selector")
-        @* console.log("CHILD COUNT", itemsAmountSelector.childElementCount) *@
-
-        if (maxAvailableTimeSlot !== itemsAmountSelector.childElementCount) {
-            itemsAmountSelector.innerHTML = ""
-
-            itemsAmountSelector.options.add(new Option("เลือกจำนวนอุปกรณ์", "DUMMY"));
-            for (let i = 1; i <= maxAvailableTimeSlot; ++i) {
-                itemsAmountSelector.options.add(new Option(i, i));
+    function setQuantitySeletor(maxQuantity) {
+        if (maxQuantity !== quantitySelector.childElementCount) {
+            for (let i = 1; i <= maxQuantity; ++i) {
+                quantitySelector.options.add(new Option(i, i));
             }
         }
     }
 
-    function clearItemQuantity() {
-        console.log("claer quantity")
+    function clearItemQuantity(dummy_text = "เลือกจำนวนอุปกรณ์") {
+        quantitySelector.innerHTML = ""
+        quantitySelector.options.add(new Option(dummy_text, "DUMMY"));
     }
 
-    function clearForm() {
-        console.log("clear form")
+    function clearFormTimeSlot() {
+        document.getElementById('time-slot-1').checked = false;
+        document.getElementById('time-slot-2').checked = false;
+        document.getElementById('time-slot-1').disabled = true;
+        document.getElementById('time-slot-2').disabled = true;
     }
 
+    function bookItem() {
+        const itemTypeID = itemSelector.value
+        const bookDate = dateSelector.value
+        const quantity = quantitySelector.value
+        const timeID =
+            (timeSlotSelector[0].checked ? parseInt(timeSlotSelector[0].value) : 0) +
+            (timeSlotSelector[1].checked ? parseInt(timeSlotSelector[1].value) : 0)
+
+        console.log(itemTypeID, bookDate, quantity, timeID)
+    }
 </script>
 }

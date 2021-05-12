@@ -80,6 +80,32 @@ namespace ConsoleApp.PostgreSQL
             return transactions;
         }
 
+        public static async Task<List<Transaction>> GetByLabIDTypeAndDateAsync(int labID, int itemType, DateTime date)
+        {
+            var db = new SoftwareStudioContext();
+
+            List<string> reqList = new List<string>{
+                    "transactions.uuid",
+                    "book_date",
+                    "transactions.created",
+                    "transactions.item_id",
+                    "time_id",
+                    "transaction_type",
+                    "transactions.user_id"
+                };
+            var reqString = db.ListToString(reqList);
+            string queryString = $@"
+                SELECT {reqString}
+                FROM transactions
+                LEFT JOIN items ON transactions.item_id = items.uuid
+                LEFT JOIN laboratory_items ON laboratory_items.item_id = items.uuid
+                WHERE laboratory_id = {labID} AND type = {itemType} AND book_date = '{date.ToString("yyyy-MM-dd")}';
+            ";
+            List<Transaction> transactions = await db.transactions.FromSqlRaw(queryString).ToListAsync();
+
+            return transactions;
+        }
+
         public static async Task<List<Transaction>> GetByUserIDAsync(int userID)
         {
             var db = new SoftwareStudioContext();

@@ -1,4 +1,4 @@
-function setUserID() {
+function resetUserID() {
   setCookie("userID", 0);
 }
 

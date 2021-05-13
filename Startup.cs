@@ -25,6 +25,7 @@ namespace soft_stu_project
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMvcCore().AddNewtonsoftJson();
             services.AddControllersWithViews();
             services.AddCors(options =>
             {
@@ -52,9 +53,10 @@ namespace soft_stu_project
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
+                //edit here
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Admin}/{action=Detail}/{id?}");
             });
         }
     }

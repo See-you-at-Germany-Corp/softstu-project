@@ -9,7 +9,7 @@
   margin: 20px auto 0px auto;
 }
 
-.booking-container form {
+.booking-container .form-container {
   gap: 20px;
   display: flex;
   flex-direction: column;
@@ -80,7 +80,31 @@ input[type="radio"]:checked + label {
   background-color: rgb(94, 158, 255);
 }
 
-.booking-container form > button {
+input[type="checkbox"] {
+  display: none;
+  position: absolute;
+  visibility: hidden;
+}
+
+input[type="checkbox"] + label {
+  cursor: pointer;
+  padding: 4px 10px;
+  border-radius: 5px;
+
+  color: rgb(26, 145, 218);
+  background-color: rgb(205, 236, 255);
+}
+input[type="checkbox"]:disabled + label {
+  cursor: default;
+  background-color: rgb(229, 229, 229);
+}
+
+input[type="checkbox"]:checked + label {
+  color: white;
+  background-color: rgb(94, 158, 255);
+}
+
+.booking-container .form-container > button {
   align-self: flex-end;
   width: fit-content;
 
@@ -101,7 +125,7 @@ input[type="radio"]:checked + label {
     max-width: 280px;
     /* background-color: red; */
   }
-  .booking-container form {
+  .booking-container .form-container {
     gap: 10px;
     max-width: 100vw;
   }

@@ -5,7 +5,7 @@
 <div class="container">
     @foreach (var labName in ViewData["nameLab"] as List<Laboratory>)
     {
-        <div class="lab-container">
+        <div class="all-lab-container">
             <div class="lab-in-container">
                 <div class="lab-pic">
                     <img id="picture1"
@@ -43,7 +43,7 @@
                         </div>
                         <div class="btn-container">
                             <a href="Lab/@labId">
-                                <button class="btn-more-inform">รายละเอียด</button>
+                                <button class="primary-button">รายละเอียด</button>
                             </a>
                         </div>
                     </div>

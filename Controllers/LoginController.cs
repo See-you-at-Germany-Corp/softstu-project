@@ -19,6 +19,8 @@ namespace soft_stu_project.Controllers
             _logger = logger;
         }
 
+        [HttpGet]
+        [Route("Login/")]
         public async Task<IActionResult> Index(string username, string password)
         {
             int user = await UserDB.LoginAsync(username, password);

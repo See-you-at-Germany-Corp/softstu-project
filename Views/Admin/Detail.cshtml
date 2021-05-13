@@ -151,10 +151,11 @@
         }
 
         function dateSelected() {
+            var lab = document.getElementById("lab-title").value
             var date = document.getElementById("date").value
             @* console.log(date) *@
             date += " 00:00"
-            location.href=`../Detail/?id=2&date=${date}`
+            location.href=`../Detail/?id=${lab}&date=${date}`
         }
 
         function labSelected() {

@@ -40,10 +40,10 @@ namespace softstu_project.Controllers
         {
 
             int labID = Int16.Parse(id ?? "1");
-            Laboratory lab = LabDatabase.GetByID(Int16.Parse(id ?? "1"));
+            Laboratory lab = LabDB.GetByID(Int16.Parse(id ?? "1"));
             List<LabItem> items = new List<LabItem>();
-            IList<ItemDetail> labItems = await ItemDatabase.GetAllDetailByLabIDAsync(Int16.Parse(id ?? "1"));
-            List<Laboratory> labList = await LabDatabase.GetAllAsync();
+            IList<ItemDetail> labItems = await ItemDB.GetAllDetailByLabIDAsync(Int16.Parse(id ?? "1"));
+            List<Laboratory> labList = await LabDB.GetAllAsync();
 
             
             ViewData["LabItems"] = labItems;
@@ -99,13 +99,13 @@ namespace softstu_project.Controllers
         {
             int labID = Int16.Parse(id ?? "1");
             DateTime datetime = DateTime.ParseExact(date ?? DateTime.Now.ToString("yyyy-MM-dd HH:mm"),"yyyy-MM-dd HH:mm",CultureInfo.InvariantCulture);
-            Laboratory lab = LabDatabase.GetByID(Int16.Parse(id ?? "1"));
+            Laboratory lab = LabDB.GetByID(Int16.Parse(id ?? "1"));
             List<LabItem> items = new List<LabItem>();
-            IList<ItemDetail> labItems = await ItemDatabase.GetAllDetailByLabIDAsync(Int16.Parse(id ?? "1"));
-            List<List<int>> allQuantity = await LabItemDatabase.GetCurrentQuantityByDateAsync(datetime);
-            List<Transaction> transactions = await TransactionDatabase.GetByLabIDAndDateAsync(labID,datetime );
+            IList<ItemDetail> labItems = await ItemDB.GetAllDetailByLabIDAsync(Int16.Parse(id ?? "1"));
+            List<List<int>> allQuantity = await LabItemDB.GetCurrentQuantityByDateAsync(datetime);
+            List<Transaction> transactions = await TransactionDB.GetByLabIDAndDateAsync(labID,datetime );
             List<int> availableNumber = new List<int>{allQuantity[0][labID-1] , allQuantity[1][labID-1]};
-            List<Laboratory> labList = await LabDatabase.GetAllAsync();
+            List<Laboratory> labList = await LabDB.GetAllAsync();
 
             for(int i = 0; i < labItems.Count; i++) {
                 var available = 0;
@@ -137,23 +137,23 @@ namespace softstu_project.Controllers
             foreach(var name in itemnames) {
                 if (id != null) {
                     var labID = Int16.Parse(id ?? "0");
-                    int itemID = ItemDatabase.Add(new Item(name));
-                    LabItemDatabase.AddItem(labID ,itemID);
+                    int itemID = ItemDB.Add(new Item(name,(ItemTypes)labID));
+                    LabItemDB.AddItem(labID ,itemID);
                 }
             }
             if (id != null) {
                 foreach(var removeID in removeid) {
                     var labID = Int16.Parse(id ?? "0");
                     var itemID = Int16.Parse(removeID ?? "0");
-                    var itemDB = await ItemDatabase.GetByIDAsync(itemID);
-                    var labItemDB = await LabItemDatabase.GetAllByLabIDAsync(labID);
+                    var itemDB = await ItemDB.GetByIDAsync(itemID);
+                    var labItemDB = await LabItemDB.GetAllByLabIDAsync(labID);
                     foreach(var ldb in labItemDB) {
                         if(ldb.item_id == itemID) {
                             
-                            LabItemDatabase.RemoveItem(ldb);
+                            LabItemDB.RemoveItem(ldb.item_id);
                         }
                     }
-                    ItemDatabase.Remove(itemDB[0]);
+                    ItemDB.Remove(itemDB[0]);
                     
                 }
             }

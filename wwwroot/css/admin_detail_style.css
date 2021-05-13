@@ -1,0 +1,133 @@
+
+.detail-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 80%;
+    margin: 0 auto;
+}
+
+#numberinput {
+    width: 30px;
+    text-align: center;
+}
+
+
+#accept, #cancel {
+    height: 50px;
+    width: 100px;
+    border-radius: 5px;
+   
+}
+
+#accept {
+     border: 2px solid #64bdf8;
+     background-color: white;
+     color: #64bdf8;
+}
+
+#accept:hover {
+    background-color: #64bdf8;
+    color: white;
+}
+
+#cancel {
+    border: none;
+    background-color: whitesmoke;
+}
+
+#cancel:hover {
+    background-color: #e5e5e5;
+}
+
+#button-container {
+    margin-top: 20px;
+}
+button[id^="increment"], button[id^="decrement"] {
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    border: none ;
+    text-align: center;
+    color: white;
+}
+button[id^="increment"] {
+    background-color: green;
+    margin-right: 5px;
+}
+
+button[id^="increment"]:hover {
+    background-color: limegreen;
+}
+
+button[id^="increment"]:active {
+    background-color: seagreen;
+}
+
+button[id^="decrement"] {
+    background-color: red;
+    margin-right: 5px;
+}
+
+button[id^="decrement"]:hover {
+    background-color: #ff6161;
+}
+
+button[id^="decrement"]:active {
+    background-color: #9c3b3b;
+}
+.datepicker-container, .add-container{
+    display: flex;
+    margin-bottom: 10px;
+    margin-top:10px;
+}
+
+.datepicker-container{
+    justify-content: space-between;
+}
+
+#date {
+    align-self: center;
+    height: 20px;
+}
+
+.available {
+    display: flex;
+    margin-right: 70px;
+}
+
+.available-number {
+    background-color: var(--color);
+    width: 60px;
+    text-align: center;
+    margin-left: 10px;
+    border-radius: 5px;
+    height: 60px;
+    color: white;
+}
+
+.available-number h3, p {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+#delete-td {
+    /* border-style : hidden!important; */
+    border:none;
+    width: 50px !important;
+    background-color: white;
+}
+
+.new-item-edit input {
+    width: 100%;
+}
+
+#table-title {
+    width: 400px;
+}
+
+#lab-title {
+    border: 1px solid gainsboro;
+    background-color: whitesmoke;
+    border-radius: 5px;
+}

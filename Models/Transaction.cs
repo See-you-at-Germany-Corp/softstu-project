@@ -56,5 +56,11 @@ namespace softstu_project.Models
         {
             return $"({this.user_id}, {this.item_id}, {this.transaction_type}, {this.time_id}, '{this.created}', '{this.book_date}')";
         }
+
+        public string GetTimeName(int timeID)
+        {
+            List<string> timeNames = new List<string> { "none", "เช้า", "บ่าย", "ทั้งวัน" };
+            return timeNames[timeID];
+        }
     }
 }

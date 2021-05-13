@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using ConsoleApp.PostgreSQL;
 using softstu_project.Models;
 using Npgsql;
+using Newtonsoft.Json.Linq;
 
 namespace WebApi.Controllers
 {
@@ -38,6 +39,55 @@ namespace WebApi.Controllers
         public ActionResult<Laboratory> Gets(int labID)
         {
             return LabDB.GetByID(labID);
+        }
+
+        [HttpGet("quantity")]
+        public async Task<ActionResult> Get(int labID, int itemType, int timestamp)
+        {
+            DateTime date = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
+            date = date.AddSeconds(timestamp);
+
+            List<Transaction> transactions = await TransactionDB.GetByLabIDTypeAndDateAsync(labID, itemType, date);
+
+            int allItems = await LabItemDB.GetLabItemCountByLabIDAndType(1, 1);
+            int amTimeSlot = allItems;
+            int pmTimeSlot = allItems;
+
+            foreach (var transaction in transactions)
+            {
+                switch (transaction.time_id)
+                {
+                    case (int)Time_id_type.none:
+                        break;
+                    case (int)Time_id_type.am:
+                        amTimeSlot--;
+                        break;
+                    case (int)Time_id_type.pm:
+                        pmTimeSlot--;
+                        break;
+                    case (int)Time_id_type.day:
+                        amTimeSlot--;
+                        pmTimeSlot--;
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+
+            string jsonString = $@"{{
+                am: {(date.Day == 1 ? 0 : amTimeSlot)},
+                pm: {(date.Day == 1 ? 0 : pmTimeSlot)},
+            }}";
+            JObject result = JObject.Parse(jsonString);
+
+            return Json(result);
+        }
+
+        [HttpPost("booking")]
+        public async Task<ActionResult> Booking()
+        {
+            return Json("");
         }
     }
 

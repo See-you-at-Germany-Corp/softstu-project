@@ -47,5 +47,11 @@ namespace softstu_project.Models
             this.book_date = transaction.book_date;
             this.created = DateTime.Now;
         }
+
+        public string GetTimeName(int timeID)
+        {
+            List<string> timeNames = new List<string> { "none", "เช้า", "บ่าย", "ทั้งวัน" };
+            return timeNames[timeID];
+        }
     }
 }

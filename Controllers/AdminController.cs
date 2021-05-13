@@ -21,6 +21,8 @@ namespace softstu_project.Controllers
             _logger = logger;
         }
 
+        [HttpGet]
+        [Route("Admin/")]
         public async Task<IActionResult> Index()
         {
             /// get lab lists here. 
@@ -95,6 +97,7 @@ namespace softstu_project.Controllers
         }
 
         [HttpGet]
+        [Route("Admin/Detail/")]
         public async Task<IActionResult> Detail(string? id, string? date)
         {
             int labID = Int16.Parse(id ?? "1");

@@ -18,6 +18,8 @@ namespace softstu_project.Controllers
             _logger = logger;
         }
 
+        [HttpGet]
+        [Route("/")]
         public IActionResult Index()
         {
             return View();

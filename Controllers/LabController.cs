@@ -19,6 +19,8 @@ namespace softstu_project.Controllers
             _logger = logger;
         }
 
+        [HttpGet]
+        [Route("Lab")]
         public async Task<IActionResult> Index()
         {
             List<Laboratory> nameLab = await LabDB.GetAllAsync();

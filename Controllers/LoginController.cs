@@ -21,12 +21,19 @@ namespace soft_stu_project.Controllers
 
         [HttpGet]
         [Route("Login/")]
-        public async Task<IActionResult> Index(string username, string password)
+        public async Task<IActionResult> Index()
         {
-            int user = await UserDB.LoginAsync(username, password);
-
-
+            if(TempData["userID"] == null){
+                TempData["userID"] = -1;
+            }
             return View();
+        }
+
+        public async Task<IActionResult> Submit(string username, string password)
+        {
+            int userID = await UserDB.LoginAsync(username, password);
+            TempData["userID"] = userID;
+            return RedirectToAction("Index");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

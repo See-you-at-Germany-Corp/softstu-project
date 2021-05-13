@@ -41,7 +41,6 @@ namespace ConsoleApp.PostgreSQL
 
             /// find in db user with username.
             User user = await db.users.FirstOrDefaultAsync(user => user.username == username);
-
             if (user == null) return -1;
             else
             {

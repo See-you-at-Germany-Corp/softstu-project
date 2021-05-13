@@ -6,32 +6,24 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using softstu_project.Models;
+using ConsoleApp.PostgreSQL;
 
-namespace softstu_project.Controllers
+namespace soft_stu_project.Controllers
 {
-    public class HomeController : Controller
+    public class LoginController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILogger<LoginController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        public LoginController(ILogger<LoginController> logger)
         {
             _logger = logger;
         }
 
-        [HttpGet]
-        [Route("/")]
-        public IActionResult Index()
+        public async Task<IActionResult> Index(string username, string password)
         {
-            return View();
-        }
+            int user = await UserDB.LoginAsync(username, password);
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
 
-        public IActionResult Profile()
-        {
             return View();
         }
 

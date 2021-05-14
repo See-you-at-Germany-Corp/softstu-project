@@ -135,30 +135,32 @@ namespace ConsoleApp.PostgreSQL
             }
         }
 
-        public static async Task<List<List<ItemsLaboratoryTransaction>>> GetAvailableItems(DateTime booking_datetime)
+        public static async Task<List<ItemsLaboratoryTransaction>> GetAvailableItems(DateTime booking_datetime)
         {
             var db = new SoftwareStudioContext();
             
-            List<ItemsLaboratoryTransaction> items_am = await db.items_laboratory_transaction.FromSqlRaw(getAvailableItemsQueryString((int)Time_id_type.AM, booking_datetime)).ToListAsync();
-            List<ItemsLaboratoryTransaction> items_pm = await db.items_laboratory_transaction.FromSqlRaw(getAvailableItemsQueryString((int)Time_id_type.PM, booking_datetime)).ToListAsync();
+            List<ItemsLaboratoryTransaction> items = await db.items_laboratory_transaction.FromSqlRaw(getAvailableItemsQueryString(booking_datetime)).ToListAsync();
 
-            return new List<List<ItemsLaboratoryTransaction>> { items_am, items_pm };
+            return items;
         }
 
-        public static string getAvailableItemsQueryString(int time_id, DateTime datetime){
-            string x = $@"SELECT items.uuid, 
-                                 items.name, 
-                                 items.type, 
-                                 laboratory_items.laboratory_id, 
-                                 COALESCE (transactions.time_id, {time_id}) as time_id FROM items 
-                            LEFT JOIN transactions ON 
-                                transactions.item_id = items.uuid 
-                                AND transactions.book_date = '{datetime.ToString("yyyy-MM-dd")}' 
-                                AND (transactions.time_id = {time_id} OR transactions.time_id = {(int)Time_id_type.Day}) 
-                            INNER JOIN laboratory_items ON 
-                                laboratory_items.item_id = items.uuid 
-                            WHERE transactions.user_id is NULL 
-                            ORDER BY items.uuid";
+        public static string getAvailableItemsQueryString(DateTime datetime){
+            string x = $@"
+                select items.uuid, items.name, items.type, laboratory_items.laboratory_id,
+	                    (case
+			                when transactions.time_id = 1 or transactions.time_id is NULL then True
+			                else False
+                        end) as time_am, 
+	                    (case 
+			                when transactions.time_id = 2 or transactions.time_id is NULL then True 
+                            else False
+                        end) as time_pm from items
+                LEFT JOIN transactions ON 
+		            transactions.item_id = items.uuid 
+                    AND transactions.book_date = '{datetime.ToString("yyyy-MM-dd")}' 
+                INNER JOIN laboratory_items ON 
+                    laboratory_items.item_id = items.uuid
+                ORDER BY items.uuid";
             return x;
         }
     }

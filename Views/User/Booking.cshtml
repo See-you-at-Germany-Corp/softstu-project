@@ -33,13 +33,15 @@
         <div class="input-time-select">
             <label>ช่วงเวลาที่สามารถจองได้</label>
             <div class="radio-container" id="time-slot-selector">
-                <input type="checkbox" name="time-selector" id="time-slot-1" value="1" disabled>
+                <input type="checkbox" name="time-selector" id="time-slot-1" value="1" onclick="enableButton()"
+                    disabled>
                 <label for="time-slot-1" class="radio-label">09:00 - 12:00</label>
-                <input type="checkbox" name="time-selector" id="time-slot-2" value="2" disabled>
+                <input type="checkbox" name="time-selector" id="time-slot-2" value="2" onclick="enableButton()"
+                    disabled>
                 <label for="time-slot-2" class="radio-label">13:00 - 16:00</label>
             </div>
         </div>
-        <button onclick="bookItem()">Submit</button>
+        <button id="submit-btn" onclick="submitForm()" disabled>Submit</button>
     </div>
 
 </div>
@@ -56,6 +58,7 @@
     };
 
     async function updateForm() {
+        disableButton()
         clearItemQuantity()
         clearFormTimeSlot()
 
@@ -73,7 +76,6 @@
     function selectItem() {
         if (dateSelector.value === "") return
         if (itemSelector.value === "DUMMY") {
-            console.log("EMPTY ITEM")
             clearForm();
             return
         }
@@ -84,7 +86,6 @@
     function selectDate() {
         if (itemSelector.value === "DUMMY") return
         if (dateSelector.value === "") {
-            console.log("EMPTY DATE")
             clearForm();
             return
         }
@@ -108,7 +109,6 @@
 
     function getItemTimeSlot() {
         const timestamp = Date.parse(dateSelector.value) / 1000
-
         return fetch(`/api/lab/quantity?labID=@lab.uuid&itemType=${itemSelector.value}&timestamp=${timestamp}`, {
             method: 'get',
             headers: {
@@ -129,8 +129,8 @@
 
     function setFormTimeSlot() {
         let { minQuantity, maxQuantity } = getMinMaxQuantity()
-        const timeSlot1 = document.getElementById('time-slot-1')
-        const timeSlot2 = document.getElementById('time-slot-2')
+        const timeSlot1 = timeSlotSelector[0];
+        const timeSlot2 = timeSlotSelector[1];
 
         if (minQuantity !== maxQuantity && parseInt(quantitySelector.value) > minQuantity) {
             if (timeSlot.am > timeSlot.pm) {
@@ -154,27 +154,63 @@
         }
     }
 
+    function enableButton() {
+        const btn = document.getElementById('submit-btn')
+
+        const timeSlot1 = timeSlotSelector[0];
+        const timeSlot2 = timeSlotSelector[1];
+
+        if (!timeSlot1.checked && !timeSlot2.checked) {
+            btn.disabled = true;
+        } else {
+            btn.disabled = false;
+        }
+    }
+
+    function disableButton() {
+        const btn = document.getElementById('submit-btn')
+
+        btn.disabled = true;
+    }
+
     function clearItemQuantity(dummy_text = "เลือกจำนวนอุปกรณ์") {
         quantitySelector.innerHTML = ""
         quantitySelector.options.add(new Option(dummy_text, "DUMMY"));
     }
 
     function clearFormTimeSlot() {
-        document.getElementById('time-slot-1').checked = false;
-        document.getElementById('time-slot-2').checked = false;
-        document.getElementById('time-slot-1').disabled = true;
-        document.getElementById('time-slot-2').disabled = true;
+        timeSlotSelector[0].checked = false;
+        timeSlotSelector[1].checked = false;
+        timeSlotSelector[0].disabled = true;
+        timeSlotSelector[1].disabled = true;
     }
 
-    function bookItem() {
+    function submitForm() {
         const itemTypeID = itemSelector.value
-        const bookDate = dateSelector.value
+        const bookDate = new Date(dateSelector.value)
         const quantity = quantitySelector.value
         const timeID =
             (timeSlotSelector[0].checked ? parseInt(timeSlotSelector[0].value) : 0) +
             (timeSlotSelector[1].checked ? parseInt(timeSlotSelector[1].value) : 0)
 
-        console.log(itemTypeID, bookDate, quantity, timeID)
+        bookItem(timeID, quantity, itemTypeID, bookDate)
+    }
+
+    function bookItem(time_id, quantity, item_type, book_date) {
+        const formData = new FormData();
+        formData.append('user_id', 1)
+        formData.append('time_id', time_id)
+        formData.append('quantity', quantity)
+        formData.append('item_type', item_type)
+        formData.append('book_date', book_date.toLocaleDateString())
+
+        fetch(`/api/item/booking`, {
+            method: 'post',
+            body: formData
+        })
+            .then(res => {
+                return res.json()
+            })
     }
 </script>
 }

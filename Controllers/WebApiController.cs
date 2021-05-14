@@ -42,7 +42,7 @@ namespace WebApi.Controllers
         }
 
         [HttpGet("quantity")]
-        public async Task<ActionResult> Get(int labID, int itemType, int timestamp)
+        public async Task<ActionResult> GetQuantity(int labID, int itemType, int timestamp)
         {
             DateTime date = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
             date = date.AddSeconds(timestamp);
@@ -83,12 +83,6 @@ namespace WebApi.Controllers
 
             return Json(result);
         }
-
-        [HttpPost("booking")]
-        public async Task<ActionResult> Booking()
-        {
-            return Json("");
-        }
     }
 
     [Route("api/lab_item")]
@@ -100,6 +94,29 @@ namespace WebApi.Controllers
         public async Task<ActionResult<List<Laboratory_item>>> Gets(int labID)
         {
             return await LabItemDB.GetAllByLabIDAsync(labID);
+        }
+    }
+
+    [Route("api/item")]
+    public class ItemController : Controller
+    {
+        public ItemController() { }
+
+        [HttpPost("booking")]
+        public async Task<ActionResult> Post()
+        {
+            var db = new SoftwareStudioContext();
+
+            int user_id = int.Parse(Request.Form["user_id"]);
+            int time_id = int.Parse(Request.Form["time_id"]);
+            int quantity = int.Parse(Request.Form["quantity"]);
+            int item_type = int.Parse(Request.Form["item_type"]);
+            DateTime book_date = DateTime.ParseExact(Request.Form["book_date"], "M/d/yyyy", null);
+
+            // db.items.FromSqlRaw()
+            Console.WriteLine(book_date.ToString("yyyy-dd-MM"));
+
+            return Json("");
         }
     }
 

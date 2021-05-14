@@ -120,10 +120,14 @@ input[type="checkbox"]:checked + label {
   background-color: rgb(26, 145, 218);
 }
 
+.booking-container .form-container > button:disabled {
+  cursor: default;
+  background-color: rgb(161, 161, 161);
+}
+
 @media (max-width: 576px) {
   .booking-container {
     max-width: 280px;
-    /* background-color: red; */
   }
   .booking-container .form-container {
     gap: 10px;

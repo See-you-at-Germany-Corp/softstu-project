@@ -1,5 +1,6 @@
-function resetUserID() {
-  setCookie("userID", 0);
+function resetCookieAndAlert() {
+  setUserIDCookie();
+  alert("ออกจากระบบแล้ว");
 }
 
 function getCookie(name) {
@@ -10,4 +11,18 @@ function getCookie(name) {
 
 function setCookie(cname, cvalue) {
   document.cookie = cname + "=" + cvalue + ";" + "path =/";
+}
+
+function isLoggedIn() {
+  if (getUserIDCookie() > 0) return true;
+  else return false;
+}
+
+function getUserIDCookie() {
+  const userID = getCookie("userID");
+  return parseInt(userID);
+}
+
+function setUserIDCookie(cookieValue = -1) {
+  setCookie("userID", cookieValue);
 }

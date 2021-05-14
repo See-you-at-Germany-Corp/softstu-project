@@ -74,18 +74,18 @@ namespace ConsoleApp.PostgreSQL
 
 /*
     * unitest
-    string value1 = await UserDatabase.Login("61011422", "12345678") + "";
-    string value2 = await UserDatabase.Login("61011444", "1234567") + "";
+    string value1 = await UserDB.Login("61011422", "12345678") + ""; login succeed.
+    string value2 = await UserDB.Login("61011444", "1234567") + ""; login failed.
 
     * admin
     User user1 = new User(User_role.admin, "61010914", "12345678", "ลัทธพล", "แพ่งสภา", 61010914, "วิศวกรรมศาสตร์", "วิศวกรรมคอมพิวเตอร์", "61010914@kmitl.ac.th");
-    UserDatabase.Register(user1);
+    UserDB.Register(user1);
     User user2 = new User(User_role.admin, "61010968", "12345678", "วิธวินท์", "เมืองน้อย", 61010968, "วิศวกรรมศาสตร์", "วิศวกรรมคอมพิวเตอร์", "61010968@kmitl.ac.th");
-    UserDatabase.Register(user2);
+    UserDB.Register(user2);
     User user3 = new User(User_role.admin, "61011405", "12345678", "พรรษา", "บุญทวีกุลสวัสดิ์", 61011405, "วิศวกรรมศาสตร์", "วิศวกรรมคอมพิวเตอร์", "61011405@kmitl.ac.th");
-    UserDatabase.Register(user3);
+    UserDB.Register(user3);
     User user4 = new User(User_role.admin, "61011422", "12345678", "วีรวิทย์", "ศิรกุลวัฒน์", 61011422, "วิศวกรรมศาสตร์", "วิศวกรรมคอมพิวเตอร์", "61011422@kmitl.ac.th");
-    UserDatabase.Register(user4);
+    UserDB.Register(user4);
     User user5 = new User(User_role.admin, "61011433", "12345678", "เสฎฐวุฒิ", "ทิพย์กรรภิรมย์", 61011433, "วิศวกรรมศาสตร์", "วิศวกรรมคอมพิวเตอร์", "61011433@kmitl.ac.th");
-    UserDatabase.Register(user5);
+    UserDB.Register(user5);
 */

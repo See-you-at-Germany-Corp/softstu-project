@@ -21,10 +21,10 @@ namespace soft_stu_project.Controllers
 
         [HttpGet]
         [Route("Login/")]
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
             if(TempData["userID"] == null){
-                TempData["userID"] = -1;
+                TempData["userID"] = 0;
             }
             return View();
         }

@@ -2,7 +2,6 @@
 @{
     var lab = ViewData["LabInfo"] as Laboratory;
     var itemSet = ViewData["LabItemSet"] as List<int>;
-
     var transactions = ViewData["LabTransactions"] as List<Transaction>;
 }
 @section CSS{
@@ -10,11 +9,11 @@
 }
 <div class="booking-container">
     <div class="lab-header">@lab.name</div>
-    <div class="form-container">
+    <form class="form-container" asp-controller="Lab" asp-action="SubmitBooking">
         <div class="input-form">
             <div class="input-container">
                 <label for="">อุปกรณ์</label>
-                <select name="" id="item-selector" onchange="selectItem()">
+                <select name="item_type" id="item-selector" onchange="selectItem()">
                     <option value="DUMMY" selected>เลือกอุปกรณ์</option>
                     @foreach (var index in itemSet)
                     {
@@ -24,11 +23,11 @@
             </div>
             <div class="input-container">
                 <label for="">วันที่</label>
-                <input type="date" name="" id="date-selector" onchange="selectDate()" />
+                <input type="date" name="book_date" id="date-selector" onchange="selectDate()" />
             </div>
             <div class="input-container">
                 <label for="">จำนวน</label>
-                <select name="" id="quantity-selector" onchange="setFormTimeSlot()">
+                <select name="quantity" id="quantity-selector" onchange="setFormTimeSlot()">
                     <option value="DUMMY">เลือกจำนวนอุปกรณ์</option>
                 </select>
             </div>
@@ -36,16 +35,14 @@
         <div class="input-time-select">
             <label>ช่วงเวลาที่สามารถจองได้</label>
             <div class="radio-container" id="time-slot-selector">
-                <input type="checkbox" name="time-selector" id="time-slot-1" value="1" onclick="enableButton()"
-                    disabled>
+                <input type="checkbox" name="time_id_1" id="time-slot-1" value="1" onclick="enableButton()" disabled>
                 <label for="time-slot-1" class="radio-label">09:00 - 12:00</label>
-                <input type="checkbox" name="time-selector" id="time-slot-2" value="2" onclick="enableButton()"
-                    disabled>
+                <input type="checkbox" name="time_id_2" id="time-slot-2" value="2" onclick="enableButton()" disabled>
                 <label for="time-slot-2" class="radio-label">13:00 - 16:00</label>
             </div>
         </div>
         <button id="submit-btn" onclick="submitForm()" disabled>Submit</button>
-    </div>
+    </form>
 
 </div>
 @section Scripts {
@@ -53,7 +50,8 @@
     const itemSelector = document.getElementById('item-selector');
     const dateSelector = document.getElementById('date-selector');
     const quantitySelector = document.getElementById('quantity-selector');
-    const timeSlotSelector = document.getElementsByName('time-selector');
+    const timeSlotSelector1 = document.getElementById('time-slot-1');
+    const timeSlotSelector2 = document.getElementById('time-slot-2');
 
     let timeSlot = {
         am: 0,
@@ -132,20 +130,18 @@
 
     function setFormTimeSlot() {
         let { minQuantity, maxQuantity } = getMinMaxQuantity()
-        const timeSlot1 = timeSlotSelector[0];
-        const timeSlot2 = timeSlotSelector[1];
 
         if (minQuantity !== maxQuantity && parseInt(quantitySelector.value) > minQuantity) {
             if (timeSlot.am > timeSlot.pm) {
-                timeSlot1.disabled = false;
-                timeSlot2.disabled = true;
+                timeSlotSelector1.disabled = false;
+                timeSlotSelector2.disabled = true;
             } else {
-                timeSlot1.disabled = true;
-                timeSlot2.disabled = false;
+                timeSlotSelector1.disabled = true;
+                timeSlotSelector2.disabled = false;
             }
         } else {
-            timeSlot1.disabled = false;
-            timeSlot2.disabled = false;
+            timeSlotSelector1.disabled = false;
+            timeSlotSelector2.disabled = false;
         }
     }
 
@@ -160,10 +156,7 @@
     function enableButton() {
         const btn = document.getElementById('submit-btn')
 
-        const timeSlot1 = timeSlotSelector[0];
-        const timeSlot2 = timeSlotSelector[1];
-
-        if (!timeSlot1.checked && !timeSlot2.checked) {
+        if (!timeSlotSelector1.checked && !timeSlotSelector2.checked) {
             btn.disabled = true;
         } else {
             btn.disabled = false;
@@ -182,10 +175,10 @@
     }
 
     function clearFormTimeSlot() {
-        timeSlotSelector[0].checked = false;
-        timeSlotSelector[1].checked = false;
-        timeSlotSelector[0].disabled = true;
-        timeSlotSelector[1].disabled = true;
+        timeSlotSelector1.checked = false;
+        timeSlotSelector2.checked = false;
+        timeSlotSelector1.disabled = true;
+        timeSlotSelector2.disabled = true;
     }
 
     function submitForm() {
@@ -193,8 +186,8 @@
         const bookDate = new Date(dateSelector.value)
         const quantity = quantitySelector.value
         const timeID =
-            (timeSlotSelector[0].checked ? parseInt(timeSlotSelector[0].value) : 0) +
-            (timeSlotSelector[1].checked ? parseInt(timeSlotSelector[1].value) : 0)
+            (timeSlotSelector1.checked ? parseInt(timeSlotSelector1.value) : 0) +
+            (timeSlotSelector2.checked ? parseInt(timeSlotSelector2.value) : 0)
 
         bookItem(timeID, quantity, itemTypeID, bookDate)
     }

@@ -88,11 +88,9 @@ namespace softstu_project.Controllers
         public async Task<IActionResult> Booking(int labID)
         {
             Laboratory lab = LabDB.GetByID(labID);
-            List<ItemDetail> items = await ItemDB.GetAllDetailByLabIDAsync(labID);
             List<Transaction> transactions = await TransactionDB.GetByLabIDAsync(labID);
 
             ViewData["LabInfo"] = lab;
-            // ViewData["LabItems"] = items;
             ViewData["LabTransactions"] = transactions;
 
             List<int> itemSet = await ItemDB.GetItemSetByLabIDAsync(labID);
@@ -104,6 +102,16 @@ namespace softstu_project.Controllers
             ViewData["LabItemSet"] = itemSet;
 
             return View();
+        }
+
+        public async void SubmitBooking(BookingFormModel formData)
+        {
+            Console.WriteLine("lab_id {0}", formData.lab_id);
+            Console.WriteLine("user_id {0}", formData.user_id);
+            Console.WriteLine("time_id {0} {1}", formData.time_id.GetType(), formData.time_id);
+            Console.WriteLine("quantity {0}", formData.quantity);
+            Console.WriteLine("item_type {0}", formData.item_type);
+            Console.WriteLine("book_date {0}", formData.book_date);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -114,28 +114,26 @@ namespace WebApi.Controllers
             int item_type = int.Parse(Request.Form["item_type"]);
             DateTime book_date = DateTime.ParseExact(Request.Form["book_date"], "M/d/yyyy", null);
 
-            // string itemsQueryString = $@"
-            //     SELECT * FROM items
-            //     WHERE items.type = {item_type};
-            // ";
-            // List<Item> items = await db.items.FromSqlRaw(itemsQueryString).ToListAsync();
+            List<List<ItemsLaboratoryTransaction>> time_slots = await ItemDB.GetAvailableItems(book_date);
 
-            // string itemsUUID = "";
-            // foreach (var item in items)
-            // {
-            //     itemsUUID = itemsUUID + $"{item.uuid.ToString()}, ";
-            // }
+            time_slots[0].RemoveAll(am => am.laboratory_id != lab_id);
+            time_slots[1].RemoveAll(pm => pm.laboratory_id != lab_id);
 
-            // string txQueryString = $@"
-            //     SELECT * FROM transactions
-            //     WHERE transactions.book_date = {book_date.ToString("yyyy-dd-MM")} AND transactions.item_id IN ({itemsUUID});
-            // ";
-            // List<Transaction> transactions = await db.transactions.FromSqlRaw(txQueryString).ToListAsync();
+            if (time_id == 3)
+            {
+                List<ItemsLaboratoryTransaction> day = new List<ItemsLaboratoryTransaction>();
+                foreach (var item in time_slots[0])
+                {
+                    if (time_slots[1].Contains(item))
+                    {
+                        day.Add(item);
+                    }
+                }
+            }
 
-            List<List<ItemsLaboratoryTransaction>> items = await ItemDB.GetAvailableItems(book_date);
-
-            Console.WriteLine(items.Count);
-            Console.WriteLine(book_date.ToString("yyyy-dd-MM"));
+            for (var i = 0; i < quantity; i++)
+            {
+            }
 
             return Json("");
         }

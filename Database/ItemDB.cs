@@ -138,14 +138,15 @@ namespace ConsoleApp.PostgreSQL
         public static async Task<List<List<ItemsLaboratoryTransaction>>> GetAvailableItems(DateTime booking_datetime)
         {
             var db = new SoftwareStudioContext();
-            
+
             List<ItemsLaboratoryTransaction> items_am = await db.items_laboratory_transaction.FromSqlRaw(getAvailableItemsQueryString((int)Time_id_type.am, booking_datetime)).ToListAsync();
             List<ItemsLaboratoryTransaction> items_pm = await db.items_laboratory_transaction.FromSqlRaw(getAvailableItemsQueryString((int)Time_id_type.pm, booking_datetime)).ToListAsync();
 
             return new List<List<ItemsLaboratoryTransaction>> { items_am, items_pm };
         }
 
-        public static string getAvailableItemsQueryString(int time_id, DateTime datetime){
+        public static string getAvailableItemsQueryString(int time_id, DateTime datetime)
+        {
             string x = $@"SELECT items.uuid, 
                                  items.name, 
                                  items.type, 

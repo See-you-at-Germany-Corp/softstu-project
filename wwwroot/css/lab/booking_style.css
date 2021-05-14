@@ -56,30 +56,6 @@
   display: flex;
 }
 
-input[type="radio"] {
-  display: none;
-  position: absolute;
-  visibility: hidden;
-}
-
-input[type="radio"] + label {
-  cursor: pointer;
-  padding: 4px 10px;
-  border-radius: 5px;
-
-  color: rgb(26, 145, 218);
-  background-color: rgb(205, 236, 255);
-}
-input[type="radio"]:disabled + label {
-  cursor: default;
-  background-color: rgb(229, 229, 229);
-}
-
-input[type="radio"]:checked + label {
-  color: white;
-  background-color: rgb(94, 158, 255);
-}
-
 input[type="checkbox"] {
   display: none;
   position: absolute;

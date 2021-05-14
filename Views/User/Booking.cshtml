@@ -198,6 +198,7 @@
 
     function bookItem(time_id, quantity, item_type, book_date) {
         const formData = new FormData();
+        formData.append('lab_id', @lab.uuid)
         formData.append('user_id', 1)
         formData.append('time_id', time_id)
         formData.append('quantity', quantity)

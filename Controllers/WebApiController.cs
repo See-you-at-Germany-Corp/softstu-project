@@ -107,13 +107,33 @@ namespace WebApi.Controllers
         {
             var db = new SoftwareStudioContext();
 
+            int lab_id = int.Parse(Request.Form["lab_id"]);
             int user_id = int.Parse(Request.Form["user_id"]);
             int time_id = int.Parse(Request.Form["time_id"]);
             int quantity = int.Parse(Request.Form["quantity"]);
             int item_type = int.Parse(Request.Form["item_type"]);
             DateTime book_date = DateTime.ParseExact(Request.Form["book_date"], "M/d/yyyy", null);
 
-            // db.items.FromSqlRaw()
+            // db.items.FromSqlRaw()    
+            string itemsQueryString = $@"
+                SELECT * FROM items
+                WHERE items.type = {item_type};
+            ";
+            List<Item> items = await db.items.FromSqlRaw(itemsQueryString).ToListAsync();
+
+            string itemsUUID = "";
+            foreach (var item in items)
+            {
+                itemsUUID = itemsUUID + $"{item.uuid.ToString()}, ";
+            }
+
+            string txQueryString = $@"
+                SELECT * FROM transactions
+                WHERE transactions.book_date = {book_date.ToString("yyyy-dd-MM")} AND transactions.item_id IN ({itemsUUID});
+            ";
+            List<Transaction> transactions = await db.transactions.FromSqlRaw(txQueryString).ToListAsync();
+
+            Console.WriteLine(items.Count);
             Console.WriteLine(book_date.ToString("yyyy-dd-MM"));
 
             return Json("");

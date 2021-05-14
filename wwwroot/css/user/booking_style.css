@@ -151,6 +151,3 @@ input[type="checkbox"]:checked + label {
     -webkit-box-sizing: border-box;
   }
 }
-
-@media (max-width: 1000px) {
-}

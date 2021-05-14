@@ -20,6 +20,7 @@
                 <thead>
                     <th>วันดำเนินการ</th>
                     <th>วันที่จอง</th>
+                    <th>ประเภทการจอง</th>
                     <th>หมายเลขอุปกรณ์</th>
                     <th>รหัสผู้ใช้งาน</th>
                     <th>สถานะ</th>
@@ -30,6 +31,7 @@
                         <tr>
                             <td>@log.created.ToShortDateString()</td>
                             <td>@log.book_date.ToShortDateString()</td>
+                            <td>@log.GetTimeName(log.time_id)</td>
                             <td>@log.item_id</td>
                             <td>@log.user_id</td>
                             <td>@transactionName[log.transaction_type]</td>
@@ -54,6 +56,7 @@
                     <thead>
                         <th>วันที่จอง</th>
                         <th>หมายเลขอุปกรณ์</th>
+                        <th>ประเภทการจอง</th>
                         <th>รหัสผู้ใช้งาน</th>
                         <th>ยืนยันการคืน</th>
                     </thead>
@@ -63,9 +66,11 @@
                             <tr id="blacklist-@transaction.item_id">
                                 <td>@transaction.book_date.ToShortDateString()</td>
                                 <td>@transaction.item_id</td>
+                                <td>@transaction.GetTimeName(transaction.time_id)</td>
                                 <td>@transaction.user_id</td>
                                 <td>
-                                    <button class="ghost-button" name="transactionID" type="submit" value="@transaction.uuid">ยืนยัน</button>
+                                    <button class="ghost-button" name="transactionID" type="submit"
+                                    value="@transaction.uuid">ยืนยัน</button>
                                 </td>
                             </tr>
                             /// remove item from borrowLists here.
@@ -123,7 +128,7 @@
         const filteredTrLists = trBlackListLists.filter((tr) => {
             const tdLists = tr.getElementsByTagName("td");
             const tdItemID = tdLists[1].innerHTML;
-            const tdUserID = tdLists[2].innerHTML;
+            const tdUserID = tdLists[3].innerHTML;
 
             if (item.value) return item.value === tdItemID;
             if (user.value) return user.value === tdUserID;

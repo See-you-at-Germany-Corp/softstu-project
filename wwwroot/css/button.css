@@ -1,6 +1,6 @@
 .ghost-button {
     min-width: 70px;
-    min-height: 35px;
+    min-height: 30px;
     background-color: #fbfbfb;
     color: #1A91DA;
     border: 2px solid #1A91DA;
@@ -14,9 +14,26 @@
 }
 
 .ghost-button:hover {
+    cursor: pointer;
     background-color: rgba(26, 145, 218, 0.1); 
 }
 
 .ghost-button:active {
     background-color: rgba(26, 145, 218, 0.3); 
 }
+
+.primary-button {
+    align-self: flex-end;
+    width: fit-content;
+  
+    cursor: pointer;
+    margin-top: 20px;
+    padding: 4px 10px;
+  
+    border: 0;
+    border-radius: 5px;
+  
+    font-size: 16px;
+    color: white;
+    background-color: rgb(26, 145, 218);
+  }

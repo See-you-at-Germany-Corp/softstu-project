@@ -1,0 +1,56 @@
+﻿@{
+    ViewData["Title"] = "Lab Page";
+    int labId = 1;
+}
+<div class="container">
+    @foreach (var labName in ViewData["nameLab"] as List<Laboratory>)
+    {
+        <div class="all-lab-container">
+            <div class="lab-in-container">
+                <div class="lab-pic">
+                    <img id="picture1"
+                    src="https://specials-images.forbesimg.com/imageserve/5db4c7b464b49a0007e9dfac/960x0.jpg?fit=scale"
+                    alt="dog">
+                </div>
+                <div class="lab-content">
+                    <div class="lab-header-container">
+                        <div class="lab-name">
+                            <p class="font-header1">@labName.name</p>
+                        </div>
+                        <div class="topic-content">
+                            <p class="font-header2">รายชื่ออุปกรณ์</p>
+                        </div>
+                    </div>
+
+                    <div class="lab-information-container">
+                        <div class="font-lab-detail">
+                            <form class="form-text" action="">
+                                <div class="list-lab-left">
+                                    <ul>
+                                        @foreach (var lab in ViewData["myType"] as List<List<ItemDetail>>)
+                                        {
+                                            @if (lab[0].laboratory_id == labName.uuid)
+                                            {
+                                                @foreach (var item in lab)
+                                                {
+                                                    <li>@Item.getName(item.type)</li>
+                                                }
+                                            }
+                                        }
+                                    </ul>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="btn-container">
+                            <a href="Lab/@labId">
+                                <button class="primary-button">รายละเอียด</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        labId+=1;
+    }
+
+</div>

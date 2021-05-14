@@ -6,7 +6,7 @@ namespace softstu_project.Models
 {
     public enum Time_id_type
     {
-        none, am, pm, day
+        none, AM, PM, Day
     }
 
     public enum Transaction_type

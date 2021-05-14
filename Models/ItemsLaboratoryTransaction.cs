@@ -10,8 +10,8 @@ namespace softstu_project.Models
         public int uuid { get; set; }
 
         public string name { get; set; }
-
-        public int time_id { get; set; }
+        public Boolean time_am { get; set; }
+        public Boolean time_pm { get; set; }
 
         public int laboratory_id { get; set; }
 

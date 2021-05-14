@@ -37,7 +37,8 @@
             @foreach (var transactionItem in transactionItems)
             {
                 <div class="transaction-item">
-                    <div class="item-img" style="background-image: url('../../images/@((ItemTypes)transactionItem.type).png')"></div>
+                    <div class="item-img"
+                    style="background-image: url('../../images/@((ItemTypes)transactionItem.type).png')"></div>
                     <div class="item-detail-cont">
                         <div class="item-id">[@transactionItem.item_id] @transactionItem.name</div>
                         <div class="item-trans-date">@transactionItem.book_date.ToShortDateString()</div>
@@ -51,4 +52,11 @@
         </div>
     </div>
 </div>
-</div>
+
+<script>
+    userAuthorizeUser();
+
+    function userAuthorizeUser() {
+        if (!isLoggedIn()) location.href = "/";
+    }
+</script>

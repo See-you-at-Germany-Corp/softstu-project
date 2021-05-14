@@ -28,18 +28,15 @@ namespace softstu_project.Controllers
             List<List<ItemDetail>> labItem = new List<List<ItemDetail>>();
             List<List<ItemDetail>> myType = new List<List<ItemDetail>>();
             List<Int64> checkList = new List<Int64>();
+
             for (int i = 0; i < nameLab.Count; i++)
             {
                 labItem.Add(new List<ItemDetail>());
                 myType.Add(new List<ItemDetail>());
             }
-            for (int i = 0; i < items.Count; i++)
-            {
-                Console.WriteLine(i);
-                labItem[items[i].laboratory_id - 1].Add(items[i]);
 
-            }
-            Console.WriteLine(labItem.Count);
+            for (int i = 0; i < items.Count; i++)
+                labItem[items[i].laboratory_id - 1].Add(items[i]);
 
             for (int i = 0; i < labItem.Count; i++)
             {
@@ -52,12 +49,12 @@ namespace softstu_project.Controllers
                     }
                 }
                 checkList.Clear();
-
             }
-            Console.WriteLine(labItem.Count);
+            
             ViewData["nameLab"] = nameLab;
             ViewData["myType"] = myType;
             ViewData["labItem"] = labItem;
+            
             return View();
         }
 

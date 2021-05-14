@@ -30,9 +30,17 @@
             <button class="ghost-button">
                 <a asp-controller="Lab" asp-action="Index">กลับ</a>
             </button>
-            <button class="ghost-button">
+            <button class="ghost-button booking-btn">
                 <a href="@labID/Booking">จอง</a> 
             </button>
         </div>
     </div>
 </div>
+
+<script>
+    userAuthorizeLabDetail();
+
+    function userAuthorizeLabDetail() {
+        if (!isLoggedIn()) document.querySelector(".lab-detail-container .booking-btn").disabled = true;
+    }
+</script>

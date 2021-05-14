@@ -66,7 +66,7 @@
                             <tr id="blacklist-@transaction.item_id">
                                 <td>@transaction.book_date.ToShortDateString()</td>
                                 <td>@transaction.item_id</td>
-                                <td>@transaction.GetTimeName(transaction.time_id)</td>
+                                <td>@transaction.GetTimeName((int)transaction.time_id))</td>
                                 <td>@transaction.user_id</td>
                                 <td>
                                     <button class="ghost-button" name="transactionID" type="submit"

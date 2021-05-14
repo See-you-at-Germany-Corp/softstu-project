@@ -83,13 +83,6 @@ namespace softstu_project.Controllers
             return View();
         }
 
-        [HttpGet]
-        [Route("Lab/{labID}/Booking")]
-        public IActionResult Booking(int labID)
-        {
-            return View();
-        }
-
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

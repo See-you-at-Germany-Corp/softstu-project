@@ -23,6 +23,7 @@
     <link rel="stylesheet" href="~/css/table_style.css">
 
     <link rel="stylesheet" href="~/css/user/index_style.css">
+    <link rel="stylesheet" href="~/css/user/booking_style.css">
     <link rel="stylesheet" href="~/css/lab/index.css">
   
     @* JS *@
@@ -48,6 +49,12 @@
                             src="https://media.discordapp.net/attachments/817783466379968572/842443619011919882/man.png"
                             alt="profile"></a>
                     <a class="text-link" asp-controller="User" asp-action="Index">Profile</a>
+                </div>
+                <div class="nav-item" style="display: none">
+                    <a class="img-link" asp-controller="Lab" asp-action="Index"><img
+                            src="https://cdn.discordapp.com/attachments/817783466379968572/842703669858140160/lab.png"
+                            alt="labs"></a>
+                    <a class="text-link" asp-controller="Lab" asp-action="Index">Labs</a>
                 </div>
                 <div class="nav-item-text">
                     <a class="login-nav-btn" href="/Login">Login</a>
@@ -78,20 +85,22 @@
     checkCookies();
 
     function checkCookies() {
-        const userID = getCookie("userID");
         const login = document.querySelector(".login-nav-btn");
         const userEl = document.querySelectorAll(".nav-item")[0];
-
-        if (parseInt(userID) === -1) {
+        const labEl = document.querySelectorAll(".nav-item")[1];
+        
+        if (getUserIDCookie() === -1) {
             login.innerHTML = "Login";
             login.href = "/Login";
             login.removeEventListener("click", resetCookieAndAlert);
             userEl.style.display = "none";
+            labEl.style.display = "none";
         } else {
             login.innerHTML = "Logout";
             login.href = "/";
             login.addEventListener("click", resetCookieAndAlert);
             userEl.style.display = "block";
+            labEl.style.display = "block";
         }
     } 
 </script>

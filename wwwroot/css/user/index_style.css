@@ -5,7 +5,7 @@
 
   max-width: 1200px;
   position: relative;
-  margin: 20px auto 0px auto;
+  margin: 40px auto 0px auto;
 
   font-size: 16px;
   /* background-color: #f3f5fa; */
@@ -112,8 +112,8 @@
   height: 100px;
 
   border-radius: 10px;
-
-  background-color: black;
+  background-image: url("../../images/Keyboard.png");
+  background-size: cover;
 }
 
 .transaction-item > .item-detail-cont {

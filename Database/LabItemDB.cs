@@ -54,13 +54,13 @@ namespace ConsoleApp.PostgreSQL
                         allItemsAM++;
                         allItemsPM++;
                         break;
-                    case (int)Time_id_type.am:
+                    case (int)Time_id_type.AM:
                         allItemsAM--;
                         break;
-                    case (int)Time_id_type.pm:
+                    case (int)Time_id_type.PM:
                         allItemsPM++;
                         break;
-                    case (int)Time_id_type.day:
+                    case (int)Time_id_type.Day:
                         allItemsAM--;
                         allItemsPM--;
                         break;
@@ -99,13 +99,13 @@ namespace ConsoleApp.PostgreSQL
                             allItemsAM[i]++;
                             allItemsPM[i]++;
                             break;
-                        case (int)Time_id_type.am:
+                        case (int)Time_id_type.AM:
                             allItemsAM[i]--;
                             break;
-                        case (int)Time_id_type.pm:
+                        case (int)Time_id_type.PM:
                             allItemsPM[i]++;
                             break;
-                        case (int)Time_id_type.day:
+                        case (int)Time_id_type.Day:
                             allItemsAM[i]--;
                             allItemsPM[i]--;
                             break;
@@ -135,13 +135,13 @@ namespace ConsoleApp.PostgreSQL
                             allItemsAM[i]++;
                             allItemsPM[i]++;
                             break;
-                        case (int)Time_id_type.am:
+                        case (int)Time_id_type.AM:
                             allItemsAM[i]--;
                             break;
-                        case (int)Time_id_type.pm:
+                        case (int)Time_id_type.PM:
                             allItemsPM[i]++;
                             break;
-                        case (int)Time_id_type.day:
+                        case (int)Time_id_type.Day:
                             allItemsAM[i]--;
                             allItemsPM[i]--;
                             break;

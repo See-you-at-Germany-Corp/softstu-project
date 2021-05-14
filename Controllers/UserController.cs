@@ -19,11 +19,17 @@ namespace softstu_project.Controllers
             _logger = logger;
         }
 
+        [HttpGet]
+        [Route("User/")]
         public async Task<IActionResult> Index()
         {
-            int id = 10;
-            List<User> users = await UserDB.GetByIDAsync(id);
+            var userID = HttpContext.Request.Cookies["userID"];
+            List<User> users = await UserDB.GetByIDAsync(int.Parse(userID));
+            List<TransactionItem> transactionItems = await TransactionDB.GetWithItemByUserIDAsync(int.Parse(userID));
+
             ViewData["UserInfo"] = users[0];
+            ViewData["TransactionItems"] = transactionItems;
+
             return View();
         }
 

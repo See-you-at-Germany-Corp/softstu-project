@@ -59,13 +59,13 @@ namespace WebApi.Controllers
                 {
                     case (int)Time_id_type.none:
                         break;
-                    case (int)Time_id_type.am:
+                    case (int)Time_id_type.AM:
                         amTimeSlot--;
                         break;
-                    case (int)Time_id_type.pm:
+                    case (int)Time_id_type.PM:
                         pmTimeSlot--;
                         break;
-                    case (int)Time_id_type.day:
+                    case (int)Time_id_type.Day:
                         amTimeSlot--;
                         pmTimeSlot--;
                         break;

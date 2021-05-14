@@ -37,6 +37,8 @@ namespace softstu_project.Models
         public string department { get; set; }
 
         public string email { get; set; }
+        
+        public int gender { get; set; }
 
         public DateTime created { get; set; }
         [DataType(DataType.Date)]

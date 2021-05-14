@@ -27,29 +27,6 @@ namespace softstu_project.Controllers
             return View();
         }
 
-        [HttpGet]
-        [Route("User/{labID}/Booking")]
-        public async Task<IActionResult> Booking(int labID)
-        {
-            Laboratory lab = LabDB.GetByID(labID);
-            List<ItemDetail> items = await ItemDB.GetAllDetailByLabIDAsync(labID);
-            List<Transaction> transactions = await TransactionDB.GetByLabIDAsync(labID);
-
-            ViewData["LabInfo"] = lab;
-            // ViewData["LabItems"] = items;
-            ViewData["LabTransactions"] = transactions;
-
-            List<int> itemSet = await ItemDB.GetItemSetByLabIDAsync(labID);
-            List<string> itemSetNames = new List<string>();
-            foreach (var item in itemSet)
-            {
-                itemSetNames.Add(((ItemTypes)item).ToString());
-            }
-            ViewData["LabItemSet"] = itemSet;
-
-            return View();
-        }
-
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

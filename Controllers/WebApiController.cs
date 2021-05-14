@@ -114,24 +114,25 @@ namespace WebApi.Controllers
             int item_type = int.Parse(Request.Form["item_type"]);
             DateTime book_date = DateTime.ParseExact(Request.Form["book_date"], "M/d/yyyy", null);
 
-            // db.items.FromSqlRaw()    
-            string itemsQueryString = $@"
-                SELECT * FROM items
-                WHERE items.type = {item_type};
-            ";
-            List<Item> items = await db.items.FromSqlRaw(itemsQueryString).ToListAsync();
+            // string itemsQueryString = $@"
+            //     SELECT * FROM items
+            //     WHERE items.type = {item_type};
+            // ";
+            // List<Item> items = await db.items.FromSqlRaw(itemsQueryString).ToListAsync();
 
-            string itemsUUID = "";
-            foreach (var item in items)
-            {
-                itemsUUID = itemsUUID + $"{item.uuid.ToString()}, ";
-            }
+            // string itemsUUID = "";
+            // foreach (var item in items)
+            // {
+            //     itemsUUID = itemsUUID + $"{item.uuid.ToString()}, ";
+            // }
 
-            string txQueryString = $@"
-                SELECT * FROM transactions
-                WHERE transactions.book_date = {book_date.ToString("yyyy-dd-MM")} AND transactions.item_id IN ({itemsUUID});
-            ";
-            List<Transaction> transactions = await db.transactions.FromSqlRaw(txQueryString).ToListAsync();
+            // string txQueryString = $@"
+            //     SELECT * FROM transactions
+            //     WHERE transactions.book_date = {book_date.ToString("yyyy-dd-MM")} AND transactions.item_id IN ({itemsUUID});
+            // ";
+            // List<Transaction> transactions = await db.transactions.FromSqlRaw(txQueryString).ToListAsync();
+
+            List<List<ItemsLaboratoryTransaction>> items = await ItemDB.GetAvailableItems(book_date);
 
             Console.WriteLine(items.Count);
             Console.WriteLine(book_date.ToString("yyyy-dd-MM"));
@@ -185,9 +186,9 @@ namespace WebApi.Controllers
         public ActionResult<HttpResponseMessage> Post(int user_id, int item_id, int time_id, string date)  // not sure about "Item"
         {
             int status = UserDB.BookItems(user_id, item_id, time_id, date);
-            if (status == 0) 
+            if (status == 0)
                 return StatusCode(201);
-            else 
+            else
                 return StatusCode(400);
         }
     }

@@ -128,7 +128,7 @@ namespace WebApi.Controllers
     {
         public AvailableItems() { }
         [HttpGet("{datetime_str}")]
-        public async Task<ActionResult<List<List<ItemsLaboratoryTransaction>>>> Gets(string datetime_str)  // not sure about "Item"
+        public async Task<ActionResult<List<ItemsLaboratoryTransaction>>> Gets(string datetime_str)  // not sure about "Item"
         {
             DateTime booking_datetime = DateTime.ParseExact(datetime_str, "yyyy-MM-dd", null);
             return await ItemDB.GetAvailableItems(booking_datetime);

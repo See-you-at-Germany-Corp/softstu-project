@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="~/css/navbar_style.css">
     <link rel="stylesheet" href="~/css/table_style.css">
     <link rel="stylesheet" href="~/css/button.css">
-    
+
     <link rel="stylesheet" href="~/css/admin/blacklist_style.css">
     <link rel="stylesheet" href="~/css/admin/index_style.css">
     <link rel="stylesheet" href="~/css/admin_detail_style.css" asp-append-version="true">
@@ -26,9 +26,11 @@
 
     @* JS *@
     <script src="~/js/navbar.js" asp-append-version="true"></script>
-    <script src="~/js/admin/log_table_management.js" asp-append-version="true"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/js/cookies.js" asp-append-version="true"></script>
+
+    <script src="~/js/admin/log_table_management.js" asp-append-version="true"></script>
+    <script src="~/js/admin/account.js" asp-append-version="true"></script>
 </head>
 
 <body>
@@ -65,7 +67,7 @@
     </nav>
 
     <div class="container">
-        <main role="main" class="pb-3">
+        <main role="main" class="pb-3" id="admin-main-container" style="display: none">
             @RenderBody()
         </main>
     </div>
@@ -80,6 +82,7 @@
 
 <script>
     checkCookies();
+    authorize();
 
     function checkCookies() {
         const userID = getCookie("userID");
@@ -94,6 +97,17 @@
             login.href = "/";
             login.addEventListener("click", resetCookieAndAlert);
         }
+    }
+
+    function authorize() {
+        const admin = document.querySelector("#admin-main-container");
+
+        if (!isAdmin(getUserIDCookie())) {
+            admin.style.display = "none";
+            setUserIDCookie()
+            alert("ไม่มีสิทธิในการเข้าถึง ออกจากระบบแล้ว");
+            location.href = "/";
+        } else admin.style.display = "block";
     }
 </script>
 

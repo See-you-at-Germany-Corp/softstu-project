@@ -31,6 +31,9 @@ namespace soft_stu_project.Controllers
 
         public async Task<IActionResult> Submit(string username, string password)
         {
+            if (username == null) username = "";
+            if (password == null) password = "";
+            
             int userID = await UserDB.LoginAsync(username, password);
             TempData["userID"] = userID;
             return RedirectToAction("Index");

@@ -2,6 +2,10 @@
 @{
     string[] transactionName = { "ยืม", "คืน", "สาย" };
 }
+@section CSS{
+<link rel="stylesheet" href="~/css/admin/index_style.css">
+<link rel="stylesheet" href="~/css/admin/blacklist_style.css">
+}
 
 <div class="blacklist-page-container">
     <div class="device-history-container">
@@ -66,7 +70,7 @@
                             <tr id="blacklist-@transaction.item_id">
                                 <td>@transaction.book_date.ToShortDateString()</td>
                                 <td>@transaction.item_id</td>
-                                <td>@transaction.GetTimeName((int)transaction.time_id))</td>
+                                <td>@transaction.GetTimeName((int)transaction.time_id)</td>
                                 <td>@transaction.user_id</td>
                                 <td>
                                     <button class="ghost-button" name="transactionID" type="submit"

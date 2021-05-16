@@ -88,7 +88,7 @@
         const login = document.querySelector(".login-nav-btn");
         const userEl = document.querySelectorAll(".nav-item")[0];
         
-        if (getUserIDCookie() === -1) {
+        if (!isLoggedIn()) {
             login.innerHTML = "Login";
             login.href = "/Login";
             login.removeEventListener("click", resetCookieAndAlert);

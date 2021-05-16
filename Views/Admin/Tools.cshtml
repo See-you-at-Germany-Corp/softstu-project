@@ -1,49 +1,43 @@
 @{
-    var labItems = ViewData["LabItems"] as List<ItemDetail>;
+    var labItems = ViewData["LabItems"] as List<Item>;
     var labList = ViewData["Title"] as List<Laboratory>;
-    var labID = ViewData["LabID"];
+    @* var labID = ViewData["LabID"]; *@
 }
 
 <div class="detail-container">
-    <div style="display:flex; margin-top: 10px;">
-        <p style="font-size: 30px;">รายการ Lab :</p>
-        <select id="lab-title" style="font-size: 30px;" onchange="labSelected()">
-            @foreach(var lab in labList) {
-                if (lab.uuid.ToString() == labID.ToString()) {
-                    <option value=@lab.uuid selected >@lab.name</option>
-                }
-                else {
-                    <option value=@lab.uuid  >@lab.name</option>
-                }
-            }
-        </select>
+    @foreach(var lab in labList) {
+        <div style="display:flex; margin-top: 10px;">
+            <h1>@lab.name</h1>
         </div>
-    <p>@ViewData["Description"]</p>
 
-    <table class="tools-table">
-        <thead >
-            <tr>
-                <th>No.</th>
-                <th>ชื่ออุปกรณ์</th>
-            </tr>
-        </thead>
-        <tbody id="table-body">
-            @{int index = 0;}
-            @foreach (var item in labItems) {
-                <tr >
-                    <td >
-                        @{index++;}
-                        @item.uuid
-                    </td>
-                    <td id="tools-table-title" >
-                        <p id="exist-item @index">
-                        @item.name
-                        </p>
-                    </td>
+        <table class="tools-table">
+            <thead >
+                <tr>
+                    <th>No.</th>
+                    <th>ชื่ออุปกรณ์</th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody id="table-body">
+                @{int index = 0;}
+                @foreach (var item in labItems) {
+                    @if (item.type == lab.uuid) {
+                        <tr >
+                            <td style="width: 100px">
+                                @{index++;}
+                                @item.uuid
+                            </td>
+                            <td id="tools-table-title" >
+                                <p id="exist-item @index">
+                                @item.name
+                                </p>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    }
+    
 
     <script>
         function labSelected() {

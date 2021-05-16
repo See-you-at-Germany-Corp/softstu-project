@@ -17,8 +17,8 @@
 
 <div class="detail-container">
     <div style="display:flex; margin-top: 10px;">
-        <p style="font-size: 30px;">รายการ Lab :</p>
-        <select id="lab-title" style="font-size: 30px;" onchange="labSelected()">
+        <p id="title-head">รายการ Lab :</p>
+        <select id="lab-title" onchange="labSelected()">
             @foreach(var lab in labList) {
                 if (lab.uuid.ToString() == labID.ToString()) {
                     <option value=@lab.uuid selected >@lab.name</option>
@@ -33,11 +33,13 @@
 
     
     <div class="datepicker-container">
+        <div>
         <input type="date" id="date" name="trip-start"
         value=@ViewData["Date"]
         min="2018-01-01" max="2022-12-12"
         onchange="dateSelected()"
         >
+        </div>
         <div></div>
         <div class="available">
             <div class="available-number" style="@amColor">
@@ -65,7 +67,7 @@
             @foreach (var item in labItems) {
                 <tr >
                     <td >
-                        @{index++;}
+                        
                         @item.id
                     </td>
                     <td id="table-title" >
@@ -82,6 +84,7 @@
                     <td id="delete-td" >
                         <button id="decrement @index" onclick="delExistItem(@index,@item.id)">X</button>
                         <button id="increment @index" onclick="cancelDelExistItem(@index,@item.id)" hidden>-</button>
+                        @{index++;}
                     </td>
                 </tr>
             }
@@ -120,7 +123,6 @@
             document.getElementById(`decrement ${elementid}`).hidden = true;
             document.getElementById(`increment ${elementid}`).hidden = false;
             existItemID.push(itemID);
-            console.log(existItemID)
         }
 
         function cancelDelExistItem(elementid, itemID) {
@@ -133,7 +135,6 @@
                     existItemID.splice(i,1);
                 }
             }
-            console.log(existItemID)
         }
 
         function cancel() {
@@ -142,6 +143,12 @@
             for ( ; index < length; index++) {
                 elems[index].style.textDecoration = "none";
                 elems[index].style.color = "black";
+                
+                if(document.getElementById(`increment ${index}`) != null) {
+                    document.getElementById(`decrement ${index}`).hidden = false;
+                    document.getElementById(`increment ${index}`).hidden = true;
+                }
+                
             }
             for(var i = 0; i < newItemCount; i++) {
                 document.getElementById(`new-item-edit${i}`).remove()

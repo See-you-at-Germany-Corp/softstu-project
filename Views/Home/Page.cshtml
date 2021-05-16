@@ -1,0 +1,79 @@
+@{
+    var img = @Url.Content("");
+  }
+
+<link href="@Url.Content("~/css/landing_page_style.css")" rel="stylesheet" type="text/css" />
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Spartan:wght@900&display=swap" rel="stylesheet">
+
+<div class="landing-page-container">
+    @* <div id="background-img-container">
+        <img src="~/images/bg.svg" id="background-img"/>
+        <img src="~/images/WebWindow.png" width="30%" id="showimg1"/>
+    </div> *@
+    <div class="content-container">
+        <div class="cover-container">
+            <div class="form-container">
+                <div class="form-text-content">
+                    <h1>Double Lab</h1>
+                    <p>การที่เธอยอมให้เราเป็นคนคอยปลอบไม่ได้แปลว่าเธอจะรักเรา แม้ไม่เคยทำให้เธอ
+                        ต้องร้องไห้เลยอย่างเขา
+                        คอยดูแล คอยเอาใจ ดีแค่ไหน
+                        ก็ไม่เคยทำให้เธอนั้นยิ้มได้เลยอย่างเขา
+                        เธอยังรอ คนคืนมา จนเหนื่อยล้า</p>
+                </div>
+                <button id="reg-button">Register</button>
+            </div>
+        </div>
+        <div class="feature-container">
+            <div class="text-content-container">
+                    <div class="text-container" id="tc1">
+                        <h1 class="header">ยืม</h1>
+                        <h2>อยากยืมก็ยืม แต่เอามาคืนด้วยนะ หัวใจเราอะ</h2>
+                    </div>
+                    <div class="text-container" id="tc2">
+                        <h1 class="header">คืน</h1>
+                        <h2>คืนมาได้ไหมความรักที่เราให้ไป</h2>
+                    </div>
+            </div>
+            <div class="side-image-container">
+                <div class="image-container" >
+                    <img src="~/images/WebWindow.png" id="feature-img1"/>
+                    <img src="~/images/img2.png" id="feature-img2" hidden/>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    
+    
+    @* <div class="layer base">
+            
+    </div> *@
+
+    <script>
+        window.onscroll = function() {
+            @* console.log(window.scrollY) *@
+            let pos = window.scrollY
+            let elm1 = document.getElementById("tc2").getBoundingClientRect()
+            let photoPos = document.getElementById("feature-img1").getBoundingClientRect()
+            let threshold = window.innerHeight <= 1024
+            let divider = 1;
+            if (threshold) {
+                divider = 2;
+            }
+            console.log(divider)
+            @* console.log(pos) *@
+            if (pos < 630 / divider) {
+                document.getElementById("feature-img1").hidden = false;
+                document.getElementById("feature-img2").hidden = true;
+            }
+            else if (pos < 1024 / divider) {
+                document.getElementById("feature-img1").hidden = true;
+                document.getElementById("feature-img2").hidden = false;
+            }
+        }
+    </script>
+    
+    
+</div>

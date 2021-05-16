@@ -2,15 +2,15 @@
     ViewData["Title"] = "Lab Page";
     int labId = 1;
 }
-<div class="container">
+<div class="lab-index-container">
     @foreach (var labName in ViewData["nameLab"] as List<Laboratory>)
     {
         <div class="all-lab-container">
             <div class="lab-in-container">
                 <div class="lab-pic">
-                    <img id="picture1"
-                    src="https://specials-images.forbesimg.com/imageserve/5db4c7b464b49a0007e9dfac/960x0.jpg?fit=scale"
-                    alt="dog">
+                    <div id="picture1"
+                        style="background-image: url('../../images/Lab_@(labId).png')">
+                    </div>
                 </div>
                 <div class="lab-content">
                     <div class="lab-header-container">
@@ -41,11 +41,12 @@
                                 </div>
                             </form>
                         </div>
-                        <div class="btn-container">
+                        
+                    </div>
+                    <div class="btn-container">
                             <a href="Lab/@labId">
                                 <button class="primary-button">รายละเอียด</button>
                             </a>
-                        </div>
                     </div>
                 </div>
             </div>

@@ -49,7 +49,7 @@
                             alt="profile"></a>
                     <a class="text-link" asp-controller="User" asp-action="Index">Profile</a>
                 </div>
-                <div class="nav-item" style="display: none">
+                <div class="nav-item">
                     <a class="img-link" asp-controller="Lab" asp-action="Index"><img
                             src="https://cdn.discordapp.com/attachments/817783466379968572/842703669858140160/lab.png"
                             alt="labs"></a>
@@ -86,20 +86,17 @@
     function checkCookies() {
         const login = document.querySelector(".login-nav-btn");
         const userEl = document.querySelectorAll(".nav-item")[0];
-        const labEl = document.querySelectorAll(".nav-item")[1];
-
-        if (getUserIDCookie() === -1) {
+      
+        if (!isLoggedIn()) {
             login.innerHTML = "Login";
             login.href = "/Login";
             login.removeEventListener("click", resetCookieAndAlert);
             userEl.style.display = "none";
-            labEl.style.display = "none";
         } else {
             login.innerHTML = "Logout";
             login.href = "/";
             login.addEventListener("click", resetCookieAndAlert);
             userEl.style.display = "block";
-            labEl.style.display = "block";
         }
     }
 </script>

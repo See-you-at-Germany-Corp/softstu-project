@@ -50,7 +50,7 @@ namespace softstu_project.Models
         {
         }
 
-        public User(User_role role_id, string username, string password, string fname, string lname, int student_id, string facaulty, string department, string email)
+        public User(User_role role_id, string username, string password, string fname, string lname, int student_id, string facaulty, string department, string email, int gender)
         {
             this.role_id = role_id;
             this.username = username;
@@ -63,6 +63,7 @@ namespace softstu_project.Models
             this.email = email;
             this.created = DateTime.Now;
             this.updated = DateTime.Now;
+            this.gender = gender;
         }
 
         /////////////////////////////////////////////////////////////////////////

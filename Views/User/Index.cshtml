@@ -1,5 +1,8 @@
 @using softstu_project.Models;
+@using System.Globalization;
+@using System.Threading;
 @{
+    Thread.CurrentThread.CurrentCulture = new CultureInfo("th-TH");
     var user = ViewData["UserInfo"] as User;
     List<TransactionItem> transactionItems = ViewData["TransactionItems"] as List<TransactionItem>;
     var cancelSucceed = TempData["CancelSucceed"];
@@ -43,12 +46,10 @@
                         <div class="item-img"
                     style="background-image: url('../../images/@((ItemTypes)transactionItem.type).png')"></div>
                         <div class="item-detail-cont">
-                            <div class="item-id">@transactionItem.name</div>
+                            <div class="item-id">@((ItemTypes)transactionItem.type) No.@transactionItem.item_id</div>
                             <div class="item-trans-date">
-                                @transactionItem.book_date.ToString("dd MMMM yyyy")
-                            </div>
-                            <div class="item-trans-time">
                                 @(new Transaction().GetTimeName(transactionItem.time_id))
+                                @transactionItem.book_date.ToString("dddd d MMMM yyyy")
                             </div>
                         </div>
                         <button class="cancel-booking" title="ยกเลิกการจอง" type="submit"

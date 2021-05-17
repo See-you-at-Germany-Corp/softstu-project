@@ -74,7 +74,6 @@ namespace WebApi.Controllers
                 }
             }
 
-
             string jsonString = $@"{{
                 am: {(date.Day == 1 ? 0 : amTimeSlot)},
                 pm: {(date.Day == 1 ? 0 : pmTimeSlot)},
@@ -94,48 +93,6 @@ namespace WebApi.Controllers
         public async Task<ActionResult<List<Laboratory_item>>> Gets(int labID)
         {
             return await LabItemDB.GetAllByLabIDAsync(labID);
-        }
-    }
-
-    [Route("api/item")]
-    public class ItemController : Controller
-    {
-        public ItemController() { }
-
-        [HttpPost("booking")]
-        public async Task<ActionResult> Post()
-        {
-            var db = new SoftwareStudioContext();
-
-            int lab_id = int.Parse(Request.Form["lab_id"]);
-            int user_id = int.Parse(Request.Form["user_id"]);
-            int time_id = int.Parse(Request.Form["time_id"]);
-            int quantity = int.Parse(Request.Form["quantity"]);
-            int item_type = int.Parse(Request.Form["item_type"]);
-            DateTime book_date = DateTime.ParseExact(Request.Form["book_date"], "M/d/yyyy", null);
-
-            List<List<ItemsLaboratoryTransaction>> time_slots = await ItemDB.GetAvailableItems(book_date);
-
-            time_slots[0].RemoveAll(am => am.laboratory_id != lab_id);
-            time_slots[1].RemoveAll(pm => pm.laboratory_id != lab_id);
-
-            if (time_id == 3)
-            {
-                List<ItemsLaboratoryTransaction> day = new List<ItemsLaboratoryTransaction>();
-                foreach (var item in time_slots[0])
-                {
-                    if (time_slots[1].Contains(item))
-                    {
-                        day.Add(item);
-                    }
-                }
-            }
-
-            for (var i = 0; i < quantity; i++)
-            {
-            }
-
-            return Json("");
         }
     }
 

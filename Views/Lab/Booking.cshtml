@@ -2,7 +2,7 @@
 @{
     var lab = ViewData["LabInfo"] as Laboratory;
     var itemSet = ViewData["LabItemSet"] as List<int>;
-    var transactions = ViewData["LabTransactions"] as List<Transaction>;
+    var bookingSucceed = TempData["BookingSucceed"]?.ToString();
 }
 @section CSS{
 <link rel="stylesheet" href="~/css/lab/booking_style.css">
@@ -35,23 +35,27 @@
         <div class="input-time-select">
             <label>ช่วงเวลาที่สามารถจองได้</label>
             <div class="radio-container" id="time-slot-selector">
-                <input type="checkbox" name="time_id_1" id="time-slot-1" value="1" onclick="enableButton()" disabled>
+                <input type="checkbox" name="time_am" id="time-slot-1" value="1" onclick="enableButton()" disabled>
                 <label for="time-slot-1" class="radio-label">09:00 - 12:00</label>
-                <input type="checkbox" name="time_id_2" id="time-slot-2" value="2" onclick="enableButton()" disabled>
+                <input type="checkbox" name="time_pm" id="time-slot-2" value="2" onclick="enableButton()" disabled>
                 <label for="time-slot-2" class="radio-label">13:00 - 16:00</label>
             </div>
         </div>
-        <button id="submit-btn" onclick="submitForm()" disabled>Submit</button>
+        <button id="submit-btn" onclick="submitForm" disabled>Submit</button>
     </form>
 
 </div>
 @section Scripts {
 <script>
+
+
     const itemSelector = document.getElementById('item-selector');
     const dateSelector = document.getElementById('date-selector');
     const quantitySelector = document.getElementById('quantity-selector');
     const timeSlotSelector1 = document.getElementById('time-slot-1');
     const timeSlotSelector2 = document.getElementById('time-slot-2');
+    userAuthorizeLabBooking();
+    checkBookingSucceed("@bookingSucceed");
 
     let timeSlot = {
         am: 0,
@@ -110,6 +114,7 @@
 
     function getItemTimeSlot() {
         const timestamp = Date.parse(dateSelector.value) / 1000
+        console.log("eiei")
         return fetch(`/api/lab/quantity?labID=@lab.uuid&itemType=${itemSelector.value}&timestamp=${timestamp}`, {
             method: 'get',
             headers: {
@@ -208,6 +213,18 @@
             .then(res => {
                 return res.json()
             })
+    }
+
+    function userAuthorizeLabBooking() {
+        if (!isLoggedIn()) {
+            location.href = "/";
+        }
+    }
+
+    function checkBookingSucceed(bookingSucceed) {
+        if (bookingSucceed === 'False') {
+            alert("ไม่สามารถจองอุปกรณ์ในวันที่ท่านเลือกได้")
+        }
     }
 </script>
 }

@@ -88,10 +88,7 @@ namespace softstu_project.Controllers
         public async Task<IActionResult> Booking(int labID)
         {
             Laboratory lab = LabDB.GetByID(labID);
-            List<Transaction> transactions = await TransactionDB.GetByLabIDAsync(labID);
-
             ViewData["LabInfo"] = lab;
-            ViewData["LabTransactions"] = transactions;
 
             List<int> itemSet = await ItemDB.GetItemSetByLabIDAsync(labID);
             List<string> itemSetNames = new List<string>();
@@ -99,19 +96,50 @@ namespace softstu_project.Controllers
             {
                 itemSetNames.Add(((ItemTypes)item).ToString());
             }
+
+            TempData["LabID"] = lab.uuid;
             ViewData["LabItemSet"] = itemSet;
 
             return View();
         }
 
-        public async void SubmitBooking(BookingFormModel formData)
+        public async Task<ActionResult> SubmitBooking(BookingFormModel formModel)
         {
-            Console.WriteLine("lab_id {0}", formData.lab_id);
-            Console.WriteLine("user_id {0}", formData.user_id);
-            Console.WriteLine("time_id {0} {1}", formData.time_id.GetType(), formData.time_id);
-            Console.WriteLine("quantity {0}", formData.quantity);
-            Console.WriteLine("item_type {0}", formData.item_type);
-            Console.WriteLine("book_date {0}", formData.book_date);
+            var lab_id = int.Parse(TempData["LabID"].ToString());
+            var user_id = int.Parse(HttpContext.Request.Cookies["userID"]);
+
+            var time_id = formModel.time_am + formModel.time_pm;
+
+            var items = await ItemDB.GetAvailableItems(formModel.book_date);
+
+            items.RemoveAll(item => item.laboratory_id != lab_id);
+
+            switch (time_id)
+            {
+                case 1:
+                    items.RemoveAll(item => item.time_am == false);
+                    break;
+                case 2:
+                    items.RemoveAll(item => item.time_pm == false);
+                    break;
+                case 3:
+                    items.RemoveAll(item => item.time_am == false || item.time_pm == false);
+                    break;
+                default:
+                    break;
+            }
+
+            for (var i = 0; i < formModel.quantity; ++i)
+            {
+                var temp = TransactionDB.Add(new Transaction(user_id, items[i].uuid, (int)Transaction_type.borrow, time_id, formModel.book_date));
+                if (temp == 1)
+                {
+                    TempData["BookingSucceed"] = false;
+                    return RedirectToAction("Booking", new { labID = lab_id });
+                }
+            }
+
+            return RedirectToAction("Index", "User");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -24,7 +24,6 @@
     <link rel="stylesheet" href="~/css/table_style.css">
 
     <link rel="stylesheet" href="~/css/user/index_style.css">
-    <link rel="stylesheet" href="~/css/user/booking_style.css">
     <link rel="stylesheet" href="~/css/lab/index.css">
 
     @* JS *@
@@ -88,7 +87,7 @@
         const login = document.querySelector(".login-nav-btn");
         const userEl = document.querySelectorAll(".nav-item")[0];
         const labEl = document.querySelectorAll(".nav-item")[1];
-        
+
         if (getUserIDCookie() === -1) {
             login.innerHTML = "Login";
             login.href = "/Login";

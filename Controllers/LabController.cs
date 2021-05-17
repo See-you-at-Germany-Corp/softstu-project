@@ -114,6 +114,11 @@ namespace softstu_project.Controllers
 
             items.RemoveAll(item => item.laboratory_id != lab_id);
 
+            foreach (var item in items)
+            {
+                System.Console.WriteLine("BEFORE Item {0} am: {1}, pm: {2}", item.name, item.time_am, item.time_pm);
+            }
+
             switch (time_id)
             {
                 case 1:
@@ -129,13 +134,22 @@ namespace softstu_project.Controllers
                     break;
             }
 
-            for (var i = 0; i < formModel.quantity; ++i)
+            foreach (var item in items)
             {
-                var temp = TransactionDB.Add(new Transaction(user_id, items[i].uuid, (int)Transaction_type.borrow, time_id, formModel.book_date));
-                if (temp == 1)
+                System.Console.WriteLine("AFTER Item {0} am: {1}, pm: {2}", item.name, item.time_am, item.time_pm);
+            }
+
+
+            if (items.Count > 0)
+            {
+                for (var i = 0; i < formModel.quantity; ++i)
                 {
-                    TempData["BookingSucceed"] = false;
-                    return RedirectToAction("Booking", new { labID = lab_id });
+                    var temp = TransactionDB.Add(new Transaction(user_id, items[i].uuid, (int)Transaction_type.borrow, time_id, formModel.book_date));
+                    if (temp == 1)
+                    {
+                        TempData["BookingSucceed"] = false;
+                        return RedirectToAction("Booking", new { labID = lab_id });
+                    }
                 }
             }
 

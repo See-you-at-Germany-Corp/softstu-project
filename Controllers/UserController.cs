@@ -33,6 +33,32 @@ namespace softstu_project.Controllers
             return View();
         }
 
+        [Route("user/cancel-transaction")]
+        public async Task<ActionResult> CancelTransaction(int transaction_uuid)
+        {
+            List<Transaction> transaction = await TransactionDB.GetAsync(transaction_uuid);
+
+            var result = (transaction[0].book_date - DateTime.Now).TotalHours;
+
+            if (result <= 0)
+            {
+                TempData["CancelSucceed"] = "1";
+                return RedirectToAction("Index", "User");
+            }
+
+            if (result <= 1)
+            {
+                TempData["CancelSucceed"] = "2";
+                return RedirectToAction("Index", "User");
+            }
+
+
+            TransactionDB.Cancel(transaction[0]);
+            TempData["CancelSucceed"] = "0";
+            return RedirectToAction("Index", "User");
+        }
+
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

@@ -2,6 +2,7 @@
 @{
     var user = ViewData["UserInfo"] as User;
     List<TransactionItem> transactionItems = ViewData["TransactionItems"] as List<TransactionItem>;
+    var cancelSucceed = TempData["CancelSucceed"];
 }
 <div class="profile-container">
     <div class="pf-cont">
@@ -37,13 +38,19 @@
             @foreach (var transactionItem in transactionItems)
             {
                 <div class="transaction-item">
-                    <div class="item-img" style="background-image: url('../../images/@((ItemTypes)transactionItem.type).png')"></div>
+                    <div class="item-img"
+                    style="background-image: url('../../images/@((ItemTypes)transactionItem.type).png')"></div>
                     <div class="item-detail-cont">
-                        <div class="item-id">[@transactionItem.item_id] @transactionItem.name</div>
-                        <div class="item-trans-date">@transactionItem.book_date.ToShortDateString()</div>
-                        <div class="item-trans-type">@(new Transaction().GetTimeName(transactionItem.time_id))</div>
+                        <div class="item-id">@transactionItem.name</div>
+                        <div class="item-trans-date">
+                            @transactionItem.book_date.ToString("dd MMMM yyyy")
+                        </div>
+                        <div class="item-trans-time">
+                            @(new Transaction().GetTimeName(transactionItem.time_id))
+                        </div>
                     </div>
-                    <button class="cancel-booking" title="ยกเลิกการจอง" type="submit" onclick="alert('cancel')">
+                    <button class="cancel-booking" title="ยกเลิกการจอง" type="submit"
+                    onclick="location.href='@Url.Action("cancel-transaction", new{transaction_uuid=@transactionItem.uuid})'">
                         <img alt="cancel-icon" src="~/images/user-profile/cancel.svg" />
                     </button>
                 </div>
@@ -51,4 +58,20 @@
         </div>
     </div>
 </div>
-</div>
+@section Scripts{
+<script>
+    window.onload = () => {
+        initPage()
+    }
+
+    function initPage() {
+        if ("@cancelSucceed" === "0") {
+            alert("ยกเลิกการจองสำเร็จ")
+        } else if ("@cancelSucceed" === "1") {
+            alert("ไม่สามารถยกเลิกการจองหลังจากวันที่จอง")
+        } else if ("@cancelSucceed" === "2") {
+            alert("ไม่สามารถยกเลิกการจองได้ กรุณายกเลิกการจองก่อนเวลา อย่างน้อย 1 ชม.")
+        }
+    }
+</script>
+}

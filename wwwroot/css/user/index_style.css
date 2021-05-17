@@ -24,7 +24,7 @@
   align-items: center;
   flex-direction: column;
 
-  top: 76px;
+  top: 100px;
   position: sticky;
   position: -webkit-sticky;
 }
@@ -87,13 +87,23 @@
 
 .transaction-list-header {
   display: flex;
-  font-size: 20px;
+  font-size: 24px;
   padding-left: 10px;
 }
 
 .transaction-list {
   gap: 15px;
   display: grid;
+
+  padding: 10px;
+  overflow-y: auto;
+  max-height: calc(100vh - 275px);
+}
+
+.transaction-list::after {
+  content: " ";
+  height: 10px;
+  width: 100%;
 }
 
 .transaction-item {
@@ -117,6 +127,7 @@
 }
 
 .transaction-item > .item-detail-cont {
+  gap: 0;
   flex: 1;
   display: flex;
   align-self: flex-start;
@@ -132,6 +143,14 @@
   cursor: pointer;
   border-radius: 50%;
   background-color: transparent;
+}
+
+.item-detail-cont > .item-id {
+  font-size: 20px;
+}
+
+.item-detail-cont > .item-trans-date {
+  font-size: 16px;
 }
 
 .cancel-booking img {
@@ -174,6 +193,14 @@
     width: 20px;
     height: 20px;
   }
+
+  .item-detail-cont > .item-id {
+    font-size: 16px;
+  }
+
+  .item-detail-cont > .item-trans-date {
+    font-size: 12px;
+  }
 }
 
 @media (max-width: 1000px) {
@@ -185,5 +212,9 @@
     gap: 10px;
     align-items: center;
     flex-direction: column;
+  }
+
+  .transaction-list {
+    max-height: none;
   }
 }

@@ -42,7 +42,7 @@ namespace WebApi.Controllers
         }
 
         [HttpGet("quantity")]
-        public async Task<ActionResult> Get(int labID, int itemType, int timestamp)
+        public async Task<ActionResult> GetQuantity(int labID, int itemType, int timestamp)
         {
             DateTime date = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
             date = date.AddSeconds(timestamp);
@@ -74,7 +74,6 @@ namespace WebApi.Controllers
                 }
             }
 
-
             string jsonString = $@"{{
                 am: {(date.Day == 1 ? 0 : amTimeSlot)},
                 pm: {(date.Day == 1 ? 0 : pmTimeSlot)},
@@ -82,12 +81,6 @@ namespace WebApi.Controllers
             JObject result = JObject.Parse(jsonString);
 
             return Json(result);
-        }
-
-        [HttpPost("booking")]
-        public async Task<ActionResult> Booking()
-        {
-            return Json("");
         }
     }
 
@@ -148,9 +141,9 @@ namespace WebApi.Controllers
         public ActionResult<HttpResponseMessage> Post(int user_id, int item_id, int time_id, string date)  // not sure about "Item"
         {
             int status = UserDB.BookItems(user_id, item_id, time_id, date);
-            if (status == 0) 
+            if (status == 0)
                 return StatusCode(201);
-            else 
+            else
                 return StatusCode(400);
         }
     }

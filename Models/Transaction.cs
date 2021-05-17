@@ -59,7 +59,7 @@ namespace softstu_project.Models
 
         public string GetTimeName(int timeID)
         {
-            List<string> timeNames = new List<string> { "none", "เช้า", "บ่าย", "ทั้งวัน" };
+            List<string> timeNames = new List<string> { "none", "เช้า", "บ่าย", "เช้า-บ่าย" };
             return timeNames[timeID];
         }
     }

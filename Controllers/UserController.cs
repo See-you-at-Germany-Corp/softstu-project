@@ -40,28 +40,31 @@ namespace softstu_project.Controllers
             return View();
         }
 
-        [HttpGet]
-        [Route("User/{labID}/Booking")]
-        public async Task<IActionResult> Booking(int labID)
+        [Route("user/cancel-transaction")]
+        public async Task<ActionResult> CancelTransaction(int transaction_uuid)
         {
-            Laboratory lab = LabDB.GetByID(labID);
-            List<ItemDetail> items = await ItemDB.GetAllDetailByLabIDAsync(labID);
-            List<Transaction> transactions = await TransactionDB.GetByLabIDAsync(labID);
+            List<Transaction> transaction = await TransactionDB.GetAsync(transaction_uuid);
 
-            ViewData["LabInfo"] = lab;
-            // ViewData["LabItems"] = items;
-            ViewData["LabTransactions"] = transactions;
+            var result = (transaction[0].book_date - DateTime.Now).TotalHours;
 
-            List<int> itemSet = await ItemDB.GetItemSetByLabIDAsync(labID);
-            List<string> itemSetNames = new List<string>();
-            foreach (var item in itemSet)
+            if (result <= 0)
             {
-                itemSetNames.Add(((ItemTypes)item).ToString());
+                TempData["CancelSucceed"] = "1";
+                return RedirectToAction("Index", "User");
             }
-            ViewData["LabItemSet"] = itemSet;
 
-            return View();
+            if (result <= 1)
+            {
+                TempData["CancelSucceed"] = "2";
+                return RedirectToAction("Index", "User");
+            }
+
+
+            TransactionDB.Cancel(transaction[0]);
+            TempData["CancelSucceed"] = "0";
+            return RedirectToAction("Index", "User");
         }
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

@@ -184,7 +184,7 @@ namespace ConsoleApp.PostgreSQL
 
             if (transaction != null)
             {
-                db.transactions.Remove(transaction);
+                var temp = db.transactions.Remove(transaction); ;
                 transaction.transaction_type = (int)Transaction_type.cancel;
                 db.logs.Add(new Log(transaction));
                 db.SaveChanges();

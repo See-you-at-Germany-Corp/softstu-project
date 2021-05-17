@@ -97,13 +97,21 @@
 
   padding: 10px;
   overflow-y: auto;
-  max-height: calc(100vh - 275px);
+  max-height: calc(100vh - 250px);
 }
 
 .transaction-list::after {
   content: " ";
   height: 10px;
   width: 100%;
+}
+
+.empty {
+  height: 50px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .transaction-item {

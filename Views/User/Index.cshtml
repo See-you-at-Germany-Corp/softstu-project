@@ -41,14 +41,18 @@
                 {
                     <div class="transaction-item">
                         <div class="item-img"
-                            style="background-image: url('../../images/@((ItemTypes)transactionItem.type).png')">
-                        </div>
+                    style="background-image: url('../../images/@((ItemTypes)transactionItem.type).png')"></div>
                         <div class="item-detail-cont">
-                            <div class="item-id">[@transactionItem.item_id] @transactionItem.name</div>
-                            <div class="item-trans-date">@transactionItem.book_date.ToShortDateString()</div>
-                            <div class="item-trans-type">@(new Transaction().GetTimeName(transactionItem.time_id))</div>
+                            <div class="item-id">@transactionItem.name</div>
+                            <div class="item-trans-date">
+                                @transactionItem.book_date.ToString("dd MMMM yyyy")
+                            </div>
+                            <div class="item-trans-time">
+                                @(new Transaction().GetTimeName(transactionItem.time_id))
+                            </div>
                         </div>
-                        <button class="cancel-booking" title="ยกเลิกการจอง" type="submit" onclick="alert('cancel')">
+                        <button class="cancel-booking" title="ยกเลิกการจอง" type="submit"
+                    onclick="location.href='@Url.Action("cancel-transaction", new{transaction_uuid=@transactionItem.uuid})'">
                             <img alt="cancel-icon" src="~/images/user-profile/cancel.svg" />
                         </button>
                     </div>
@@ -56,22 +60,8 @@
             }
             else
             {
-                <div class="transaction-item">
-                    <div class="item-img"
-                    style="background-image: url('../../images/@((ItemTypes)transactionItem.type).png')"></div>
-                    <div class="item-detail-cont">
-                        <div class="item-id">@transactionItem.name</div>
-                        <div class="item-trans-date">
-                            @transactionItem.book_date.ToString("dd MMMM yyyy")
-                        </div>
-                        <div class="item-trans-time">
-                            @(new Transaction().GetTimeName(transactionItem.time_id))
-                        </div>
-                    </div>
-                    <button class="cancel-booking" title="ยกเลิกการจอง" type="submit"
-                    onclick="location.href='@Url.Action("cancel-transaction", new{transaction_uuid=@transactionItem.uuid})'">
-                        <img alt="cancel-icon" src="~/images/user-profile/cancel.svg" />
-                    </button
+                <div class="transaction-item empty">
+                    ยังไม่มีรายการจอง
                 </div>
             }
         </div>

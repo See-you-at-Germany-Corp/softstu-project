@@ -21,3 +21,24 @@
 .ghost-button:active {
     background-color: rgba(26, 145, 218, 0.3); 
 }
+
+.ghost-button:disabled {
+    background-color: rgba(110, 110, 110, 0.3); 
+    pointer-events: none;
+}
+
+.primary-button {
+    align-self: flex-end;
+    width: fit-content;
+  
+    cursor: pointer;
+    margin-top: 20px;
+    padding: 4px 10px;
+  
+    border: 0;
+    border-radius: 5px;
+  
+    font-size: 16px;
+    color: white;
+    background-color: rgb(26, 145, 218);
+  }

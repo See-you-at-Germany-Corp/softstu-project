@@ -1,0 +1,230 @@
+@using softstu_project.Models;
+@{
+    var lab = ViewData["LabInfo"] as Laboratory;
+    var itemSet = ViewData["LabItemSet"] as List<int>;
+    var bookingSucceed = TempData["BookingSucceed"]?.ToString();
+}
+@section CSS{
+<link rel="stylesheet" href="~/css/lab/booking_style.css">
+}
+<div class="booking-container">
+    <div class="lab-header">@lab.name</div>
+    <form class="form-container" asp-controller="Lab" asp-action="SubmitBooking">
+        <div class="input-form">
+            <div class="input-container">
+                <label for="">อุปกรณ์</label>
+                <select name="item_type" id="item-selector" onchange="selectItem()">
+                    <option value="DUMMY" selected>เลือกอุปกรณ์</option>
+                    @foreach (var index in itemSet)
+                    {
+                        <option value=@index>@((ItemTypes)index)</option>
+                    }
+                </select>
+            </div>
+            <div class="input-container">
+                <label for="">วันที่</label>
+                <input type="date" name="book_date" id="date-selector" onchange="selectDate()" />
+            </div>
+            <div class="input-container">
+                <label for="">จำนวน</label>
+                <select name="quantity" id="quantity-selector" onchange="setFormTimeSlot()">
+                    <option value="DUMMY">เลือกจำนวนอุปกรณ์</option>
+                </select>
+            </div>
+        </div>
+        <div class="input-time-select">
+            <label>ช่วงเวลาที่สามารถจองได้</label>
+            <div class="radio-container" id="time-slot-selector">
+                <input type="checkbox" name="time_am" id="time-slot-1" value="1" onclick="enableButton()" disabled>
+                <label for="time-slot-1" class="radio-label">09:00 - 12:00</label>
+                <input type="checkbox" name="time_pm" id="time-slot-2" value="2" onclick="enableButton()" disabled>
+                <label for="time-slot-2" class="radio-label">13:00 - 16:00</label>
+            </div>
+        </div>
+        <button id="submit-btn" onclick="submitForm" disabled>Submit</button>
+    </form>
+
+</div>
+@section Scripts {
+<script>
+
+
+    const itemSelector = document.getElementById('item-selector');
+    const dateSelector = document.getElementById('date-selector');
+    const quantitySelector = document.getElementById('quantity-selector');
+    const timeSlotSelector1 = document.getElementById('time-slot-1');
+    const timeSlotSelector2 = document.getElementById('time-slot-2');
+    userAuthorizeLabBooking();
+    checkBookingSucceed("@bookingSucceed");
+
+    let timeSlot = {
+        am: 0,
+        pm: 0
+    };
+
+    async function updateForm() {
+        disableButton()
+        clearItemQuantity()
+        clearFormTimeSlot()
+
+        timeSlot = await getItemTimeSlot()
+
+        let { maxQuantity } = getMinMaxQuantity()
+
+        if (maxQuantity === 0) {
+            quantitySelector.options[0].text = "ไม่มีอุปกรณ์ว่าง";
+            return
+        }
+        setQuantitySeletor(maxQuantity)
+    }
+
+    function selectItem() {
+        if (dateSelector.value === "") return
+        if (itemSelector.value === "DUMMY") {
+            clearForm();
+            return
+        }
+
+        updateForm()
+    }
+
+    function selectDate() {
+        if (itemSelector.value === "DUMMY") return
+        if (dateSelector.value === "") {
+            clearForm();
+            return
+        }
+
+        updateForm()
+    }
+
+    function getMinMaxQuantity() {
+        let minQuantity, maxQuantity;
+
+        if (timeSlot.am > timeSlot.pm) {
+            minQuantity = timeSlot.pm
+            maxQuantity = timeSlot.am
+        } else {
+            minQuantity = timeSlot.am
+            maxQuantity = timeSlot.pm
+        }
+
+        return { minQuantity, maxQuantity }
+    }
+
+    function getItemTimeSlot() {
+        const timestamp = Date.parse(dateSelector.value) / 1000
+        console.log("eiei")
+        return fetch(`/api/lab/quantity?labID=@lab.uuid&itemType=${itemSelector.value}&timestamp=${timestamp}`, {
+            method: 'get',
+            headers: {
+                'Content-Type': 'application/json',
+                Accept: 'application/json',
+            }
+        })
+            .then(res => {
+                return res.json()
+            })
+            .then(res => {
+                return res
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }
+
+    function setFormTimeSlot() {
+        let { minQuantity, maxQuantity } = getMinMaxQuantity()
+
+        if (minQuantity !== maxQuantity && parseInt(quantitySelector.value) > minQuantity) {
+            if (timeSlot.am > timeSlot.pm) {
+                timeSlotSelector1.disabled = false;
+                timeSlotSelector2.disabled = true;
+            } else {
+                timeSlotSelector1.disabled = true;
+                timeSlotSelector2.disabled = false;
+            }
+        } else {
+            timeSlotSelector1.disabled = false;
+            timeSlotSelector2.disabled = false;
+        }
+    }
+
+    function setQuantitySeletor(maxQuantity) {
+        if (maxQuantity !== quantitySelector.childElementCount) {
+            for (let i = 1; i <= maxQuantity; ++i) {
+                quantitySelector.options.add(new Option(i, i));
+            }
+        }
+    }
+
+    function enableButton() {
+        const btn = document.getElementById('submit-btn')
+
+        if (!timeSlotSelector1.checked && !timeSlotSelector2.checked) {
+            btn.disabled = true;
+        } else {
+            btn.disabled = false;
+        }
+    }
+
+    function disableButton() {
+        const btn = document.getElementById('submit-btn')
+
+        btn.disabled = true;
+    }
+
+    function clearItemQuantity(dummy_text = "เลือกจำนวนอุปกรณ์") {
+        quantitySelector.innerHTML = ""
+        quantitySelector.options.add(new Option(dummy_text, "DUMMY"));
+    }
+
+    function clearFormTimeSlot() {
+        timeSlotSelector1.checked = false;
+        timeSlotSelector2.checked = false;
+        timeSlotSelector1.disabled = true;
+        timeSlotSelector2.disabled = true;
+    }
+
+    function submitForm() {
+        const itemTypeID = itemSelector.value
+        const bookDate = new Date(dateSelector.value)
+        const quantity = quantitySelector.value
+        const timeID =
+            (timeSlotSelector1.checked ? parseInt(timeSlotSelector1.value) : 0) +
+            (timeSlotSelector2.checked ? parseInt(timeSlotSelector2.value) : 0)
+
+        bookItem(timeID, quantity, itemTypeID, bookDate)
+    }
+
+    function bookItem(time_id, quantity, item_type, book_date) {
+        const formData = new FormData();
+        formData.append('lab_id', @lab.uuid)
+        formData.append('user_id', 1)
+        formData.append('time_id', time_id)
+        formData.append('quantity', quantity)
+        formData.append('item_type', item_type)
+        formData.append('book_date', book_date.toLocaleDateString())
+
+        fetch(`/api/item/booking`, {
+            method: 'post',
+            body: formData
+        })
+            .then(res => {
+                return res.json()
+            })
+    }
+
+    function userAuthorizeLabBooking() {
+        if (!isLoggedIn()) {
+            location.href = "/";
+        }
+    }
+
+    function checkBookingSucceed(bookingSucceed) {
+        if (bookingSucceed === 'False') {
+            alert("ไม่สามารถจองอุปกรณ์ในวันที่ท่านเลือกได้")
+        }
+    }
+</script>
+}

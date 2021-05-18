@@ -116,13 +116,33 @@ namespace ConsoleApp.PostgreSQL
             return transactions;
         }
 
+        public static async Task<List<TransactionItem>> GetWithItemByUserIDAsync(int userID)
+        {
+            var db = new SoftwareStudioContext();
+
+            List<string> reqList = new List<string>{
+                    "transactions.uuid",
+                    "transactions.item_id",
+                    "time_id",
+                    "book_date",
+                    "items.type",
+                    "items.name",
+                    "transactions.created",
+                };
+            var reqString = db.ListToString(reqList);
+            string queryString = $"SELECT {reqString} FROM transactions LEFT JOIN items ON items.uuid = transactions.item_id WHERE transactions.user_id = {userID};";
+            List<TransactionItem> transactionItems = await db.transactionItems.FromSqlRaw(queryString).ToListAsync();
+
+            return transactionItems;
+        }
+
         public static int Add(Transaction transaction)
         {
             var db = new SoftwareStudioContext();
 
             DateTime datetime_now = DateTime.Now;
             int hour;
-            if (transaction.time_id == (int)Time_id_type.pm)
+            if (transaction.time_id == (int)Time_id_type.PM)
             {
                 hour = 12;
             }
@@ -164,7 +184,7 @@ namespace ConsoleApp.PostgreSQL
 
             if (transaction != null)
             {
-                db.transactions.Remove(transaction);
+                var temp = db.transactions.Remove(transaction); ;
                 transaction.transaction_type = (int)Transaction_type.cancel;
                 db.logs.Add(new Log(transaction));
                 db.SaveChanges();

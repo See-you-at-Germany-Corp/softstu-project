@@ -1,0 +1,46 @@
+@{
+    ViewData["Title"] = "Login";
+    int userID = (int)TempData["userID"];
+}
+<div class="contain-login">
+    <div class="login">
+        <div class="logo-lab">
+            <img class="logo-pic"
+                src="https://cdn.discordapp.com/attachments/817783466379968572/832547225749553172/flask.png" alt="dog">
+            <div class="logo-text">
+                <p class="font-header">Double Labs</p>
+            </div>
+        </div>
+        <div class="login-input">
+            <form asp-controller="Login" class="contain-input" asp-action="Submit">
+                <input class="input" id="username" type="text" name="username" placeholder="username">
+                <input class="input" id="password" type="password" name="password" placeholder="password">
+                <button class="login-btn" id="login" type="submit">Login</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    checkCookie(@userID);
+    loggedInRedirect(getUserIDCookie());
+
+    function checkCookie(userID = -1) {
+        if (parseInt(userID) > 0) {
+
+            alert("เข้าสู่ระบบสำเร็จ !");
+            setUserIDCookie(userID);
+
+            if (isAdmin(userID)) location.href = "/Admin";
+            else location.href = "/Lab";
+
+        } else if (parseInt(userID) === -1) alert("รหัสผ่านไม่ถูกต้อง !");
+    }
+
+    function loggedInRedirect(userID = -1) {
+        if (isLoggedIn()) {
+            if (isAdmin(userID)) location.href = "/Admin";
+            else location.href = "/Lab";
+        }
+    }
+</script>

@@ -4,19 +4,19 @@ using System.ComponentModel.DataAnnotations;
 
 namespace softstu_project.Models
 {
-    public class ItemsLaboratoryTransaction
+    public class TransactionItem
     {
         [Key]
         public int uuid { get; set; }
 
         public string name { get; set; }
 
-        public Boolean time_am { get; set; }
+        public int time_id { get; set; }
 
-        public Boolean time_pm { get; set; }
-
-        public int laboratory_id { get; set; }
+        public int item_id { get; set; }
 
         public int type { get; set; }
+
+        public DateTime book_date { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -14,24 +14,27 @@
         rel="stylesheet">
 
     @* CSS *@
+    @RenderSection("CSS", false)
     <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/login/login_style.css">
+    <link rel="stylesheet" href="~/css/lab/lab_style.css">
+    <link rel="stylesheet" href="~/css/lab/index.css">
     <link rel="stylesheet" href="~/css/navbar_style.css">
     <link rel="stylesheet" href="~/css/button.css">
     <link rel="stylesheet" href="~/css/table_style.css">
 
     <link rel="stylesheet" href="~/css/user/index_style.css">
-
     <link rel="stylesheet" href="~/css/lab/index.css">
 
     @* JS *@
     <script src="~/js/navbar.js" asp-append-version="true"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/js/cookies.js" asp-append-version="true"></script>
+    <script src="~/js/admin/account.js" asp-append-version="true"></script>
 </head>
 
 <body>
-    <nav
-        class="boateiei navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
         <div class="nav-container">
             <div class="nav-brand-box">
                 <div class="nav-icon"></div>
@@ -40,14 +43,20 @@
 
             <div class="nav-menu">
 
-                <div class="nav-item" style="display: 'none'">
+                <div class="nav-item" style="display: none">
                     <a class="img-link" asp-controller="User" asp-action="Index"><img
-                            src="https://www.flaticon.com/svg/vstatic/svg/2922/2922510.svg?token=exp=1618485501~hmac=7734c0bf434cc27dceba121cf0c4ebcb"
+                            src="https://media.discordapp.net/attachments/817783466379968572/842443619011919882/man.png"
                             alt="profile"></a>
                     <a class="text-link" asp-controller="User" asp-action="Index">Profile</a>
                 </div>
+                <div class="nav-item">
+                    <a class="img-link" asp-controller="Lab" asp-action="Index"><img
+                            src="https://cdn.discordapp.com/attachments/817783466379968572/842703669858140160/lab.png"
+                            alt="labs"></a>
+                    <a class="text-link" asp-controller="Lab" asp-action="Index">Labs</a>
+                </div>
                 <div class="nav-item-text">
-                    <a class="login-btn" href="/Login">Login</a>
+                    <a class="login-nav-btn" href="/Login">Login</a>
                 </div>
 
                 <div class="nav-item nav-expand" onclick="showNavbar()">
@@ -75,19 +84,18 @@
     checkCookies();
 
     function checkCookies() {
-        const userID = getCookie("userID");
-        const login = document.querySelector(".login-btn");
+        const login = document.querySelector(".login-nav-btn");
         const userEl = document.querySelectorAll(".nav-item")[0];
-
-        if (!parseInt(userID)) {
+      
+        if (!isLoggedIn()) {
             login.innerHTML = "Login";
             login.href = "/Login";
-            login.removeEventListener("click", resetUserID);
+            login.removeEventListener("click", resetCookieAndAlert);
             userEl.style.display = "none";
         } else {
             login.innerHTML = "Logout";
             login.href = "/";
-            login.addEventListener("click", resetUserID);
+            login.addEventListener("click", resetCookieAndAlert);
             userEl.style.display = "block";
         }
     }

@@ -19,36 +19,52 @@ namespace softstu_project.Controllers
             _logger = logger;
         }
 
+        [HttpGet]
+        [Route("User/")]
         public async Task<IActionResult> Index()
         {
-            int id = 10;
-            List<User> users = await UserDB.GetByIDAsync(id);
-            ViewData["UserInfo"] = users[0];
+            ViewData["UserInfo"] = new User(User_role.user, "", "", "", "", 0, "", "", "", 1);
+            ViewData["TransactionItems"] = new List<TransactionItem>();
+
+            var userID = HttpContext.Request.Cookies["userID"];
+            if (userID != null)
+                if (int.Parse(userID) > 0)
+                {
+                    List<User> users = await UserDB.GetByIDAsync(int.Parse(userID));
+                    List<TransactionItem> transactionItems = await TransactionDB.GetWithItemByUserIDAsync(int.Parse(userID));
+
+                    ViewData["UserInfo"] = users[0];
+                    ViewData["TransactionItems"] = transactionItems;
+                }
+
             return View();
         }
 
-        [HttpGet]
-        [Route("User/{labID}/Booking")]
-        public async Task<IActionResult> Booking(int labID)
+        [Route("user/cancel-transaction")]
+        public async Task<ActionResult> CancelTransaction(int transaction_uuid)
         {
-            Laboratory lab = LabDB.GetByID(labID);
-            List<ItemDetail> items = await ItemDB.GetAllDetailByLabIDAsync(labID);
-            List<Transaction> transactions = await TransactionDB.GetByLabIDAsync(labID);
+            List<Transaction> transaction = await TransactionDB.GetAsync(transaction_uuid);
 
-            ViewData["LabInfo"] = lab;
-            // ViewData["LabItems"] = items;
-            ViewData["LabTransactions"] = transactions;
+            var result = (transaction[0].book_date - DateTime.Now).TotalHours;
 
-            List<int> itemSet = await ItemDB.GetItemSetByLabIDAsync(labID);
-            List<string> itemSetNames = new List<string>();
-            foreach (var item in itemSet)
+            if (result <= 0)
             {
-                itemSetNames.Add(((ItemTypes)item).ToString());
+                TempData["CancelSucceed"] = "1";
+                return RedirectToAction("Index", "User");
             }
-            ViewData["LabItemSet"] = itemSet;
 
-            return View();
+            if (result <= 1)
+            {
+                TempData["CancelSucceed"] = "2";
+                return RedirectToAction("Index", "User");
+            }
+
+
+            TransactionDB.Cancel(transaction[0]);
+            TempData["CancelSucceed"] = "0";
+            return RedirectToAction("Index", "User");
         }
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

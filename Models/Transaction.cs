@@ -6,7 +6,7 @@ namespace softstu_project.Models
 {
     public enum Time_id_type
     {
-        none, am, pm, day
+        none, AM, PM, Day
     }
 
     public enum Transaction_type
@@ -59,7 +59,7 @@ namespace softstu_project.Models
 
         public string GetTimeName(int timeID)
         {
-            List<string> timeNames = new List<string> { "none", "เช้า", "บ่าย", "ทั้งวัน" };
+            List<string> timeNames = new List<string> { "none", "เช้า", "บ่าย", "เช้า-บ่าย" };
             return timeNames[timeID];
         }
     }

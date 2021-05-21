@@ -149,12 +149,12 @@ namespace ConsoleApp.PostgreSQL
             string x = $@"
                 select items.uuid, items.name, items.type, laboratory_items.laboratory_id,
 	                    (case
-			                when transactions.time_id = 1 or transactions.time_id is NULL then True
-			                else False
+			                when transactions.time_id = 1 or transactions.time_id = 3 then False
+			                else True
                         end) as time_am, 
 	                    (case 
-			                when transactions.time_id = 2 or transactions.time_id is NULL then True 
-                            else False
+			                when transactions.time_id = 2 or transactions.time_id = 3 then False 
+                            else True
                         end) as time_pm from items
                 LEFT JOIN transactions ON 
 		            transactions.item_id = items.uuid 

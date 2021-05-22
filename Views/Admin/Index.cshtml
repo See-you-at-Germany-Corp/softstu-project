@@ -15,7 +15,7 @@
             }
             @foreach (var lab in ViewData["LabLists"] as List<LabListModel>)
             {
-                <a href="Detail/@labID">
+                <a href="Admin/Detail/?id=@labID">
                     <div class="lab-item-box">
                         <p>@lab.name</p>
                         <div class="item-box">

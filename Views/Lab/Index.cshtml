@@ -1,6 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "Lab Page";
-    int labId = 1;
+    ViewData["Title"] = "Lab Page"; 
 }
 <div class="lab-index-container">
     @foreach (var labName in ViewData["nameLab"] as List<Laboratory>)
@@ -8,7 +7,7 @@
         <div class="all-lab-container">
             <div class="lab-in-container">
                 <div class="lab-pic">
-                    <div id="picture1" style="background-image: url('../../images/Lab_@(labId).png')">
+                    <div id="picture1" style="background-image: url('../../images/Lab_@(labName.uuid).png')">
                     </div>
                 </div>
                 <div class="lab-content">
@@ -22,9 +21,6 @@
                             </div>
                         </div>
                         <div class="lab-information-container">
-                            @* <div class="font-lab-detail"> *@
-                            @* <form class="form-text" action=""> *@
-                            @* <div class="list-lab-left"> *@
                             <ul>
                                 @foreach (var lab in ViewData["myType"] as List<List<ItemDetail>>)
                                 {
@@ -37,20 +33,16 @@
                                     }
                                 }
                             </ul>
-                            @* </div> *@
-                            @* </form> *@
-                            @* </div> *@
                         </div>
                     </div>
                     <div class="btn-container">
-                        <a href="Lab/@labId">
+                        <a href="Lab/@labName.uuid">
                             <button class="primary-button">รายละเอียด</button>
                         </a>
                     </div>
                 </div>
             </div>
         </div>
-        labId += 1;
     }
 
 </div>

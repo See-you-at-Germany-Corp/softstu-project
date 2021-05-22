@@ -1,6 +1,7 @@
 .lab-index-container {
   padding: 30px 0px;
 }
+
 .all-lab-container {
 }
 
@@ -48,6 +49,10 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+
+.lab-detail-content {
+  margin: 0;
 }
 
 .lab-header-container {
@@ -113,69 +118,18 @@
   width: 100%;
   justify-content: flex-end;
   align-items: flex-end;
-  /* margin-top: -30px;
-  margin-left: -20px; */
 }
 
 ul {
   padding: 0;
 }
-/* If the screen size is 601px wide or more, set the font-size of <div> to 80px */
-@media screen and (min-width: 801px) {
-  .list-lab-left {
-    font-size: 16px;
-  }
-  .list-lab-right {
-    font-size: 16px;
-  }
-}
 
 /* If the screen size is 600px wide or less, set the font-size of <div> to 30px */
-@media screen and (max-width: 800px) {
-  .btn-more-inform {
-    width: 60px;
-    height: 20px;
-    background-color: #64bdf8;
-    font-size: 8px;
-  }
-  .lab-pic {
-    display: flex;
-    min-width: 150px;
-    min-height: 150px;
-    max-width: 200px;
-    max-height: 200px;
-    align-items: center;
-    height: auto;
-    padding-top: 30px;
-  }
-  .lab-header-container {
-    padding-left: 0px;
-    width: 60%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  .font-lab-detail {
-    display: flex;
-    width: 100%;
-  }
-  .lab-information-container {
-    display: flex;
-    flex-direction: column;
-    width: 70%;
-    padding-left: 20px;
-  }
-  .btn-container {
-    display: flex;
-    width: 50%;
-    justify-content: center;
-    align-items: center;
-    padding-bottom: 30px;
-  }
+@media screen and (max-width: 700px) {
   .lab-in-container {
     width: 70%;
     height: auto;
-    max-width: 800px;
+    max-width: 250px;
 
     margin: 0 auto;
     margin-bottom: 30px;
@@ -184,31 +138,80 @@ ul {
     align-items: center;
     flex-direction: column;
   }
-  .lab-content {
-    width: 90%;
-    max-width: 800px;
 
-    display: flex;
+  #picture1 {
+    width: 200px;
+    margin-bottom: 5px;
+  }
+
+  .lab-content {
+    padding: 0;
+    max-width: 200px;
+  }
+
+  .lab-detail-content {
+    width: 200px;
+    box-sizing: border-box;
+  }
+
+  .lab-header-container {
+    width: 100%;
     align-items: center;
-    flex-direction: column;
-    justify-content: center;
+    justify-self: center;
   }
-  .lab-information-container {
-    display: flex;
-    flex-direction: column;
-    width: 70%;
-    padding-left: 0px;
-  }
+
   .font-lab-detail {
     display: flex;
-    width: 95%;
-    margin: 0 auto;
+    width: 100%;
   }
-  .form-text {
+
+  .topic-content {
+    align-self: flex-start;
+  }
+  .btn-container {
     display: flex;
-    width: 70%;
+    padding-bottom: 10px;
     justify-content: center;
-    align-items: center;
-    margin: 0 auto;
+  }
+
+  .font-header1 {
+    font-size: 20px;
+  }
+
+  .font-header2 {
+    font-size: 16px;
+  }
+}
+
+/* @media screen and (max-width: 600px) {
+  .lab-in-container {
+    margin: 0;
+  }
+
+  #picture1 {
+    width: 90px;
+    height: 90px;
+  }
+
+  .lab-header-container {
+    margin: 0;
+  }
+  .font-header1 {
+    font-size: 18px;
+  }
+
+  .font-header2 {
+    margin: 0;
+    font-size: 16px;
+  }
+} */
+
+/* If the screen size is 601px wide or more, set the font-size of <div> to 80px */
+@media screen and (min-width: 801px) {
+  .list-lab-left {
+    font-size: 16px;
+  }
+  .list-lab-right {
+    font-size: 16px;
   }
 }

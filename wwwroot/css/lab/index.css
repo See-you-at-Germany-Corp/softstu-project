@@ -1,62 +1,63 @@
-.lab-detail-container { 
-    display: flex;
-    flex-flow: column nowrap;
-    width: 80%;
+.lab-detail-container {
+  display: flex;
+  flex-flow: column nowrap;
+  width: 80%;
 
-    margin: 0 auto;
-    margin-top: 25px;
+  margin: 0 auto;
+  margin-top: 25px;
 }
 
-.lab-detail-box { 
-    display: flex;
-    flex-flow: column nowrap;
-    width: 60%; 
+.lab-detail-box {
+  display: flex;
+  flex-flow: column nowrap;
+  width: 60%;
 
-    margin: 0 auto;
-    margin-bottom: 25px;
+  margin: 0 auto;
+  margin-bottom: 25px;
 }
 
 .lab-detail-box p {
-    word-break: break-all;
+  word-break: break-word;
 
-    margin: 0 auto;
-    padding: 0;
+  margin: 0 auto;
+  padding: 0;
 }
 
 .lab-device-list-table-container {
-    display: flex;
-    flex-flow: column nowrap;
-    width: 100%;
-    max-width: 500px;
+  display: flex;
+  flex-flow: column nowrap;
+  width: 100%;
+  max-width: 500px;
 
-    align-items: center;
-    margin: 0 auto;
+  align-items: center;
+  margin: 0 auto;
 }
 
 .lab-device-list-table-container table {
-    width: 100%;
-    /* max-width: 500px; */
+  width: 100%;
+  /* max-width: 500px; */
 }
 
-.lab-device-list-table-container table th, td {
-    width: 200px;
+.lab-device-list-table-container table th,
+td {
+  width: 200px;
 }
 
 .button-box {
-    display: flex;
-    width: 100%;
+  display: flex;
+  width: 100%;
 
-    justify-content: flex-end;
-    margin: 0 auto;
-    margin-top: 25px;
+  justify-content: flex-end;
+  margin: 0 auto;
+  margin-top: 25px;
 }
 
 .button-box button {
-    margin-left: 10px;
+  margin-left: 10px;
 }
 
 @media (max-width: 992px) {
-    .lab-detail-box {  
-        width: 100%; 
-    }
+  .lab-detail-box {
+    width: 100%;
+  }
 }

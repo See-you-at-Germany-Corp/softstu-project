@@ -43,14 +43,14 @@ namespace softstu_project.Models
 
         public static string getName(ItemTypes itemType)
         {
-            List<string> itemNames = new List<string>() { "none", "keyboard", "mouse", "monitor", "ups", "speaker" };
+            List<string> itemNames = new List<string>() { "none", "Keyboard", "Mouse", "Monitor", "Ups", "Speaker" };
 
             return itemNames[(int)itemType];
         }
 
         public static string getName(int itemType)
         {
-            List<string> itemNames = new List<string>() { "none", "keyboard", "mouse", "monitor", "ups", "speaker" };
+            List<string> itemNames = new List<string>() { "none", "Keyboard", "Mouse", "Monitor", "Ups", "Speaker" };
 
             return itemNames[itemType];
         }

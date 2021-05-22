@@ -17,6 +17,7 @@
 }
 
 .lab-detail-box p {
+  text-indent: 2em;
   word-break: break-word;
 
   margin: 0 auto;

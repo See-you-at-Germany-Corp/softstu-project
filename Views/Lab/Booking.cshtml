@@ -17,7 +17,7 @@
                     <option value="DUMMY" selected>เลือกอุปกรณ์</option>
                     @foreach (var index in itemSet)
                     {
-                        <option value=@index>@((ItemTypes)index)</option>
+                                    <option value=@index>@((ItemTypes)index)</option>
                     }
                 </select>
             </div>
@@ -114,7 +114,6 @@
 
     function getItemTimeSlot() {
         const timestamp = Date.parse(dateSelector.value) / 1000
-        console.log("eiei")
         return fetch(`/api/lab/quantity?labID=@lab.uuid&itemType=${itemSelector.value}&timestamp=${timestamp}`, {
             method: 'get',
             headers: {

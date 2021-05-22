@@ -132,15 +132,17 @@ namespace WebApi.Controllers
     public class BookedItems : Controller
     {
         public BookedItems() { }
+
         [HttpGet("{user_id}")]
         public async Task<ActionResult<List<Transaction>>> Gets(int user_id)  // not sure about "Item"
         {
             return await UserDB.GetBookedItems(user_id);
         }
-        [HttpPost("{user_id}/{item_id}/{time_id}/{date}")]
-        public ActionResult<HttpResponseMessage> Post(int user_id, int item_id, int time_id, string date)  // not sure about "Item"
-        {
-            int status = UserDB.BookItems(user_id, item_id, time_id, date);
+
+        [HttpPost("")]
+        public ActionResult<HttpResponseMessage> Post([FromBody] Book body)  // not sure about "Item"
+        { 
+            int status = UserDB.BookItems(body.user_id, body.item_id, body.time_id, body.date);
             if (status == 0)
                 return StatusCode(201);
             else

@@ -66,7 +66,7 @@ namespace ConsoleApp.PostgreSQL
                                                       (int)Transaction_type.borrow, 
                                                       time_id, 
                                                       DateTime.ParseExact(date_string, "yyyy-MM-dd", null));
-            int result = TransactionDB.Add(transaction);
+            int result = TransactionDB.Add(transaction).Result;
             return result;
         }
     }

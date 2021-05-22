@@ -47,13 +47,12 @@
 </div>
 @section Scripts {
 <script>
-
-
     const itemSelector = document.getElementById('item-selector');
     const dateSelector = document.getElementById('date-selector');
     const quantitySelector = document.getElementById('quantity-selector');
     const timeSlotSelector1 = document.getElementById('time-slot-1');
     const timeSlotSelector2 = document.getElementById('time-slot-2');
+
     userAuthorizeLabBooking();
     checkBookingSucceed("@bookingSucceed");
 
@@ -217,7 +216,7 @@
 
     function userAuthorizeLabBooking() {
         if (!isLoggedIn()) {
-            location.href = "/";
+            location.href = "/Login";
         }
     }
 

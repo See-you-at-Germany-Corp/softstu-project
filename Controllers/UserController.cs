@@ -28,14 +28,17 @@ namespace softstu_project.Controllers
 
             var userID = HttpContext.Request.Cookies["userID"];
             if (userID != null)
+            {
                 if (int.Parse(userID) > 0)
                 {
                     List<User> users = await UserDB.GetByIDAsync(int.Parse(userID));
                     List<TransactionItem> transactionItems = await TransactionDB.GetWithItemByUserIDAsync(int.Parse(userID));
+                    List<TransactionItem> sortedTransactionItems = transactionItems.OrderBy(item => item.book_date).ToList();
 
                     ViewData["UserInfo"] = users[0];
-                    ViewData["TransactionItems"] = transactionItems;
+                    ViewData["TransactionItems"] = sortedTransactionItems;
                 }
+            }
 
             return View();
         }

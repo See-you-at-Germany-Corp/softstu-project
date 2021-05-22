@@ -1,6 +1,6 @@
 @{
     var img = @Url.Content("");
-  }
+}
 
 <link href="@Url.Content("~/css/landing_page_style.css")" rel="stylesheet" type="text/css" />
 <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -10,7 +10,7 @@
     @* <div id="background-img-container">
         <img src="~/images/bg.svg" id="background-img"/>
         <img src="~/images/WebWindow.png" width="30%" id="showimg1"/>
-    </div> *@
+        </div> *@
     <div class="content-container">
         <div class="cover-container">
             <div class="form-container">
@@ -23,50 +23,50 @@
         </div>
         <div class="feature-container">
             <div class="text-content-container">
-                    <div class="text-container" id="tc1">
-                        <h1 class="header">ยืมอะไรไปแล้วบ้าง</h1>
-                        <h2>ไม่ต้องกังวลเรื้องลิมตืนของ เรามีรายการแสดงของที้คุณยืมไว้แล้ว</h2>
+                <div class="text-container" id="tc1">
+                    <h1 class="header">ยืมอะไรไปแล้วบ้าง</h1>
+                    <h2>ไม่ต้องกังวลเรื่องลืมคืนของ เรามีรายการแสดงของที่คุณยืมไว้แล้ว</h2>
+                </div>
+                <div class="text-container" id="tc2">
+                    <h1 class="header">ยืมได้เลย</h1>
+                    <h2>เลือกห้องแลปแล้วเลือกอุปกรณ์ที่ต้องการยืมได้เลย</h2>
+                </div>
+                <div class="side-image-container">
+                    <div class="image-container" id="img-con">
+                        <img src="~/images/img1.png" id="feature-img1" />
+                        <img src="~/images/img2.png" id="feature-img2" hidden />
                     </div>
-                    <div class="text-container" id="tc2">
-                        <h1 class="header">ยืมได้เลย</h1>
-                        <h2>เลือกห้องแลปแล้วเลือกอุปกรณ์ที่ต้องการยืมได้เลย</h2>
-                    </div>
-                    <div class="side-image-container">
-                        <div class="image-container" id="img-con">
-                            <img src="~/images/img1.png" id="feature-img1"/>
-                            <img src="~/images/img2.png" id="feature-img2" hidden/>
-                        </div>
-                        
-                    </div>
+
+                </div>
             </div>
-            
+
         </div>
     </div>
-    
-    
+
+
     @* <div class="layer base">
-            
-    </div> *@
+
+        </div> *@
 
     <script>
         function onLogin() {
-            location.href=`../Login`
+            location.href = `../Login`
         }
-        
-        window.onscroll = function() {
+
+        window.onscroll = function () {
             let pos = window.scrollY
             let threshold = window.innerHeight <= 720
             let divider = 1;
             let elmPos = document.getElementById("tc2").getBoundingClientRect().y + document.getElementById("tc2").getBoundingClientRect().height
             if (window.innerWidth < 1024) {
-                
+
                 var picPos = document.getElementById("img-con").getBoundingClientRect().y
-                
+
             }
             else {
                 var picPos = document.getElementById("img-con").getBoundingClientRect().y + (document.getElementById("img-con").getBoundingClientRect().height)
             }
-            if(elmPos < picPos) {
+            if (elmPos < picPos) {
                 document.getElementById("feature-img1").hidden = true;
                 document.getElementById("feature-img2").hidden = false;
             }
@@ -74,11 +74,11 @@
                 document.getElementById("feature-img1").hidden = false;
                 document.getElementById("feature-img2").hidden = true;
             }
-            
+
         }
 
-        
+
     </script>
-    
-    
+
+
 </div>

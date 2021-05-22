@@ -18,5 +18,10 @@ namespace softstu_project.Models
         public int type { get; set; }
 
         public DateTime book_date { get; set; }
+
+        public override string ToString()
+        {
+            return $"name: {name}, type: {type}, bookdate: {book_date}";
+        }
     }
 }

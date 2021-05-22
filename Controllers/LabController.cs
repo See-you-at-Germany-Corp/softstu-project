@@ -50,11 +50,11 @@ namespace softstu_project.Controllers
                 }
                 checkList.Clear();
             }
-            
+
             ViewData["nameLab"] = nameLab;
             ViewData["myType"] = myType;
             ViewData["labItem"] = labItem;
-            
+
             return View();
         }
 
@@ -110,6 +110,8 @@ namespace softstu_project.Controllers
             var items = await ItemDB.GetAvailableItems(formModel.book_date);
 
             items.RemoveAll(item => item.laboratory_id != lab_id);
+
+            System.Console.WriteLine("TIME ID: {0}", time_id);
 
             foreach (var item in items)
             {

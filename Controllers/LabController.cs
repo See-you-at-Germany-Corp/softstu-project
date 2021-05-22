@@ -130,7 +130,7 @@ namespace softstu_project.Controllers
             {
                 for (var i = 0; i < formModel.quantity; ++i)
                 {
-                    var temp = TransactionDB.Add(new Transaction(user_id, items[i].uuid, (int)Transaction_type.borrow, time_id, formModel.book_date));
+                    var temp = TransactionDB.Add(new Transaction(user_id, items[i].uuid, (int)Transaction_type.borrow, time_id, formModel.book_date)).Result;
                     if (temp == 1)
                     {
                         TempData["BookingSucceed"] = false;

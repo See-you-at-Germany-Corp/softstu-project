@@ -136,11 +136,12 @@ namespace ConsoleApp.PostgreSQL
             return transactionItems;
         }
 
-        public static int Add(Transaction transaction)
+        public static async Task<int> Add(Transaction transaction)
         {
             var db = new SoftwareStudioContext();
 
             DateTime datetime_now = DateTime.Now;
+            
             int hour;
             if (transaction.time_id == (int)Time_id_type.PM)
             {
@@ -154,6 +155,14 @@ namespace ConsoleApp.PostgreSQL
                                               transaction.book_date.Month,
                                               transaction.book_date.Day,
                                               hour, 0, 0);
+
+            string query_string =$@"SELECT * FROM transactions WHERE
+                                        book_date = '{book_date.ToString("yyyy-MM-dd")}'
+                                        and (time_id = {transaction.time_id} or time_id={(int)Time_id_type.Day})";
+            List<Transaction> t = await db.transactions.FromSqlRaw(query_string).ToListAsync();
+            if (t.Count > 0){
+                return 1;
+            }
             int result = DateTime.Compare(datetime_now, book_date);
             if (result <= 0)
             {

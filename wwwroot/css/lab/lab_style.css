@@ -137,8 +137,13 @@ ul {
     flex-direction: column;
   }
 
+  .lab-pic {
+    min-height: 150px;
+  }
+
   #picture1 {
     width: 200px;
+    min-height: 150px;
     margin-bottom: 5px;
   }
 

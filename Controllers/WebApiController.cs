@@ -49,7 +49,7 @@ namespace WebApi.Controllers
 
             List<Transaction> transactions = await TransactionDB.GetByLabIDTypeAndDateAsync(labID, itemType, date);
 
-            int allItems = await LabItemDB.GetLabItemCountByLabIDAndType(1, 1);
+            int allItems = await LabItemDB.GetLabItemCountByLabIDAndType(labID, itemType);
             int amTimeSlot = allItems;
             int pmTimeSlot = allItems;
 
@@ -57,8 +57,6 @@ namespace WebApi.Controllers
             {
                 switch (transaction.time_id)
                 {
-                    case (int)Time_id_type.none:
-                        break;
                     case (int)Time_id_type.AM:
                         amTimeSlot--;
                         break;
@@ -69,14 +67,16 @@ namespace WebApi.Controllers
                         amTimeSlot--;
                         pmTimeSlot--;
                         break;
+                    case (int)Time_id_type.none:
+                        break;
                     default:
                         break;
                 }
             }
 
             string jsonString = $@"{{
-                am: {(date.Day == 1 ? 0 : amTimeSlot)},
-                pm: {(date.Day == 1 ? 0 : pmTimeSlot)},
+                am: {amTimeSlot},
+                pm: {pmTimeSlot},
             }}";
             JObject result = JObject.Parse(jsonString);
 
@@ -141,7 +141,7 @@ namespace WebApi.Controllers
 
         [HttpPost("")]
         public ActionResult<HttpResponseMessage> Post([FromBody] Book body)  // not sure about "Item"
-        { 
+        {
             int status = UserDB.BookItems(body.user_id, body.item_id, body.time_id, body.date);
             if (status == 0)
                 return StatusCode(201);

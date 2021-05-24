@@ -12,6 +12,11 @@ namespace softstu_project.Models
         Monitor,
         Ups,
         Speaker,
+        Raspberry_Pi_3,
+        Macbook_M1,
+        Lan_Cable,
+        Arduino_Uno,
+        Arduino_Nano,
     }
 
     public class Item
@@ -41,16 +46,9 @@ namespace softstu_project.Models
             this.type = (int)itemType;
         }
 
-        public static string getName(ItemTypes itemType)
-        {
-            List<string> itemNames = new List<string>() { "none", "Keyboard", "Mouse", "Monitor", "Ups", "Speaker" };
-
-            return itemNames[(int)itemType];
-        }
-
         public static string getName(int itemType)
         {
-            List<string> itemNames = new List<string>() { "none", "Keyboard", "Mouse", "Monitor", "Ups", "Speaker" };
+            List<string> itemNames = new List<string> { "None", "Keyboard", "Mouse", "Monitor", "Ups", "Speaker", "Raspberry Pi 3", "Macbook M1", "Lan cable", "Arduino Uno", "Arduino Nano" };
 
             return itemNames[itemType];
         }

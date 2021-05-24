@@ -213,7 +213,7 @@
                     <td id="first-column">
                             <select id="type${newItemCount}" >
                                 @foreach(var name in enableType) {
-                                    <option value="@name">@type[name-1]</option>
+                                    <option value="@name">@Item.getName(name)</option>
                                 }
                     </td>
                     <td id="table-title" >

@@ -42,13 +42,8 @@ namespace softstu_project.Controllers
 
         public async Task<IActionResult> Tools()
         {
-
-            // int labID = Int16.Parse(id ?? "1");
-            // Laboratory lab = LabDB.GetByID(Int16.Parse(id ?? "1"));
             List<Laboratory> lab = await LabDB.GetAllAsync();
-            // List<LabItem> items = new List<LabItem>();
-            // IList<ItemDetail> labItems = await ItemDB.GetAllDetailByLabIDAsync(Int16.Parse(id ?? "1"));
-            IList<Item> labItems = await ItemDB.GetAllAsync();
+            List<ItemDetail> labItems = await ItemDB.GetAllDetailAsync();
             List<Laboratory> labList = await LabDB.GetAllAsync();
 
 
@@ -151,24 +146,6 @@ namespace softstu_project.Controllers
         [HttpGet]
         public async Task<ActionResult> Update(string? id, string? date, [FromQuery] string[] itemnames, [FromQuery] string[] removeid)
         {
-            // Dictionary<int,string> type = await ItemDB.GetItemSetAsync();
-            // // List<ItemDetail> typeName = await ItemDB.GetAllDetailAsync();
-            // foreach (var name in itemnames)
-            // {
-            //     if (id != null)
-            //     {
-            //         var labID = Int16.Parse(id ?? "0");
-            //         var typeName = name.Split('+')[1];
-            //         foreach(var item in type) {
-            //             var typeString = item.Value.Split("_")[0].ToLower();
-            //             if (typeString == typeName) {
-            //                 int itemID = ItemDB.Add(new Item(name, (ItemTypes)(item.Key + 1) ));
-            //                 LabItemDB.AddItem(labID, itemID);
-            //             }
-            //         }
-                    
-            //     }
-            // }
 
             foreach (var name in itemnames)
             {
@@ -182,9 +159,6 @@ namespace softstu_project.Controllers
                 }
             }
 
-
-            // await add(id,itemnames);
-
             if (id != null)
             {
                 foreach (var removeID in removeid)
@@ -193,22 +167,10 @@ namespace softstu_project.Controllers
                     var itemID = Int16.Parse(removeID ?? "0");
                     var itemDB = await ItemDB.GetByIDAsync(itemID);
                     var labItemDB = await LabItemDB.GetAllByLabIDAsync(labID);
-                    // foreach (var ldb in labItemDB)
-                    // {
-                    //     if (ldb.item_id == itemID)
-                    //     {
-                    //         System.Diagnostics.Debug.WriteLine(itemID);
-
-                    //         LabItemDB.RemoveItem(ldb.item_id);
-                    //     }
-                    // }
-                    // System.Diagnostics.Debug.WriteLine(itemDB[0].uuid);
                     var db = new SoftwareStudioContext();
                     string queryString = $"DELETE FROM laboratory_items WHERE item_id = {itemID}; DELETE FROM items WHERE uuid = {itemID}; ";
-                    // var temp = await db.items.FromSqlRaw(queryString);
-                    var items = await db.itemDetails.FromSqlRaw(queryString).ToListAsync();
-                    // ItemDB.Remove(itemDB[0]);
-
+                    // var items = await db.itemDetails.FromSqlRaw(queryString).ToListAsync();
+                    await db.Database.ExecuteSqlRawAsync(queryString);
                 }
             }
             return RedirectToAction("Detail", new { id = id, date = date });

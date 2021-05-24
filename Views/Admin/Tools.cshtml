@@ -1,5 +1,5 @@
 @{
-    var labItems = ViewData["LabItems"] as List<Item>;
+    var labItems = ViewData["LabItems"] as List<ItemDetail>;
     var labList = ViewData["Title"] as List<Laboratory>;
     @* var labID = ViewData["LabID"]; *@
 }
@@ -21,7 +21,7 @@
             <tbody id="table-body">
                 @{int index = 0;}
                 @foreach (var item in labItems) {
-                    @if (item.type == lab.uuid) {
+                    @if (item.laboratory_id == lab.uuid) {
                         <tr >
                             <td style="width: 100px">
                                 @{index++;}

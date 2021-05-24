@@ -4,6 +4,7 @@
     @* var labID = ViewData["LabID"]; *@
 }
 
+<link href="@Url.Content("~/css/admin_detail_style.css")" rel="stylesheet" type="text/css" />
 <div class="detail-container">
     @foreach(var lab in labList) {
         <div style="display:flex; margin-top: 10px;">

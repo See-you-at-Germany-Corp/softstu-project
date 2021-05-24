@@ -110,6 +110,22 @@ namespace ConsoleApp.PostgreSQL
             return itemSet;
         }
 
+        public static async Task<Dictionary<int,string>> GetItemSetAsync()
+        {
+            List<ItemDetail> itemDetails = await ItemDB.GetAllDetailAsync();
+            List<int> itemSet = new List<int>();
+            Dictionary<int,string> itemSetDict = new Dictionary<int, string>();
+            itemDetails.ForEach(item =>
+            {
+                if (!itemSet.Contains(item.type)){
+                    itemSet.Add(item.type);
+                    itemSetDict.Add(item.type,item.name);
+                } 
+            });
+
+            return itemSetDict;
+        }
+
         public static int Add(Item item)
         {
             var db = new SoftwareStudioContext();

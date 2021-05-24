@@ -33,7 +33,7 @@ namespace ConsoleApp.PostgreSQL
             var db = new SoftwareStudioContext();
             List<Laboratory> labs = await GetAllAsync();
             List<int> allItems = await LabItemDB.GetAllQuantityAsync();
-            List<List<int>> currentItems = await LabItemDB.GetCurrentQuantityByDateAsync();
+            List<List<int>> currentItems = await LabItemDB.GetCurrentQuantityByDateAsync(DateTime.Now);
 
             for (int i = 0; i < 5; i++)
             {

@@ -46,7 +46,7 @@
                         <div class="item-img"
                     style="background-image: url('../../images/@((ItemTypes)transactionItem.type).png')"></div>
                         <div class="item-detail-cont">
-                            <div class="item-id">@((ItemTypes)transactionItem.type) No.@transactionItem.item_id</div>
+                            <div class="item-id">@(Item.getName(transactionItem.type)) No.@transactionItem.item_id</div>
                             <div class="item-trans-date">
                                 @(new Transaction().GetTimeName(transactionItem.time_id))
                                 @transactionItem.book_date.ToString("dddd d MMMM yyyy")

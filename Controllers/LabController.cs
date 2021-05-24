@@ -109,7 +109,7 @@ namespace softstu_project.Controllers
 
             var items = await ItemDB.GetAvailableItems(formModel.book_date);
 
-            items.RemoveAll(item => item.laboratory_id != lab_id);
+            items.RemoveAll(item => item.type != formModel.item_type);
 
             switch (time_id)
             {

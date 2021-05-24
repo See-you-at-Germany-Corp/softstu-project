@@ -28,10 +28,11 @@ namespace ConsoleApp.PostgreSQL
             for (int i = 0; i < items.Count; i++)
             {
                 int labid = items[i].laboratory_id;
-                while(allItems.Count < labid) {
+                while (allItems.Count < labid)
+                {
                     allItems.Add(0);
                 }
-                allItems[labid-1] = allItems[labid-1] + 1;
+                allItems[labid - 1] = allItems[labid - 1] + 1;
             }
             return allItems;
         }
@@ -77,43 +78,6 @@ namespace ConsoleApp.PostgreSQL
             List<Laboratory_item> items = await db.laboratory_items.FromSqlRaw(queryString).ToListAsync();
 
             return items;
-        }
-
-        public static async Task<List<List<int>>> GetCurrentQuantityByDateAsync()
-        {
-            var db = new SoftwareStudioContext();
-
-            List<int> allQuantity = await GetAllQuantityAsync();
-            List<int> allItemsAM = allQuantity;
-            List<int> allItemsPM = allQuantity;
-
-            for (int i = 0; i < 5; i++)
-            {
-                List<Transaction> transactions = await TransactionDB.GetByLabIDAndDateAsync(i + 1, DateTime.Now);
-
-                for (int j = 0; j < transactions.Count; j++)
-                {
-                    switch (transactions[j].time_id)
-                    {
-                        case (int)Time_id_type.none:
-                            allItemsAM[i]++;
-                            allItemsPM[i]++;
-                            break;
-                        case (int)Time_id_type.AM:
-                            allItemsAM[i]--;
-                            break;
-                        case (int)Time_id_type.PM:
-                            allItemsPM[i]++;
-                            break;
-                        case (int)Time_id_type.Day:
-                            allItemsAM[i]--;
-                            allItemsPM[i]--;
-                            break;
-                    }
-                }
-            }
-
-            return new List<List<int>> { allItemsAM, allItemsPM };
         }
 
         public static async Task<List<List<int>>> GetCurrentQuantityByDateAsync(DateTime date)

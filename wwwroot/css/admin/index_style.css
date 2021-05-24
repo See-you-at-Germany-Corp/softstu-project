@@ -1,152 +1,156 @@
 .admin-page-container {
-    display: flex;
-    width: 100%;
+  display: flex;
+  width: 100%;
 
-    justify-content: space-around;
-    margin: 0 auto;
-    padding-top: 15px;
-    padding-bottom: 25px;
+  justify-content: space-around;
+  margin: 0 auto;
+  padding-top: 15px;
+  padding-bottom: 25px;
 }
 
 .lab-list-container {
-    display: flex;
-    width: 30%;
+  display: flex;
+  width: 35%;
 
-    flex-flow: column wrap;
-    padding: 10px;
+  flex-flow: column wrap;
+  padding: 10px;
 }
 
 .lab-list-container .lab-list-item-box {
-    display: flex;
-    flex-flow: column wrap;
+  display: flex;
+  flex-flow: column wrap;
 }
 
 .lab-list-container .lab-item-box {
-    display: flex;
-    background-color: #fbfbfb;
-    height: 25px;
+  display: flex;
+  background-color: #fbfbfb;
+  height: 25px;
 
-    border: 1px solid black;
-    justify-content: space-between;
-    align-items: center;
-    padding: 5px 10px;
-    margin: 5px 0;
+  border: 1px solid black;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 10px;
+  margin: 5px 0;
 }
 
 .lab-list-container .lab-item-box p {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 }
 
 .item-box {
-    width: clamp(25%, 60%, 100px);
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: space-between; 
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
 }
 
-.item-box div {  
-    display: flex;
-    flex-flow: row nowrap;
-    align-items: center;  
+.item-box div {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
 }
 
-.item-box div div {  
-    margin-left: 5px;
+.item-box div div {
+  min-width: 60px;
+  margin-left: 5px;
 }
 
 .emoticon {
-    font-size: 14px; 
+  font-size: 14px;
 }
 
 .lab-list-container a {
-    color: black;
-    text-decoration: none;
+  color: black;
+  text-decoration: none;
 }
 
 .lab-list-container .lab-item-box:hover {
-    cursor: pointer;
-    filter: brightness(95%);
+  cursor: pointer;
+  filter: brightness(95%);
 }
 
 .lab-list-container .lab-item-box:active {
-    cursor: pointer;
-    filter: brightness(90%);
+  cursor: pointer;
+  filter: brightness(90%);
 }
 
 .device-history-container {
-    display: flex;
-    width: 55%;
+  display: flex;
+  width: 55%;
 
-    flex-flow: column wrap;
-    padding: 10px;
+  flex-flow: column wrap;
+  padding: 10px;
 }
 
 .device-history-container .device-history-table-container {
-    max-height: 300px;
-    margin-bottom: 20px;
-    overflow: auto;
+  max-height: 300px;
+  margin-bottom: 20px;
+  overflow: auto;
 }
 
 .filter-box {
-    display: flex;
-    margin-bottom: 15px;
-    max-width: 100%;
+  display: flex;
+  margin-bottom: 15px;
+  max-width: 100%;
 }
 
 .filter {
-    width: 50%; 
-    max-width: 150px;
-    height: 30px;
-    margin: 0;
-    margin-right: 5px;
-    padding: 5px;
+  width: 50%;
+  max-width: 150px;
+  height: 30px;
+  margin: 0;
+  margin-right: 5px;
+  padding: 5px;
 }
 
 .inputdate {
-    width: 50%;
-    max-width: calc(150px - 4px);
-    height: 26px; 
-    padding: 0px 5px;
+  width: 50%;
+  max-width: calc(150px - 4px);
+  height: 26px;
+  padding: 0px 5px;
 }
 
 .device-history-container .device-history-table {
-    width: 100%;
-    position: sticky;
-    padding: 0;
-    margin: 0;
+  width: 100%;
+  position: sticky;
+  padding: 0;
+  margin: 0;
 }
 
 .device-history-container .device-history-option-container {
-    /* display: flex;  */
-    margin-top: 20px;
+  /* display: flex;  */
+  margin-top: 20px;
 }
 
 @media (max-width: 1200px) {
 }
 
 @media (max-width: 992px) {
-    .admin-page-container {
-        display: flex;
-        width: 100%;
-        margin: 0 auto;
-        flex-flow: row wrap;
-    }
+  .admin-page-container {
+    display: flex;
+    width: 100%;
+    margin: 0 auto;
+    flex-flow: row wrap;
+  }
 
-    .lab-list-container {
-        display: flex;
-        width: 80%;
+  .lab-list-container {
+    display: flex;
+    width: 80%;
 
-        flex-flow: column wrap;
-        padding: 10px;
+    flex-flow: column wrap;
+    padding: 10px;
 
-        justify-self: flex-start;
-    }
+    justify-self: flex-start;
+  }
 
-    .device-history-container {
-        display: flex;
-        width: 80%;
-    } 
+  .device-history-container {
+    display: flex;
+    width: 80%;
+  }
+
+  .item-box div div {
+    min-width: 40px;
+  }
 }
 
 @media (max-width: 768px) {

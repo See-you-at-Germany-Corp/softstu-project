@@ -17,7 +17,7 @@
                     <option value="DUMMY" selected>เลือกอุปกรณ์</option>
                     @foreach (var index in itemSet)
                     {
-                                    <option value=@index>@((ItemTypes)index)</option>
+                        <option value=@index>@Item.getName(index)</option>
                     }
                 </select>
             </div>
@@ -41,7 +41,7 @@
                 <label for="time-slot-2" class="radio-label">13:00 - 16:00</label>
             </div>
         </div>
-        <button id="submit-btn" onclick="submitForm" disabled>Submit</button>
+        <button id="submit-btn" disabled>Submit</button>
     </form>
 
 </div>
@@ -150,10 +150,8 @@
     }
 
     function setQuantitySeletor(maxQuantity) {
-        if (maxQuantity !== quantitySelector.childElementCount) {
-            for (let i = 1; i <= maxQuantity; ++i) {
-                quantitySelector.options.add(new Option(i, i));
-            }
+        for (let i = 1; i <= maxQuantity; ++i) {
+            quantitySelector.options.add(new Option(i, i));
         }
     }
 
@@ -183,35 +181,6 @@
         timeSlotSelector2.checked = false;
         timeSlotSelector1.disabled = true;
         timeSlotSelector2.disabled = true;
-    }
-
-    function submitForm() {
-        const itemTypeID = itemSelector.value
-        const bookDate = new Date(dateSelector.value)
-        const quantity = quantitySelector.value
-        const timeID =
-            (timeSlotSelector1.checked ? parseInt(timeSlotSelector1.value) : 0) +
-            (timeSlotSelector2.checked ? parseInt(timeSlotSelector2.value) : 0)
-
-        bookItem(timeID, quantity, itemTypeID, bookDate)
-    }
-
-    function bookItem(time_id, quantity, item_type, book_date) {
-        const formData = new FormData();
-        formData.append('lab_id', @lab.uuid)
-        formData.append('user_id', 1)
-        formData.append('time_id', time_id)
-        formData.append('quantity', quantity)
-        formData.append('item_type', item_type)
-        formData.append('book_date', book_date.toLocaleDateString())
-
-        fetch(`/api/item/booking`, {
-            method: 'post',
-            body: formData
-        })
-            .then(res => {
-                return res.json()
-            })
     }
 
     function userAuthorizeLabBooking() {

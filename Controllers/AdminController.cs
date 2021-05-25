@@ -8,6 +8,8 @@ using Microsoft.Extensions.Logging;
 using softstu_project.Models;
 using ConsoleApp.PostgreSQL;
 using System.Globalization;
+using Microsoft.EntityFrameworkCore;
+using softstu_project.Models;
 #nullable enable
 
 namespace softstu_project.Controllers
@@ -40,13 +42,8 @@ namespace softstu_project.Controllers
 
         public async Task<IActionResult> Tools()
         {
-
-            // int labID = Int16.Parse(id ?? "1");
-            // Laboratory lab = LabDB.GetByID(Int16.Parse(id ?? "1"));
             List<Laboratory> lab = await LabDB.GetAllAsync();
-            // List<LabItem> items = new List<LabItem>();
-            // IList<ItemDetail> labItems = await ItemDB.GetAllDetailByLabIDAsync(Int16.Parse(id ?? "1"));
-            IList<Item> labItems = await ItemDB.GetAllAsync();
+            List<ItemDetail> labItems = await ItemDB.GetAllDetailAsync();
             List<Laboratory> labList = await LabDB.GetAllAsync();
 
 
@@ -118,6 +115,9 @@ namespace softstu_project.Controllers
             List<Transaction> transactions = await TransactionDB.GetByLabIDAndDateAsync(labID, datetime);
             List<int> availableNumber = new List<int> { allQuantity[0][labID - 1], allQuantity[1][labID - 1] };
             List<Laboratory> labList = await LabDB.GetAllAsync();
+            List<int> type = await ItemDB.GetItemSetByLabIDAsync(labID);
+            Dictionary<int,string> types = await ItemDB.GetItemSetAsync();
+            List<string> realType = new List<string>();
 
             for (int i = 0; i < labItems.Count; i++)
             {
@@ -138,27 +138,38 @@ namespace softstu_project.Controllers
                 items.Add(new LabItem(labItems[i].uuid.ToString(), labItems[i].name, am, pm));
             }
 
+
+            foreach(var it in types) {
+                realType.Add(it.Value.Substring(0,it.Value.Length - 2));
+            }
+
             ViewData["LabItems"] = items;
             ViewData["Title"] = labList;
             ViewData["Description"] = lab.description;
             ViewData["LabID"] = id;
             ViewData["Date"] = datetime.ToString("yyyy-MM-dd");
             ViewData["Available"] = availableNumber;
+            ViewData["Type"] = realType;
+            ViewData["EnableType"] = type;
             return View();
         }
 
         [HttpGet]
         public async Task<ActionResult> Update(string? id, string? date, [FromQuery] string[] itemnames, [FromQuery] string[] removeid)
         {
+
             foreach (var name in itemnames)
             {
                 if (id != null)
                 {
                     var labID = Int16.Parse(id ?? "0");
-                    int itemID = ItemDB.Add(new Item(name, (ItemTypes)labID));
-                    LabItemDB.AddItem(labID, itemID);
+                    var type = Int16.Parse(name.Split(' ').Last());
+                    int itemIDs = ItemDB.Add(new Item(name.Split(' ')[0], (ItemTypes)type ));
+                    LabItemDB.AddItem(labID, itemIDs);
+                   
                 }
             }
+
             if (id != null)
             {
                 foreach (var removeID in removeid)
@@ -167,19 +178,14 @@ namespace softstu_project.Controllers
                     var itemID = Int16.Parse(removeID ?? "0");
                     var itemDB = await ItemDB.GetByIDAsync(itemID);
                     var labItemDB = await LabItemDB.GetAllByLabIDAsync(labID);
-                    foreach (var ldb in labItemDB)
-                    {
-                        if (ldb.item_id == itemID)
-                        {
-
-                            LabItemDB.RemoveItem(ldb.item_id);
-                        }
-                    }
-                    ItemDB.Remove(itemDB[0]);
-
+                    var db = new SoftwareStudioContext();
+                    string queryString = $"DELETE FROM laboratory_items WHERE item_id = {itemID}; DELETE FROM items WHERE uuid = {itemID}; ";
+                    // var items = await db.itemDetails.FromSqlRaw(queryString).ToListAsync();
+                    await db.Database.ExecuteSqlRawAsync(queryString);
                 }
             }
             return RedirectToAction("Detail", new { id = id, date = date });
         }
+
     }
 }

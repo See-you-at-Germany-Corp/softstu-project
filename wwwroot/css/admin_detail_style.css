@@ -142,6 +142,10 @@ button[id^="decrement"]:active {
     width: 400px;
 }
 
+#first-column {
+    width: 150px;
+}
+
 #lab-title {
     border: 1px solid gainsboro;
     background-color: whitesmoke;
@@ -175,4 +179,21 @@ button[id^="decrement"]:active {
         font-size: 15px;
     }
     
+
+}
+
+#first-column {
+    max-width: 150px;
+}
+
+#first-column select{
+    width: 100%;
+}
+
+.detail-container {
+    width: 80%;
+}
+
+.tools-table {
+    width: 100%;
 }

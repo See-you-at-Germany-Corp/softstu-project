@@ -70,7 +70,9 @@ namespace ConsoleApp.PostgreSQL
                 "laboratory_items.laboratory_id",
             };
             string reqStr = db.ListToString(reqList);
-            string queryString = $"SELECT {reqStr} FROM items LEFT JOIN laboratory_items ON laboratory_id = {labID} WHERE laboratory_items.item_id = items.uuid";
+            string queryString = $@"SELECT {reqStr} FROM items LEFT JOIN laboratory_items ON laboratory_id = {labID} 
+                                    WHERE laboratory_items.item_id = items.uuid 
+                                    ORDER BY items.type";
             List<ItemDetail> items = await db.itemDetails.FromSqlRaw(queryString).ToListAsync();
 
             return items;
@@ -108,6 +110,23 @@ namespace ConsoleApp.PostgreSQL
             });
 
             return itemSet;
+        }
+
+        public static async Task<Dictionary<int, string>> GetItemSetAsync()
+        {
+            List<ItemDetail> itemDetails = await ItemDB.GetAllDetailAsync();
+            List<int> itemSet = new List<int>();
+            Dictionary<int, string> itemSetDict = new Dictionary<int, string>();
+            itemDetails.ForEach(item =>
+            {
+                if (!itemSet.Contains(item.type))
+                {
+                    itemSet.Add(item.type);
+                    itemSetDict.Add(item.type, item.name);
+                }
+            });
+
+            return itemSetDict;
         }
 
         public static int Add(Item item)

@@ -6,6 +6,13 @@
     var availPM = (@ViewData["Available"] as List<int>)[1];
     var labList = ViewData["Title"] as List<Laboratory>;
     var labID = ViewData["LabID"];
+    var type = ViewData["Type"] as List<string>;
+    var typeName = new List<string>();
+    var enableType = ViewData["EnableType"] as List<int>;
+        
+    @* for(var i = 0; i < type.Count - 1; i++) {
+        typeName.Add(Item.getName(type[i] - 1));
+    } *@
 
     string getColor(string text) {
         if (text == "YES") {
@@ -20,7 +27,7 @@
 
 <div class="detail-container">
     <div style="display:flex; margin-top: 10px;">
-        <p id="title-head">รายการ Lab :</p>
+        <p id="title-head">รายการ Lab </p>
         <select id="lab-title" onchange="labSelected()">
             @foreach(var lab in labList) {
                 if (lab.uuid.ToString() == labID.ToString()) {
@@ -69,7 +76,7 @@
             @{int index = 0;}
             @foreach (var item in labItems) {
                 <tr >
-                    <td >
+                    <td id="first-column">
                         
                         @item.id
                     </td>
@@ -118,6 +125,8 @@
 
         function delNewItem(id) {
             document.getElementById(`new-item-edit${id}`).remove()
+            newItemCount--;
+            
         }
 
         function delExistItem(elementid, itemID) {
@@ -180,7 +189,11 @@
             let queryString = ""
             for(i = 0; i < newItemCount; i++) {
                 let itemName = document.getElementById(`item-name${i}`).value
-                queryString += `&itemnames=${itemName}`
+                let itemType = document.getElementById(`type${i}`).value
+                if(itemName != "" && itemType != "") {
+                    queryString += `&itemnames=${itemName}+${itemType}`
+                }
+                
             }
             
             for(i = 0; i < existItemID.length; i++) {
@@ -188,7 +201,7 @@
                 queryString += `&removeid=${itemID}`
             }
             console.log(queryString)
-            location.href="@Url.Action("Update", "Admin")" + "?id=" + @labID + queryString
+            location.href="@Url.Action("Update", "Admin")" + "/?id=" + @labID + queryString
         }
 
 
@@ -197,8 +210,11 @@
             tr.className="new-item-edit"
             tr.id= `new-item-edit${newItemCount}`
             tr.innerHTML = `
-                    <td >
-                        
+                    <td id="first-column">
+                            <select id="type${newItemCount}" >
+                                @foreach(var name in enableType) {
+                                    <option value="@name">@Item.getName(name)</option>
+                                }
                     </td>
                     <td id="table-title" >
                         <input id="item-name${newItemCount}" value="">

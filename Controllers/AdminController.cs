@@ -9,7 +9,6 @@ using softstu_project.Models;
 using ConsoleApp.PostgreSQL;
 using System.Globalization;
 using Microsoft.EntityFrameworkCore;
-using softstu_project.Models;
 #nullable enable
 
 namespace softstu_project.Controllers

@@ -23,6 +23,7 @@ namespace ConsoleApp.PostgreSQL
 
         public static int Register(User user)
         {
+            Console.WriteLine("user {0}", user);
             var db = new SoftwareStudioContext();
 
             /// hash password.
@@ -51,6 +52,7 @@ namespace ConsoleApp.PostgreSQL
                 else return -1;
             }
         }
+
         public static async Task<List<Transaction>> GetBookedItems(int user_id)
         {
             var db = new SoftwareStudioContext();
@@ -59,14 +61,15 @@ namespace ConsoleApp.PostgreSQL
             List<Transaction> booked_items = await db.transactions.FromSqlRaw(query_string).ToListAsync();
             return booked_items;
         }
-        public static int BookItems(int user_id, int item_id, int time_id, string date_string)
+
+        public async static Task<int> BookItems(int user_id, int item_id, int time_id, string date_string)
         {
             Transaction transaction = new Transaction(user_id,
                                                       item_id, 
                                                       (int)Transaction_type.borrow, 
                                                       time_id, 
                                                       DateTime.ParseExact(date_string, "yyyy-MM-dd", null));
-            int result = TransactionDB.Add(transaction).Result;
+            int result = await TransactionDB.Add(transaction);
             return result;
         }
     }

@@ -8,6 +8,7 @@ namespace softstu_project.Models
     {
         user, admin
     }
+    
     public class User
     {
         [Key]
@@ -53,6 +54,22 @@ namespace softstu_project.Models
         public User(User_role role_id, string username, string password, string fname, string lname, int student_id, string facaulty, string department, string email, int gender)
         {
             this.role_id = role_id;
+            this.username = username;
+            this.password = password;
+            this.fname = fname;
+            this.lname = lname;
+            this.student_id = student_id;
+            this.faculty = facaulty;
+            this.department = department;
+            this.email = email;
+            this.created = DateTime.Now;
+            this.updated = DateTime.Now;
+            this.gender = gender;
+        }
+
+        public User(int role_id, string username, string password, string fname, string lname, int student_id, string facaulty, string department, string email, int gender)
+        {
+            this.role_id = (User_role)role_id;
             this.username = username;
             this.password = password;
             this.fname = fname;

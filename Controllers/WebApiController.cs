@@ -116,6 +116,7 @@ namespace WebApi.Controllers
             return StatusCode(201);
         }
     }
+
     [Route("api/available_items")]
     public class AvailableItems : Controller
     {
@@ -140,13 +141,42 @@ namespace WebApi.Controllers
         }
 
         [HttpPost("")]
-        public ActionResult<HttpResponseMessage> Post([FromBody] Book body)  // not sure about "Item"
+        public async Task<ActionResult<HttpResponseMessage>> Post([FromBody] Book body)  // not sure about "Item"
         {
-            int status = UserDB.BookItems(body.user_id, body.item_id, body.time_id, body.date);
+            int status = await UserDB.BookItems(body.user_id, body.item_id, body.time_id, body.date);
             if (status == 0)
                 return StatusCode(201);
             else
                 return StatusCode(400);
+        }
+
+        [HttpDelete("")]
+        public async Task<ActionResult<HttpResponseMessage>> Delete(int transaction_id)  // not sure about "Item"
+        {
+            if (transaction_id > 0)
+            {
+                List<Transaction> transactions = await TransactionDB.GetAsync(transaction_id);
+                TransactionDB.Cancel(transactions[0]);
+
+                return StatusCode(204);
+            }
+            else
+                return StatusCode(400);
+        }
+    }
+
+    [Route("api/account/register")]
+    public class Account : Controller
+    {
+        public Account() { }
+
+        [HttpPost("")]
+        public ActionResult<HttpResponseMessage> Post([FromBody] UserRegister body)
+        {
+            User user = new User((User_role)body.role_id, body.username, body.password, body.fname, body.lname, body.student_id, body.faculty, body.department, body.email, body.gender);
+            UserDB.Register(user);
+
+            return StatusCode(201);
         }
     }
 }

@@ -10,6 +10,17 @@ namespace ConsoleApp.PostgreSQL
     {
         public UserDB() { }
 
+        public static async Task<List<User>> GetAllAsync()
+        {
+            using (var db = new SoftwareStudioContext())
+            {
+                string queryString = $"SELECT * FROM users";
+                var user = await db.users.FromSqlRaw(queryString).ToListAsync();
+
+                return user;
+            }
+        }
+
         public static async Task<List<User>> GetByIDAsync(int userID)
         {
             using (var db = new SoftwareStudioContext())

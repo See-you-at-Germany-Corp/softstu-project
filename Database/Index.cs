@@ -17,6 +17,7 @@ namespace ConsoleApp.PostgreSQL
         public DbSet<Log> logs { get; set; }
         public DbSet<ItemsLaboratoryTransaction> items_laboratory_transaction { get; set; }
         public DbSet<TransactionItem> transactionItems { get; set; }
+        public DbSet<UserBlacklist> userBlacklists { get; set; }
         
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

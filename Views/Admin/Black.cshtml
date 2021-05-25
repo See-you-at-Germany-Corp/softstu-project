@@ -1,0 +1,29 @@
+@{
+    var users = ViewData["Users"] as List<UserBlacklist>;
+}
+
+<div>
+    @foreach (var user in users)
+    {
+        if (user.is_blacklist)
+        {
+            <div>
+                <img src="~/images/@(user.gender).png'" alt="img">
+                <p>@user.fname @user.lname</p>
+            </div>
+        }
+    }
+</div>
+
+<div>
+    @foreach (var user in users)
+    {
+        if (!user.is_blacklist)
+        {
+            <div>
+                <img src="~/images/@(user.gender).png'" alt="img">
+                <p>@user.fname @user.lname</p>
+            </div>
+        }
+    }
+</div>

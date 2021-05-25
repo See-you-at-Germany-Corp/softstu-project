@@ -150,6 +150,7 @@ namespace softstu_project.Controllers
             ViewData["Available"] = availableNumber;
             ViewData["Type"] = realType;
             ViewData["EnableType"] = type;
+
             return View();
         }
 
@@ -184,6 +185,14 @@ namespace softstu_project.Controllers
                 }
             }
             return RedirectToAction("Detail", new { id = id, date = date });
+        }
+        public async Task< IActionResult> Black()
+        {   
+            List<UserBlacklist> userBlacklists = await BlackDB.GetBlacklistAsync();
+
+            ViewData["Users"] = userBlacklists;
+
+            return View();
         }
 
     }

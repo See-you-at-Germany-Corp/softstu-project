@@ -23,6 +23,11 @@
     pointer-events: none;
 }
 
+.ghost-red {
+    color: rgb(255, 96, 117);
+    border: 2px solid rgb(255, 96, 117);
+}
+
 .primary-button {
     align-self: flex-end;
     width: fit-content;

@@ -82,6 +82,17 @@ namespace softstu_project.Controllers
             return RedirectToAction("Blacklist");
         }
 
+        public async Task<IActionResult> OnCancelTransaction(int cancelTransactionID)
+        {
+            if (cancelTransactionID > 0)
+            {
+                List<Transaction> transactions = await TransactionDB.GetAsync(cancelTransactionID);
+                TransactionDB.Cancel(transactions[0]);
+            }
+
+            return RedirectToAction("Blacklist");
+        }
+
         public IActionResult OnHomeLogDateChange(string homedate)
         {
             return RedirectToAction("Blacklist");

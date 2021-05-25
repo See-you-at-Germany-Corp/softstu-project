@@ -55,34 +55,42 @@
                 onchange="onBlacklistFilterChange()">
         </div>
         <div class="device-blacklist-table-container">
-            <form asp-controller="Admin" asp-action="OnDeleteTransaction" method="POST">
-                <table class="device-blacklist-table" id="device-blacklist-table">
-                    <thead>
-                        <th>วันที่จอง</th>
-                        <th>หมายเลขอุปกรณ์</th>
-                        <th>ประเภทการจอง</th>
-                        <th>รหัสผู้ใช้งาน</th>
-                        <th>ยืนยันการคืน</th>
-                    </thead>
-                    <tbody id="blacklist-tbody">
-                        @foreach (var transaction in ViewData["BlacklistLists"] as List<Transaction>)
-                        {
-                            <tr id="blacklist-@transaction.item_id">
-                                <td>@transaction.book_date.ToShortDateString()</td>
-                                <td>@transaction.item_id</td>
-                                <td>@transaction.GetTimeName((int)transaction.time_id)</td>
-                                <td>@transaction.user_id</td>
+            <table class="device-blacklist-table" id="device-blacklist-table">
+                <thead>
+                    <th>วันที่จอง</th>
+                    <th>หมายเลขอุปกรณ์</th>
+                    <th>ประเภทการจอง</th>
+                    <th>รหัสผู้ใช้งาน</th>
+                    <th>ยืนยันการคืน</th>
+                    <th>ยกเลิกการจอง</th>
+                </thead>
+                <tbody id="blacklist-tbody">
+                    @foreach (var transaction in ViewData["BlacklistLists"] as List<Transaction>)
+                    {
+                        <tr id="blacklist-@transaction.item_id">
+                            <td>@transaction.book_date.ToShortDateString()</td>
+                            <td>@transaction.item_id</td>
+                            <td>@transaction.GetTimeName((int)transaction.time_id)</td>
+                            <td>@transaction.user_id</td>
+                            <form asp-controller="Admin" asp-action="OnDeleteTransaction" method="POST">
                                 <td>
                                     <button class="ghost-button" name="transactionID" type="submit"
                                     value="@transaction.uuid">ยืนยัน</button>
                                 </td>
-                            </tr>
-                            /// remove item from borrowLists here.
-                            /// add item to Log here.
-                        }
-                    </tbody>
-                </table>
-            </form>
+                            </form>
+                            <form asp-controller="Admin" asp-action="OnCancelTransaction" method="POST">
+                                <td>
+                                    <button class="ghost-button ghost-red" name="cancelTransactionID" type="submit"
+                                    value="@transaction.uuid">ยกเลิก</button>
+                                </td>
+                            </form>
+                        </tr>
+                        /// remove item from borrowLists here.
+                        /// add item to Log here.
+                    }
+                </tbody>
+            </table>
+
         </div>
     </div>
 </div>

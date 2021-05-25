@@ -56,8 +56,8 @@
         <div class="device-history-table-container">
             <table class="device-history-table" id="device-history-table">
                 <thead>
-                    <th>วันดำเนินการ</th>
-                    <th>วันที่จอง</th>
+                    <th class="date-column">วันดำเนินการ</th>
+                    <th class="date-column">วันที่จอง</th>
                     <th>ประเภทการจอง</th>
                     <th>หมายเลขอุปกรณ์</th>
                     <th>รหัสผู้ใช้งาน</th>
@@ -67,8 +67,8 @@
                     @foreach (var log in ViewData["LogLists"] as List<Log>)
                     {
                         <tr>
-                            <td>@log.created.ToShortDateString()</td>
-                            <td>@log.book_date.ToShortDateString()</td>
+                            <td class="date-column">@log.created.ToShortDateString()</td>
+                            <td class="date-column">@log.book_date.ToShortDateString()</td>
                             <td>@log.GetTimeName(log.time_id)</td>
                             <td>@log.item_id</td>
                             <td>@log.user_id</td>

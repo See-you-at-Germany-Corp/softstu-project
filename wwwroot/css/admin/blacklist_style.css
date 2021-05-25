@@ -1,58 +1,58 @@
 .blacklist-page-container {
-    display: flex;
-    width: 100%;
+  display: flex;
+  width: 100%;
 
-    justify-content: space-around;
-    margin: 0 auto;
-    padding-top: 25px;
-    padding-bottom: 25px;
+  justify-content: space-around;
+  margin: 0 auto;
+  padding-top: 25px;
+  padding-bottom: 25px;
 }
 
 .blacklist-page-container .device-history-container {
-    display: flex;
-    width: 45%;
+  display: flex;
+  width: 45%;
 
-    flex-flow: column wrap;
-    padding: 0px 10px;
+  flex-flow: column wrap;
+  padding: 0px 10px;
 }
- 
+
 .blacklist-page-container .device-history-table-container {
-    max-height: 400px;
-    overflow: auto;
+  max-height: 400px;
+  overflow: auto;
 }
 
 .device-blacklist-container {
-    display: flex;
-    width: 45%;
+  display: flex;
+  width: 45%;
 
-    flex-flow: column wrap;
-    padding: 0px 10px;
+  flex-flow: column wrap;
+  padding: 0px 10px;
 }
 
 .device-blacklist-container .device-blacklist-table-container {
-    max-height: 400px; 
-    overflow: auto;
+  max-height: 400px;
+  overflow: auto;
 }
 
 .device-blacklist-container .device-blacklist-table {
-    width: 100%; 
+  width: 100%;
 }
 
 @media (max-width: 992px) {
-    .blacklist-page-container {
-        display: flex;
-        width: 100%;
-        margin: 0 auto;
-        flex-flow: row wrap;
-    }
+  .blacklist-page-container {
+    display: flex;
+    width: 100%;
+    margin: 0 auto;
+    flex-flow: row wrap;
+  }
 
-    .blacklist-page-container .device-history-container {
-        display: flex; 
-        width: 80%;
-    }
+  .blacklist-page-container .device-history-container {
+    display: flex;
+    width: 80%;
+  }
 
-    .device-blacklist-container {
-        display: flex;
-        width: 80%;
-    }
+  .device-blacklist-container {
+    display: flex;
+    width: 80%;
+  }
 }
